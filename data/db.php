@@ -1,10 +1,10 @@
 <?php
 
-$sql_host = $ini['important']['sql_host'];
-$sql_user = $ini['important']['sql_user'];
-$sql_password = $ini['important']['sql_password'];
-$sql_database = $ini['important']['sql_database'];
-$sql_encoding = $ini['important']['sql_encoding'];
+$sql_host = $ini['db']['sql_host'];
+$sql_user = $ini['db']['sql_user'];
+$sql_password = $ini['db']['sql_password'];
+$sql_database = $ini['db']['sql_database'];
+$sql_encoding = $ini['db']['sql_encoding'];
 
 //PDO
 try {
