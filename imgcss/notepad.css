@@ -1,0 +1,87 @@
+#notepad {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-justify-content: space-around;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+
+} /*notepad*/
+
+#notepad .note_area {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  /*float: left;*/
+  font-weight: bold;
+  background-color: #fcf59b;
+  border-bottom-right-radius: 210px 15px;
+  -webkit-box-shadow: -3px 5px 12px 0 rgba(0,0,0,0.3);
+  -moz-box-shadow: -3px 5px 12px 0 rgba(0,0,0,0.3);
+  box-shadow: -3px 5px 12px 0 rgba(0,0,0,0.3);
+  margin: 10px;
+  -webkit-transition: all 1s ease-in-out;
+-moz-transition: all 1s ease-in-out;
+-o-transition: all 1s ease-in-out;
+}
+
+#notepad .note_area::before {
+  content: '';
+  display: block;
+  position: absolute;
+  z-index: -1;
+  width: 90%;
+  height: 20px;
+  -webkit-box-shadow: 3px 17px 6px rgba(0,0,0,.3);
+  -moz-box-shadow: 3px 17px 6px rgba(0,0,0,.3);
+  box-shadow: 3px 17px 6px rgba(0,0,0,.3);
+  bottom: 15px;
+  right: 5px;
+  -ms-transform: skew(-10deg,2deg);
+  -webkit-transform: skew(-10deg,2deg);
+  transform: skew(-10deg,2deg);
+}
+
+#notepad .note_area textarea {
+  border: 0;
+  resize: none;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  box-sizing: border-box;
+  padding: 20px;
+  font-family: 'Kalam', cursive;
+  font-size:20px;
+  overflow: hidden;
+  text-align: justify;
+}
+
+
+@media screen and (max-width:1023px) {
+  #notepad .note_area {
+    width: 200px;
+    height: 200px;
+    /*margin: 5px;*/
+  }
+  #notepad .note_area textarea {
+    font-size: 18px;
+    padding: 5px;
+  }
+
+}
+
+@media screen and (max-width:479px) {
+  #notepad .note_area {
+    width: 150px;
+    height: 150px;
+    margin: 5px;
+  }
+  #notepad .note_area textarea {
+    font-size: 13px;
+    padding: 5px;
+  }
+
+}
