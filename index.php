@@ -5,12 +5,17 @@ if (!include("data/init.php")) { echo "<p>[!] Błąd krytyczny systemu - nie mo�
 if (!include("data/functions.php")) { echo "<p>[!] Błąd krytyczny systemu - nie można zaimplementować pliku z funkcjami.</p><p>[!] die();</p>"; die();  } //pobiera funkcje
 if (!include("data/db.php")) { echo "<p>[!] Błąd krytyczny systemu - nie można zaimplementować pliku z połączeniem SQL.</p><p>[!] die();</p>"; die();  } //pobiera funkcje
 
+
+
+
+
 include('data/operations.php');
 
 
 
 
 include('data/header.php');
+
 
 
 //pierwszy to nazwa url, drugi to nazwa pliku BEZ KOŃCÓWKI PHP.
@@ -21,9 +26,13 @@ $kontroller_tab['ustawienia'] = 'settings';
 $kontroller_tab['pliki'] = 'upload';
 $kontroller_tab['notatki'] = 'notepad';
 
+//w przyszłości zabezpieczyć operacje przed zalogowaniem
+if ($_COOKIE['admin']!=1) {
+  include('data/lockscreen.php');
+}
 
 // MINI VIEV MODULE
-if (isset($_GET['page'])) {
+else if (isset($_GET['page'])) {
   $path_start = 'data/app';
   $path_end = '.php';
   $filename = "$path_start/" . $kontroller_tab[$_GET['page']] . $path_end;

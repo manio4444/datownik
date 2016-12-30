@@ -73,6 +73,43 @@ main section { max-width: 1200px; box-sizing: border-box; padding: 30px 10px; ma
 
 .ui.selection.dropdown { min-height: 0; }
 
+
+
+#bookmarks .urladd {
+  display: block;
+  margin-bottom: 20px;
+}
+
+#bookmarks .urladd input {
+  vertical-align: bottom;
+}
+
+#bookmarks .urladd::before {
+  display: inline-block;
+  border-radius: .28571429rem;
+  background-color: black;
+  /*background-image: attr*/
+  content: '';
+  width: 100px;
+  height: 100px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media only screen and (max-width: 1023px) {
 
 main section { padding: 10px 0px; margin: 0 auto; }

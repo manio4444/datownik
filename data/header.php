@@ -10,6 +10,8 @@
 <link href='imgcss/contactsvcf.css' rel='stylesheet' type='text/css'>
 
 <link href="https://fonts.googleapis.com/css?family=Kalam:300,400,700&amp;subset=latin-ext" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;subset=latin-ext" rel="stylesheet">
+
 <link href='imgcss/notepad.css' rel='stylesheet' type='text/css'>
 <!-- <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script> -->
 

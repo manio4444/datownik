@@ -1,10 +1,11 @@
 #lockscreen {
   color: #ffffff;
-  height: 568px;
-  width: 320px;
+  /*height: 568px;*/
+  /*width: 320px;*/
   margin: 0px;
-  background-image: url('../img/bg1.png');
+  background-image: url('bg_lockscreen.png');
   background-repeat:no-repeat;
+  background-size: cover;
   font-family: 'Roboto', Arial, sans-serif; font-weight: 100;
 }
 
@@ -16,6 +17,8 @@
   font-size: 22px;
   text-align: center;
 }
+
+#main-div { text-align: center; }
 
 #input-div {
   font-size: 50px;
