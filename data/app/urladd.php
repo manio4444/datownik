@@ -35,8 +35,13 @@
 
 <?php foreach ($sql_pdo->query('SELECT * FROM `bookmarks` ORDER BY `id` DESC') as $value) : ?>
 
-<div class="ui input urladd">
-<input type="text" placeholder="Adres URL" data-note="<?php echo $value['id']; ?>" value="<?php echo $value['href']; ?>">
+<div class="url_container">
+  <a href="<?php echo $value['href']; ?>" target="_blank"><img src="<?php if (if_is_this_image($value['href'])) echo $value['href']; ?>" alt=""></a>
+  <div class="ui input urladd">
+    <input type="text" name="" value="asdsad">
+    <input type="text" placeholder="Adres URL" data-note="<?php echo $value['id']; ?>" value="<?php echo $value['href']; ?>">
+    <span><?php echo @getimagesize($value['href'])['mime']; ?></span>
+  </div>
 </div>
 
 <?php endforeach; ?>

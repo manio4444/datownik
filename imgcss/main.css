@@ -73,25 +73,29 @@ main section { max-width: 1200px; box-sizing: border-box; padding: 30px 10px; ma
 
 .ui.selection.dropdown { min-height: 0; }
 
-
+#bookmarks .url_container {
+  margin-bottom: 20px;
+}
 
 #bookmarks .urladd {
-  display: block;
-  margin-bottom: 20px;
+  display: inline-block;
 }
 
 #bookmarks .urladd input {
   vertical-align: bottom;
+  display: block;
+  margin-top: 5px;
 }
 
-#bookmarks .urladd::before {
+#bookmarks img {
   display: inline-block;
   border-radius: .28571429rem;
   background-color: black;
-  /*background-image: attr*/
+  background-image: attr(data-src url);
   content: '';
   width: 100px;
   height: 100px;
+  vertical-align: bottom;
 }
 
 

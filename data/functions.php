@@ -159,4 +159,12 @@ function load_plugins() {
     }
   }
 }
+
+
+
+
+function if_is_this_image($path) {
+  if(@is_array(getimagesize($path))) return true;
+  else return false;
+}
  ?>
