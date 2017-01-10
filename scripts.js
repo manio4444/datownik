@@ -134,8 +134,8 @@ function bookmarkListener(this_bookmark) {
 
 } //function bookmarkListener
 
-var new_bookmark = $('.urladd').outerHTML(); //dodanie do zmiennej czystej notatki w html
+var new_bookmark = $('.url_container').outerHTML(); //dodanie do zmiennej czystej notatki w html
 
-bookmarkListener( '.urladd input' ); //pierwsze uruchomienie
+bookmarkListener( '.url_container .href' ); //pierwsze uruchomienie
 
 }); //end document ready

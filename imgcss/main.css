@@ -91,7 +91,7 @@ main section { max-width: 1200px; box-sizing: border-box; padding: 30px 10px; ma
   display: inline-block;
   border-radius: .28571429rem;
   background-color: black;
-  background-image: attr(data-src url);
+  /*background-image: attr(data-src url);*/
   content: '';
   width: 100px;
   height: 100px;

@@ -24,17 +24,20 @@ function title($lnk) {
 
 
 function draw_calendar2($month,$year) {
+  /* Pola tekstowe */
+  $headings = array('Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela');
 
-	$calendar = '<table cellpadding="0" cellspacing="0" class="calendar">';
+/* Inicjacja wartości */
+  $first_day = date('N',mktime(0,0,0,$month,1,$year));	// dzien miesiaca wg ISO-8601: 1-7
+  $days_in_month = date('t',mktime(0,0,0,$month,1,$year)); //Ilość dni w danym miesiącu
+  $days_in_this_week = 1;
+  $dates_array = array();
+  $events_month = get_events_month($month,$year);
+  // echo "<pre>"; var_dump($events_month); echo "</pre>";
 
-	$headings = array('Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela');
+/* Start zwracania wartości */
+  $calendar = '<table cellpadding="0" cellspacing="0" class="calendar">';
 	$calendar.= '<tr class="calendar-row"><td class="calendar-day-head">'.implode('</td><td class="calendar-day-head">',$headings).'</td></tr>';
-
-
-	$first_day = date('N',mktime(0,0,0,$month,1,$year));	// dzien miesiaca wg ISO-8601: 1-7
-	$days_in_month = date('t',mktime(0,0,0,$month,1,$year)); //Ilość dni w danym miesiącu
-	$days_in_this_week = 1;
-	$dates_array = array();
 
 	/* row for week one */
 	$calendar.= '<tr class="calendar-row">';
@@ -56,14 +59,8 @@ function draw_calendar2($month,$year) {
 //###################################################################################################
 			/* add in the day number */
 			$calendar.= "<div class='day-number'>$day</div>";
-			/** QUERY THE DATABASE FOR AN ENTRY FOR THIS DAY !!  IF MATCHES FOUND, PRINT THEM !! **/
-      $check_day = check_day($day,$month,$year);
-      $calendar.= '<p>asdasdsadasdsa</p>';
-      foreach ($check_day as $key => $value) $events.= $value . "<br>";
-      $calendar.= "<p>$events</p>";
-      $calendar.= var_dump($events);
-
-      unset($events);
+      if (is_array($events_month[$day]) && count($events_month[$day])>0) foreach ($events_month[$day] as $value) $calendar.= "<p class='day-event'>" . $value['txt'] . '</p>';
+      $calendar.= '<p class="day-event add-event">+</p>';
 //###################################################################################################
 
 
@@ -94,7 +91,34 @@ function draw_calendar2($month,$year) {
 
 
 
+function get_events_month($month,$year) {
+  global $sql_pdo;
+  $days_in_month = date('t',mktime(0,0,0,$month,1,$year)); //Ilość dni w danym miesiącu
+  $ts_start = mktime(0,0,0,$month,1,$year);	// timestamt start
+  $ts_end = mktime(23,59,59,$month,$days_in_month,$year);	// timestamt start
+  // echo "$ts_start<br>$ts_end<br>";
+  foreach ($sql_pdo->query("SELECT id, data, DAY(data) AS 'day', txt FROM `calendar_static` WHERE `data` >= FROM_UNIXTIME('$ts_start') AND `data` <= FROM_UNIXTIME('$ts_end')")->fetchAll(PDO::FETCH_ASSOC) as $key => $value) $return[$value['day']][] = $value;
+  // echo "<pre>";
+  // var_dump($return);
+  return $return;
+}
 
+function get_events_day($day,$month,$year) {
+  global $sql_pdo;
+  echo "#$day<br>";
+  $day = 0;
+  if(!empty($day) || is_numeric($day)) echo "TAK<br>";
+  $ts_start = mktime(0,0,0,$month,$day,$year);	// timestamt start
+  $ts_end = mktime(23,59,59,$month,$day,$year);	// timestamt start
+  // echo "$ts_start<br>";
+  // echo $ts_end;
+  foreach ($sql_pdo->query("SELECT id, data, txt FROM `calendar_static` WHERE `data` >= FROM_UNIXTIME('$ts_start') AND `data` <= FROM_UNIXTIME('$ts_end')")->fetchAll(PDO::FETCH_ASSOC) as $key => $value) $return[] = $value;
+
+  echo "<pre>";
+  var_dump($return);
+
+
+}
 
 function check_day($day,$month,$year) {
   global $sql_pdo;

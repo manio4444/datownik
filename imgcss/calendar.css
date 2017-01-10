@@ -9,3 +9,15 @@ div.day-number		{ font-weight:normal; font-size:30px; float:left; margin: 0 5px 
 td.calendar-day p { font-weight: lighter;}
 /* shared */
 td.calendar-day, td.calendar-day-np { min-height:80px; position:relative; width:120px; padding:5px; border-bottom:1px solid #999; border-right:1px solid #999; vertical-align: top; }
+td.calendar-day p.day-event {
+  background-color: rgba(245, 91, 80, 1);
+  border-radius: 2px;
+  color: white;
+  display: inline-block;
+  padding: 3px;
+  margin-bottom: 3px;
+}
+td.calendar-day p.day-event:last-of-type { margin-bottom: 0; }
+td.calendar-day p.add-event {
+  background-color: rgba(245, 91, 80, 0.3);
+}

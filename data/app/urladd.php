@@ -29,18 +29,25 @@
 </form>
 
 <section id="bookmarks">
-<div class="ui input urladd">
-  <input type="text" placeholder="Adres URL">
-</div>
+  <div class="url_container">
+    <a href="" target="_blank"><img src="" alt=""></a>
+    <div class="ui input urladd">
+      <input type="text" class="name" name="" placeholder="Opis zakładki jeszcze nie działa" value="">
+      <input type="text" class="href" name="" placeholder="Wklej adres URL aby dodać nowy wpis" data-note="" value="">
+      <span><?php /*echo @getimagesize($value['href'])['mime'];*/ ?></span>
+    </div>
+  </div>
 
 <?php foreach ($sql_pdo->query('SELECT * FROM `bookmarks` ORDER BY `id` DESC') as $value) : ?>
 
 <div class="url_container">
-  <a href="<?php echo $value['href']; ?>" target="_blank"><img src="<?php if (if_is_this_image($value['href'])) echo $value['href']; ?>" alt=""></a>
+  <a href="<?php echo $value['href']; ?>" target="_blank">
+    <img src="<?php /*if (if_is_this_image($value['href']))*/ echo $value['href']; ?>" alt="">
+  </a>
   <div class="ui input urladd">
-    <input type="text" name="" value="asdsad">
-    <input type="text" placeholder="Adres URL" data-note="<?php echo $value['id']; ?>" value="<?php echo $value['href']; ?>">
-    <span><?php echo @getimagesize($value['href'])['mime']; ?></span>
+    <input type="text" class="name" name="" placeholder="Opis zakładki jeszcze nie działa" value="">
+    <input type="text" class="href" name="" placeholder="Adres URL" data-note="<?php echo $value['id']; ?>" value="<?php echo $value['href']; ?>">
+    <span><?php /*echo @getimagesize($value['href'])['mime'];*/ ?></span>
   </div>
 </div>
 
