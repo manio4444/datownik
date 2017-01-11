@@ -1,7 +1,3 @@
-<table>
-
-
-
 <?php
 
 $months_names = array(
@@ -38,5 +34,11 @@ for ($i=1; $i < 13 ; $i++) {
 
 
  ?>
-
-</table>
+ 2017-01-08 00:55:50
+ <form action="" method="post">
+ <div class="ui input urladd">
+       <input type="text" class="calendar_txt" name="calendar_txt" placeholder="Tekst" value="">
+       <input type="text" class="calendar_ts" name="calendar_ts" placeholder="Data w timestamp najlepiej" data-note="" value="">
+       <button type="send" name="button"></button>
+ </div>
+</form>
