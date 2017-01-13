@@ -1,6 +1,6 @@
 <?php
 // setcookie( "admin", 1, strtotime( '+30 days' ) );
-if ($_GET['code']==1234) setcookie( "admin", 1, strtotime( '+30 days' ) );
+if (isset($_GET['code']) && $_GET['code']==1234) setcookie( "admin", 1, strtotime( '+30 days' ) );
 //print_r ($_GET);
 if (!include("data/init.php")) { echo "<p>[!] Błąd krytyczny systemu - nie można zaimplementować pliku inicjującego.</p><p>[!] die();</p>"; die();  } //pobiera funkcje
 if (!include("data/functions.php")) { echo "<p>[!] Błąd krytyczny systemu - nie można zaimplementować pliku z funkcjami.</p><p>[!] die();</p>"; die();  } //pobiera funkcje
@@ -28,7 +28,7 @@ $kontroller_tab['pliki'] = 'upload';
 $kontroller_tab['notatki'] = 'notepad';
 
 //w przyszłości zabezpieczyć operacje przed zalogowaniem
-if ($_COOKIE['admin']!=1) {
+if (@$_COOKIE['admin']!=1) {
   include('data/lockscreen.php');
 }
 
