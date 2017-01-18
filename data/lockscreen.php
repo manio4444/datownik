@@ -4,31 +4,30 @@
  <div id="main-div">
  <div id="statusbar-40"></div>
  <div id="title">Enter Passcode</div>
- <div id="input-div">
-   <span class="input-num" id="input-num-1">·</span>
-   <span class="input-num" id="input-num-2">·</span>
-   <span class="input-num" id="input-num-3">·</span>
-   <span class="input-num" id="input-num-4">·</span>
+ <div id="row_input">
+   <span data-input="1"></span>
+   <span data-input="2"></span>
+   <span data-input="3"></span>
+   <span data-input="4"></span>
  </div>
- <div class="num-row">
-   <button class="num" id="num-1">1</button>
-   <button class="num" id="num-2">2</button>
-   <button class="num" id="num-3">3</button>
+ <div class="row_btn">
+   <button id="btn_1">1</button>
+   <button id="btn_2">2</button>
+   <button id="btn_3">3</button>
  </div>
- <div class="num-row">
-   <button class="num" id="num-4">4</button>
-   <button class="num" id="num-5">5</button>
-   <button class="num" id="num-6">6</button>
+ <div class="row_btn">
+   <button id="btn_4">4</button>
+   <button id="btn_5">5</button>
+   <button id="btn_6">6</button>
  </div>
- <div class="num-row">
-   <button class="num" id="num-7">7</button>
-   <button class="num" id="num-8">8</button>
-   <button class="num" id="num-9">9</button>
+ <div class="row_btn">
+   <button id="btn_7">7</button>
+   <button id="btn_8">8</button>
+   <button id="btn_9">9</button>
  </div>
- <div class="num-row">
-   <button class="num" id="num-10">←</button>
-   <button class="num" id="num-0">0</button>
-   <button class="num" id ="num-11">OK</button>
+ <div class="row_btn">
+   <button id="btn_0">0</button>
  </div>
 </div>
+<input type="text" name="" value="" id="code_input">
 </section>

@@ -15,7 +15,7 @@ include('data/operations.php');
 
 
 
-include('data/header.php');
+include('data/head.php'); //początek kodu do otwarcia znacznika body
 
 
 
@@ -30,26 +30,27 @@ $kontroller_tab['notatki'] = 'notepad';
 //w przyszłości zabezpieczyć operacje przed zalogowaniem
 if (@$_COOKIE['admin']!=1) {
   include('data/lockscreen.php');
-}
+} else {
+  include('data/header.php');
+  // MINI VIEV MODULE
+  if (isset($_GET['page'])) {
+    $path_start = 'data/app';
+    $path_end = '.php';
+    $filename = "$path_start/" . $kontroller_tab[$_GET['page']] . $path_end;
+    if (file_exists($filename)) include($filename);
+    else echo "nie ma pliku $filename <br>";
 
-// MINI VIEV MODULE
-else if (isset($_GET['page'])) {
-  $path_start = 'data/app';
-  $path_end = '.php';
-  $filename = "$path_start/" . $kontroller_tab[$_GET['page']] . $path_end;
-  if (file_exists($filename)) include($filename);
-  else echo "nie ma pliku $filename <br>";
+  /*
+    foreach (array_diff(scandir('data/app'), array('..', '.')) as $key => $value) {
+      if(is_dir($value)) echo "<img src='../icons/folder.gif'>&nbsp;";
+      else echo "<img src='../icons/text.gif'>&nbsp;";
+      echo "<a href='$value'>$value</a><br>";
+    }*/
+  }
+  else include('data/app/start.php');
+  // MINI VIEV MODULE - END
 
-/*
-  foreach (array_diff(scandir('data/app'), array('..', '.')) as $key => $value) {
-    if(is_dir($value)) echo "<img src='../icons/folder.gif'>&nbsp;";
-    else echo "<img src='../icons/text.gif'>&nbsp;";
-    echo "<a href='$value'>$value</a><br>";
-  }*/
-}
-else include('data/app/start.php');
-// MINI VIEV MODULE - END
-
+} // koniec else w ktory jest wszystko poza lockscreenem
 
 
 

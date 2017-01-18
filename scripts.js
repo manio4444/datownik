@@ -138,4 +138,37 @@ var new_bookmark = $('.url_container').outerHTML(); //dodanie do zmiennej czyste
 
 bookmarkListener( '.url_container .href' ); //pierwsze uruchomienie
 
+//###############################################################
+//###############################################################
+//###############################################################
+
+var lck_btn = $('#lockscreen .row_btn button');
+var input = $('#lockscreen #code_input');
+var dots_ctn = $('#lockscreen #row_input'); //konterner kropek
+
+
+lck_btn.click(function() {
+  input.val(input.val()+$(this).html());
+  input.trigger('change'); //zmusza dany element do "zasymulowania eventu"
+});
+
+input.change(function() {
+  console.log($(this).val().length);
+  if ($(this).val().length==1) dots_ctn.find('[data-input="1"]').addClass('filled');
+  if ($(this).val().length==2) dots_ctn.find('[data-input="2"]').addClass('filled');
+  if ($(this).val().length==3) dots_ctn.find('[data-input="3"]').addClass('filled');
+  if ($(this).val().length==4) {
+    dots_ctn.find('[data-input="4"]').addClass('filled');
+    if ($(this).val()==1712) window.location.href = "?code=1234";
+    else location.reload();
+  }
+});
+
+
+
+
+
+
+
+
 }); //end document ready
