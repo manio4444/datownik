@@ -59,7 +59,7 @@ function draw_calendar2($month,$year) {
 //###################################################################################################
 			/* add in the day number */
 			$calendar.= "<div class='day-number'>$day</div>";
-      if (is_array($events_month[$day]) && count($events_month[$day])>0) foreach ($events_month[$day] as $value) $calendar.= "<p class='day-event'>" . $value['txt'] . '</p>';
+      if (@is_array($events_month[$day]) && count($events_month[$day])>0) foreach ($events_month[$day] as $value) $calendar.= "<p class='day-event'>" . $value['txt'] . '</p>';
       $calendar.= '<p class="day-event add-event">+</p>';
 //###################################################################################################
 
@@ -100,7 +100,7 @@ function get_events_month($month,$year) {
   foreach ($sql_pdo->query("SELECT id, data, DAY(data) AS 'day', txt FROM `calendar_static` WHERE `data` >= FROM_UNIXTIME('$ts_start') AND `data` <= FROM_UNIXTIME('$ts_end')")->fetchAll(PDO::FETCH_ASSOC) as $key => $value) $return[$value['day']][] = $value;
   // echo "<pre>";
   // var_dump($return);
-  return $return;
+  if (!empty($return)) return $return;
 }
 
 function get_events_day($day,$month,$year) {
