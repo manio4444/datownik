@@ -9,6 +9,7 @@
 <link href='imgcss/calendar.css' rel='stylesheet' type='text/css'>
 <link href='imgcss/contactsvcf.css' rel='stylesheet' type='text/css'>
 
+<link href="https://fonts.googleapis.com/css?family=Kalam:300,400,700&amp;subset=latin-ext" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,300,400,500,600,700&amp;subset=latin-ext" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;subset=latin-ext" rel="stylesheet">
 
