@@ -29,5 +29,5 @@
    <button id="btn_0">0</button>
  </div>
 </div>
-<input type="text" name="" value="" id="code_input">
+<input type="hidden" name="" value="" id="code_input">
 </section>
