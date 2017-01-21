@@ -26,16 +26,25 @@ h2 {
 
 header, main { width: 100%; box-sizing: border-box; }
 
-header { background-color: rgba(51,51,51,0.95); color: #a2b3bf; font-size:1.25em; min-height: 80px; }
+header { background-color: rgba(51,51,51,0.95); color: #a2b3bf; font-size:1.25em; }
 header {
 -webkit-box-shadow: 0px -20px 30px 18px rgba(0,0,0,0.75);
 -moz-box-shadow: 0px -20px 30px 18px rgba(0,0,0,0.75);
 box-shadow: 0px -20px 30px 18px rgba(0,0,0,0.75);
 }
-header nav {max-width: 1200px; margin: 0 auto; position: relative; }
-header ul { font-size: 0; }
-header ul li { display: inline-block; margin: 0 20px;}
-header ul li a { font-size:1.25em; padding: 24px 5px; text-decoration: none; color: inherit; display: block; border-bottom: 5px solid transparent; }
+header nav {max-width: 1200px; margin: 0 auto; position: relative; min-height: 80px; }
+header ul { font-size: 0; height: 100%; }
+header ul li { display: inline-block; margin: 0 20px; height: 100%; }
+header ul li a {
+  height: 100%;
+  box-sizing: border-box;
+  font-size:1.25em;
+  padding: 24px 5px 0;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  border-bottom: 5px solid transparent;
+}
 header ul li:hover a, header ul li .active { color: #ffffff; border-color: white; }
 
 main section { max-width: 1200px; box-sizing: border-box; padding: 30px 10px; margin: 0 auto; }
@@ -114,7 +123,7 @@ main section { max-width: 1200px; box-sizing: border-box; padding: 30px 10px; ma
 
 
 
-@media only screen and (max-width: 1023px) {
+@media (max-width: 1023px) {
 
 main section { padding: 10px 0px; margin: 0 auto; }
 
@@ -124,5 +133,14 @@ header nav ul { display: none; }
 header nav ul::before { content: ''; display: block; float: right; width: 80px; height: 70px; }
 
 .hamburger:hover + ul, ul:hover {  display: block; }
+
+} /* media end*/
+
+@media (max-width: 640px) {
+
+.hamburger { top: 8px; }
+
+header nav { min-height: 50px; }
+header nav ul li a { padding: 10px 5px 8px; }
 
 } /* media end*/

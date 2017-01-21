@@ -1,23 +1,71 @@
 /* calendar */
-table.calendar		{ border-left:1px solid #999; margin-bottom: 15px; }
+table.calendar { border-left:1px solid #999; margin-bottom: 15px; }
 tr.calendar-row	{  }
+td.calendar-day-head { background:#ccc; font-weight:normal; text-align:center;  padding:5px; border-bottom:1px solid #999; border-top:1px solid #999; border-right:1px solid #999; }
 td.calendar-day	{ color:#aaa; background-color: #FFFFFF; }
 td.calendar-day:hover	{ background:#eceff5; }
-td.calendar-day-np	{ color:#ddd; background:#eee; min-height:80px; } * html div.calendar-day-np { height:80px; }
-td.calendar-day-head { background:#ccc; font-weight:normal; text-align:center;  padding:5px; border-bottom:1px solid #999; border-top:1px solid #999; border-right:1px solid #999; }
-div.day-number		{ font-weight:normal; font-size:30px; float:left; margin: 0 5px 5px 0; min-width:40px; text-align:center; }
+td.calendar-day-np { color:#ddd; background:#eee; }
+td.calendar-day, td.calendar-day-np {
+  height:107px;
+  position:relative;
+  width:120px;
+  padding:5px;
+  border-bottom:1px solid #999;
+  border-right:1px solid #999;
+  vertical-align: top;
+}
+div.day-number {
+  font-weight:normal;
+  font-size:32px;
+  line-height: 22px;
+  margin-bottom: 5px;
+  width: 100%;
+  text-align:right;
+}
 td.calendar-day p { font-weight: lighter;}
 /* shared */
-td.calendar-day, td.calendar-day-np { min-height:80px; position:relative; width:120px; padding:5px; border-bottom:1px solid #999; border-right:1px solid #999; vertical-align: top; }
 td.calendar-day p.day-event {
+  position: relative;
   background-color: rgba(245, 91, 80, 1);
   border-radius: 2px;
   color: white;
-  display: inline-block;
+  display: block;
   padding: 3px;
   margin-bottom: 3px;
+  font-size: 11px;
+  font-weight: normal;
 }
 td.calendar-day p.day-event:last-of-type { margin-bottom: 0; }
+td.calendar-day p.day-event a { display: block; color: inherit; }
 td.calendar-day p.add-event {
+  display: none;
   background-color: rgba(245, 91, 80, 0.3);
 }
+td.calendar-day:hover p.add-event { display: block; }
+
+
+td.calendar-day p.day-event:hover .details { display: block; }
+ td.calendar-day p.day-event .details {
+   display: none;
+   position: absolute;
+   bottom: -32px;
+   right: 50%;
+   transform: translateX(50%);
+   z-index: 1;
+   width: 150px;
+   padding: 5px 0;
+   text-align: center;
+   background-color: rgba(0, 0, 0, 0.75);
+   border-radius: 2px;
+   box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+  }
+ td.calendar-day p.day-event .details::before {
+   content: '';
+   position: absolute;
+   right: 50%;
+   transform: translateX(50%);
+   top: -7px;
+   border-bottom: 7px solid rgba(0, 0, 0, 0.7);
+   border-left: 7px solid transparent;
+   border-right: 7px solid transparent;
+ }

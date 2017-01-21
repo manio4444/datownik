@@ -59,7 +59,7 @@ function draw_calendar2($month,$year) {
 //###################################################################################################
 			/* add in the day number */
 			$calendar.= "<div class='day-number'>$day</div>";
-      if (@is_array($events_month[$day]) && count($events_month[$day])>0) foreach ($events_month[$day] as $value) $calendar.= "<p class='day-event'>" . $value['txt'] . '</p>';
+      if (@is_array($events_month[$day]) && count($events_month[$day])>0) foreach ($events_month[$day] as $value) $calendar.= '<p class="day-event"><a href="' . get_url() . '&id=' . $value['id'] . '">' . $value['txt'] . '</a><span class="details">' . $value['data'] . '</span></p>';
       $calendar.= '<p class="day-event add-event">+</p>';
 //###################################################################################################
 
@@ -73,9 +73,11 @@ function draw_calendar2($month,$year) {
 	}
 
 	/* finish the rest of the days in the week */
+  $y = 1;
 	if($day_of_week < 7) {
 		for($x = $day_of_week; $x <= 6; $x++):
-			$calendar.= '<td class="calendar-day-np"><div class="day-number">' . $x . '</div></td>';
+			$calendar.= '<td class="calendar-day-np"><div class="day-number">' . $y . '</div></td>';
+      $y++;
 		endfor;
 	}
 
@@ -117,13 +119,6 @@ function get_events_day($day,$month,$year) {
   echo "<pre>";
   var_dump($return);
 
-
-}
-
-function check_day($day,$month,$year) {
-  global $sql_pdo;
-  foreach ($sql_pdo->query("SELECT * FROM  `calendar_static`")->fetchAll(PDO::FETCH_ASSOC) as $key => $value) $return[] = $value;
-  return $return;
 
 }
 
@@ -191,4 +186,13 @@ function if_is_this_image($path) {
   if(@is_array(getimagesize($path))) return true;
   else return false;
 }
+
+
+function get_url($type = null) {
+  //domyślnie zwraca pełny adres
+  //dodać ifa na przyszłość
+  return 'http://' . $_SERVER[HTTP_HOST] . $_SERVER[REQUEST_URI];
+}
+
+
  ?>
