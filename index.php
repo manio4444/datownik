@@ -1,11 +1,14 @@
 <?php
-// setcookie( "admin", 1, strtotime( '+30 days' ) );
-if (isset($_GET['code']) && $_GET['code']==1234) setcookie( "admin", 1, strtotime( '+30 days' ) );
 //print_r ($_GET);
 if (!include("data/init.php")) { echo "<p>[!] Błąd krytyczny systemu - nie można zaimplementować pliku inicjującego.</p><p>[!] die();</p>"; die();  } //pobiera funkcje
 if (!include("data/functions.php")) { echo "<p>[!] Błąd krytyczny systemu - nie można zaimplementować pliku z funkcjami.</p><p>[!] die();</p>"; die();  } //pobiera funkcje
 if (!include("data/db.php")) { echo "<p>[!] Błąd krytyczny systemu - nie można zaimplementować pliku z połączeniem SQL.</p><p>[!] die();</p>"; die();  } //pobiera funkcje
 
+// setcookie( "admin", 1, strtotime( '+30 days' ) );
+if (isset($_GET['code']) && $_GET['code']==1234) {
+  setcookie( "admin", 1, strtotime( '+30 days' ) );
+  header("Location: " . get_url('clean'));
+}
 
 
 

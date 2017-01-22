@@ -190,8 +190,9 @@ function if_is_this_image($path) {
 
 function get_url($type = null) {
   //domyślnie zwraca pełny adres
-  //dodać ifa na przyszłość
-  return 'http://' . $_SERVER[HTTP_HOST] . $_SERVER[REQUEST_URI];
+  //dodać ify na przyszłość
+  if ($type=='clean') return strtok($_SERVER["REQUEST_URI"],'?');
+  else return 'http://' . $_SERVER[HTTP_HOST] . $_SERVER[REQUEST_URI];
 }
 
 

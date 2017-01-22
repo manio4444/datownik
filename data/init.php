@@ -3,7 +3,7 @@
 // var_dump( read_folder($config['plugins_folder']) );
 // echo "</pre>";
 
-$config['plugins_folder'] = "data/plugins";
+$config['plugins_folder'] = "plugins";
 $config['ini_folder'] = "data/config";
 
 $list_ini_files = array(
