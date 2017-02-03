@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
 <link href='imgcss/reset.css' rel='stylesheet' type='text/css'>
+<link rel="icon" type="image/png" href="favicon.ico" >
 <?php load_plugins(); ?>
 <link href='imgcss/main.css?v=<?php echo time(); ?>' rel='stylesheet' type='text/css'>
 <link href='imgcss/calendar.css' rel='stylesheet' type='text/css'>

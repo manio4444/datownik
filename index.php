@@ -22,7 +22,7 @@ include('data/head.php'); //początek kodu do otwarcia znacznika body
 
 
 
-//pierwszy to nazwa url, drugi to nazwa pliku BEZ KOŃCÓWKI PHP.
+//identyfikator tablicy to nazwa url, wartość to nazwa pliku BEZ KOŃCÓWKI PHP.
 $kontroller_tab['kalendarz'] = 'kalendarz';
 $kontroller_tab['zakladki'] = 'urladd';
 $kontroller_tab['kontakty'] = 'contactsvcf';

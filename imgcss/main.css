@@ -83,6 +83,36 @@ main section { max-width: 1200px; box-sizing: border-box; padding: 30px 10px; ma
 
 .ui.selection.dropdown { min-height: 0; }
 
+#main_page [name="urladd"] {
+  margin: 0;
+  -webkit-appearance: none;
+  tap-highlight-color: rgba(255,255,255,0);
+  padding: .78571429em 1em;
+  background: #FFF;
+  border: 1px solid rgba(34,36,38,.15);
+  outline: 0;
+  color: rgba(0,0,0,.87);
+  border-radius: .28571429rem;
+  box-shadow: 0 0 0 0 transparent inset;
+  -webkit-transition: color .1s ease,border-color .1s ease;
+  transition: color .1s ease,border-color .1s ease;
+  font-size: 1em;
+  line-height: 1.2857;
+  resize: vertical;
+  display: block;
+}
+
+#main_page [name="urladd"]:focus {
+  color: rgba(0,0,0,.95);
+  border-color: #85B7D9;
+  border-radius: .28571429rem;
+  background: #FFF;
+  box-shadow: 0 0 0 0 rgba(34,36,38,.35) inset;
+  -webkit-appearance: none;
+}
+
+
+
 #bookmarks .url_container {
   margin-bottom: 20px;
 }
