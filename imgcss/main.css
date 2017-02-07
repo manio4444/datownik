@@ -83,8 +83,7 @@ main section { max-width: 1200px; box-sizing: border-box; padding: 30px 10px; ma
 
 .ui.selection.dropdown { min-height: 0; }
 
-#main_page [name="urladd"] {
-  margin: 0;
+textarea {
   -webkit-appearance: none;
   tap-highlight-color: rgba(255,255,255,0);
   padding: .78571429em 1em;
@@ -102,7 +101,7 @@ main section { max-width: 1200px; box-sizing: border-box; padding: 30px 10px; ma
   display: block;
 }
 
-#main_page [name="urladd"]:focus {
+textarea:focus {
   color: rgba(0,0,0,.95);
   border-color: #85B7D9;
   border-radius: .28571429rem;
@@ -111,6 +110,9 @@ main section { max-width: 1200px; box-sizing: border-box; padding: 30px 10px; ma
   -webkit-appearance: none;
 }
 
+#main_page [name="urladd"] {
+  margin-bottom: 25px;
+}
 
 
 #bookmarks .url_container {

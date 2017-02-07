@@ -21,14 +21,7 @@ include('data/operations.php');
 include('data/head.php'); //początek kodu do otwarcia znacznika body
 
 
-
-//identyfikator tablicy to nazwa url, wartość to nazwa pliku BEZ KOŃCÓWKI PHP.
-$kontroller_tab['kalendarz'] = 'kalendarz';
-$kontroller_tab['zakladki'] = 'urladd';
-$kontroller_tab['kontakty'] = 'contactsvcf';
-$kontroller_tab['ustawienia'] = 'settings';
-$kontroller_tab['pliki'] = 'upload';
-$kontroller_tab['notatki'] = 'notepad';
+// $kontroller_tab[] w init.php
 
 //w przyszłości zabezpieczyć operacje przed zalogowaniem
 if (@$_COOKIE['admin']!=1) {
@@ -37,9 +30,7 @@ if (@$_COOKIE['admin']!=1) {
   include('data/header.php');
   // MINI VIEV MODULE
   if (isset($_GET['page'])) {
-    $path_start = 'data/app';
-    $path_end = '.php';
-    $filename = "$path_start/" . $kontroller_tab[$_GET['page']] . $path_end;
+    $filename = $config['app_path_start'] . "/" . $kontroller_tab[$_GET['page']] . $config['app_path_end'];
     if (file_exists($filename)) include($filename);
     else echo "nie ma pliku $filename <br>";
 

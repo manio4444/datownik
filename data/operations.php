@@ -46,15 +46,20 @@ if(isset($_POST['calendar_ts']) && isset($_POST['calendar_txt'])) {
 }
 
 
-
+if(isset($_POST['action']) && $_POST['action']=="notatka" && $_POST['urladd']) {
+    $pdo_operation = $sql_pdo->prepare( 'INSERT INTO `notes` (`txt`) VALUES (:txt)' );
+    $pdo_operation->bindValue(':txt', $_POST['urladd'], PDO::PARAM_STR);
+    $pdo_operation->execute();
+    $header_back = 'notatki'; //robi przekierowanie headerem po skończeniu operacji
+}
 
 if(isset($_POST['note_ajax'])) {
-  if (!$_POST['note_id']) {
+  if (!$_POST['note_id'] && $_POST['note_txt']) {
     $pdo_operation = $sql_pdo->prepare( 'INSERT INTO `notes` (`txt`) VALUES (:txt)' );
     $pdo_operation->bindValue(':txt', $_POST['note_txt'], PDO::PARAM_STR);
     $pdo_operation->execute();
     echo $sql_pdo->lastInsertId();
-  } elseif (!$_POST['note_txt'] && $_POST['note_delete']) {
+  } elseif (!$_POST['note_txt'] && $_POST['note_id'] && $_POST['note_delete']) {
     $pdo_operation = $sql_pdo->prepare( 'DELETE FROM `notes` WHERE `id` = :id' );
     $pdo_operation->bindValue(':id', $_POST['note_id'], PDO::PARAM_INT);
     $pdo_operation->execute();
@@ -66,6 +71,14 @@ if(isset($_POST['note_ajax'])) {
     $pdo_operation->execute();
     echo "edit";
   }
+}
+
+
+if(isset($_POST['action']) && $_POST['action']=="zakladka" && $_POST['urladd']) {
+  $pdo_operation = $sql_pdo->prepare( 'INSERT INTO `bookmarks` (`href`) VALUES (:href)' );
+    $pdo_operation->bindValue(':href', $_POST['urladd'], PDO::PARAM_STR);
+    $pdo_operation->execute();
+    $header_back = 'zakladki'; //robi przekierowanie headerem po skończeniu operacji
 }
 
 if(isset($_POST['bookmark_ajax'])) {
@@ -93,7 +106,12 @@ if(isset($_POST['bookmark_ajax'])) {
 
 
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH'])=='xmlhttprequest') die();
-if ($header_back==true) header("Location:http://" . $_SERVER[HTTP_HOST] . $_SERVER[REQUEST_URI]);
+if ($header_back===true) header("Location:http://" . $_SERVER[HTTP_HOST] . $_SERVER[REQUEST_URI]);
+else if (!empty($header_back)) {
+  $filename = $config['app_path_start'] . "/" . $kontroller_tab[$header_back] . $config['app_path_end'];
+  if (file_exists($filename)) header("Location:http://" . get_url('clean') . '?page='.$header_back);
+}
 
+// header("Location:http://" . $_SERVER[HTTP_HOST]);
 
  ?>

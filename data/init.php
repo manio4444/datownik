@@ -6,6 +6,19 @@
 $config['plugins_folder'] = "plugins";
 $config['ini_folder'] = "data/config";
 
+$config['app_path_start'] = 'data/app';
+$config['app_path_end'] = '.php';
+
+
+//identyfikator tablicy to nazwa url, wartość to nazwa pliku BEZ KOŃCÓWKI PHP.
+$kontroller_tab['kalendarz'] = 'kalendarz';
+$kontroller_tab['zakladki'] = 'urladd';
+$kontroller_tab['kontakty'] = 'contactsvcf';
+$kontroller_tab['ustawienia'] = 'settings';
+$kontroller_tab['pliki'] = 'upload';
+$kontroller_tab['notatki'] = 'notepad';
+
+
 $list_ini_files = array(
   'plugins',
   'config',
