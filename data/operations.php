@@ -106,10 +106,10 @@ if(isset($_POST['bookmark_ajax'])) {
 
 
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH'])=='xmlhttprequest') die();
-if ($header_back===true) header("Location:http://" . $_SERVER[HTTP_HOST] . $_SERVER[REQUEST_URI]);
+if ($header_back===true) header("Location:" . get_url());
 else if (!empty($header_back)) {
   $filename = $config['app_path_start'] . "/" . $kontroller_tab[$header_back] . $config['app_path_end'];
-  if (file_exists($filename)) header("Location:http://" . get_url('clean') . '?page='.$header_back);
+  if (file_exists($filename)) header("Location:" . get_url('clean') . '?page='.$header_back);
 }
 
 // header("Location:http://" . $_SERVER[HTTP_HOST]);
