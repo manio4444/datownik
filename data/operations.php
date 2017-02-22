@@ -102,14 +102,28 @@ if(isset($_POST['bookmark_ajax'])) {
 }
 
 
+if(isset($_POST['action']) && $_POST['action']=="wydarzenie" && $_POST['urladd']) {
+  $header_back['app'] = 'kalendarz';
+  $header_back['get']['txt'] = $_POST['urladd'];
+}
+
 
 
 
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH'])=='xmlhttprequest') die();
 if ($header_back===true) header("Location:" . get_url());
 else if (!empty($header_back)) {
-  $filename = $config['app_path_start'] . "/" . $kontroller_tab[$header_back] . $config['app_path_end'];
-  if (file_exists($filename)) header("Location:" . get_url('clean') . '?page='.$header_back);
+
+  $filename = (is_array($header_back))
+    ? $config['app_path_start'] . "/" . $kontroller_tab[$header_back['app']] . $config['app_path_end']
+    : $config['app_path_start'] . "/" . $kontroller_tab[$header_back] . $config['app_path_end'];
+
+  if (is_array($header_back) && file_exists($filename)) {
+    $return = "Location:" . get_url('clean') . '?page='.$header_back['app'];
+    if ($header_back['get']) foreach ($header_back['get'] as $key => $value) $return.= "&$key=$value";
+    header($return);
+  }
+  else if (file_exists($filename)) header("Location:" . get_url('clean') . '?page='.$header_back);
 }
 
 // header("Location:http://" . $_SERVER[HTTP_HOST]);

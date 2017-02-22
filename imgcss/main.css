@@ -13,11 +13,12 @@ background-color: #F5F5F5;
 
 li { font-size: 16px; }
 input {width: 300px;}
-h1,h2,h3,h4,h5,h6 { color: #f55b50;}
-
-h1 {
-  font-size: 30px;
+h1,h2,h3,h4,h5,h6 {
+  color: #f55b50;
+  font-weight: 600;
 }
+
+h1 { font-size: 30px; }
 
 h2 {
   font-size: 25px;
@@ -139,6 +140,18 @@ textarea:focus {
   height: 100px;
   vertical-align: bottom;
 }
+
+
+
+.close_bgn {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.popup {
+
+}
+
+
 
 
 

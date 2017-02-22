@@ -17,7 +17,28 @@ $months_names = array(
 
 // echo '<h2>Styczeń 2017</h2>';
 // echo draw_calendar2(01,2017);
+?>
 
+<button class="ui labeled icon button">
+  <i class="plus icon"></i>
+  Dodaj wydarzenie
+</button>
+
+<form action="" method="post">
+  <div class="ui input">
+    <input type="text" class="calendar_txt" name="calendar_txt" placeholder="Opis" value="">
+  </div>
+  <div class="ui input">
+    <input type="text" class="calendar_ts flatpickr" name="calendar_ts" placeholder="Data" data-note="" value="">
+  </div>
+  <button type="send" class="ui labeled icon button">
+    <i class="plus icon"></i>
+    Dodaj wydarzenie
+  </button>
+</div>
+</form>
+
+<?php
 $m = date('m');
 $y = date('Y');
 for ($i=1; $i < 13 ; $i++) {
@@ -34,11 +55,3 @@ for ($i=1; $i < 13 ; $i++) {
 
 
  ?>
- 2017-01-08 00:55:50
- <form action="" method="post">
- <div class="ui input urladd">
-       <input type="text" class="calendar_txt" name="calendar_txt" placeholder="Tekst" value="">
-       <input type="text" class="calendar_ts" name="calendar_ts" placeholder="Data w timestamp najlepiej" data-note="" value="">
-       <button type="send" name="button"></button>
- </div>
-</form>

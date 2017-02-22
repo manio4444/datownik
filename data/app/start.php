@@ -8,13 +8,15 @@
 <form method="POST">
   MULTICONTENT<br>
   <textarea name="urladd" rows="5" cols="100"><?php echo isset($_GET['urladd']) ? $_GET['urladd'] : null; ?></textarea>
-  <button type="send" name="action" class="ui disabled button" value="zadanie">Zadanie</button>
-  <button type="send" name="action" class="ui disabled button" value="wydarzenie">Wydarzenie</button>
-  <button type="send" name="action" class="ui button" value="zakladka">Zakładka</button>
-  <button type="send" name="action" class="ui button" value="notatka">Notatka</button>
-  <button type="send" name="action" class="ui disabled button" value="dokument">Dokument</button>
-  <button type="send" name="action" class="ui disabled button" value="kontakt">Kontakt</button>
-  <button type="send" name="action" class="ui disabled button" value="kod/haslo">Kod/hasło</button>
+  <div class="ui buttons">
+    <button type="send" name="action" class="ui disabled button red" value="zadanie">Zadanie</button>
+    <button type="send" name="action" class="ui red button" value="wydarzenie">Wydarzenie</button>
+    <button type="send" name="action" class="ui button red" value="zakladka">Zakładka</button>
+    <button type="send" name="action" class="ui button yellow" value="notatka">Notatka</button>
+    <button type="send" name="action" class="ui disabled button red" value="dokument">Dokument</button>
+    <button type="send" name="action" class="ui disabled button red" value="kontakt">Kontakt</button>
+    <button type="send" name="action" class="ui disabled button red" value="kod/haslo">Kod/hasło</button>
+  </div>
 
   <br><br>
 

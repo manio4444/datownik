@@ -7,6 +7,14 @@ if (this.href == window.location.href) $(this).addClass("active");
 
 
 $('.dropdown').dropdown();
+$(".flatpickr").flatpickr({
+  enableTime:true,
+  locale: 'pl',
+  altInput: true,
+  altFormat: "j F Y, H:i",
+  time_24hr: true,
+});
+
 
 $('.checkbox_switcher').change(function() {
   var nodes = document.querySelectorAll('.reszta');
