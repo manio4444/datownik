@@ -26,7 +26,7 @@ $months_names = array(
 
 <form action="" method="post">
   <div class="ui input">
-    <input type="text" class="calendar_txt" name="calendar_txt" placeholder="Opis" value="">
+    <input type="text" class="calendar_txt" name="calendar_txt" placeholder="Opis" value="<?php echo $_GET['txt']; ?>">
   </div>
   <div class="ui input">
     <input type="text" class="calendar_ts flatpickr" name="calendar_ts" placeholder="Data" data-note="" value="">

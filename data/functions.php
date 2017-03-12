@@ -183,8 +183,16 @@ function load_plugins() {
 
 
 function if_is_this_image($path) {
-  if(@is_array(getimagesize($path))) return true;
-  else return false;
+  if (
+    stristr($path, '.jpg') ||
+    stristr($path, '.jpeg') ||
+    stristr($path, '.gif') ||
+    stristr($path, '.png') ||
+    stristr($path, '.svg')
+  ) {
+    if(@is_array(getimagesize($path))) return true;
+    else return false;
+  } else return false;
 }
 
 

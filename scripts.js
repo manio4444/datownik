@@ -7,6 +7,8 @@ if (this.href == window.location.href) $(this).addClass("active");
 
 
 $('.dropdown').dropdown();
+
+Flatpickr.l10ns.default.firstDayOfWeek = 1; // Monday
 $(".flatpickr").flatpickr({
   enableTime:true,
   locale: 'pl',
@@ -110,7 +112,7 @@ function ajaxBookmarkSend(this_bookmark, bookmark_delete) {
          this_bookmark.attr('data-note', data);
          console.log('Nowy wpis numer: '+data);
        } else if (data=='deleted') {
-         this_bookmark.parent().remove();
+         this_bookmark.parent().parent().remove();
        } else if (data=='edit') {
          console.log('Edytowano wpis numer: '+this_bookmark.attr('data-note'));
        } else console.log(data);
