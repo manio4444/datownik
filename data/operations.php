@@ -82,7 +82,7 @@ if(isset($_POST['action']) && $_POST['action']=="zakladka" && $_POST['urladd']) 
 }
 
 if(isset($_POST['bookmark_ajax'])) {
-  if (!$_POST['bookmark_id']) {
+  if (!$_POST['bookmark_id'] && $_POST['bookmark_href']) {
     $pdo_operation = $sql_pdo->prepare( 'INSERT INTO `bookmarks` (`href`) VALUES (:href)' );
     $pdo_operation->bindValue(':href', $_POST['bookmark_href'], PDO::PARAM_STR);
     $pdo_operation->execute();
@@ -92,10 +92,16 @@ if(isset($_POST['bookmark_ajax'])) {
     $pdo_operation->bindValue(':id', $_POST['bookmark_id'], PDO::PARAM_INT);
     $pdo_operation->execute();
     echo "deleted";
-  } elseif ($_POST['note_id']!=='waiting') {
+  } elseif ($_POST['bookmark_id'] && $_POST['bookmark_href']) {
     $pdo_operation = $sql_pdo->prepare( 'UPDATE `bookmarks` SET `href` = :href WHERE `id` = :id' );
     $pdo_operation->bindValue(':id', $_POST['bookmark_id'], PDO::PARAM_INT);
     $pdo_operation->bindValue(':href', $_POST['bookmark_href'], PDO::PARAM_STR);
+    $pdo_operation->execute();
+    echo "edit";
+  } elseif ($_POST['bookmark_id'] && $_POST['bookmark_title']) {
+    $pdo_operation = $sql_pdo->prepare( 'UPDATE `bookmarks` SET `title` = :title WHERE `id` = :id' );
+    $pdo_operation->bindValue(':id', $_POST['bookmark_id'], PDO::PARAM_INT);
+    $pdo_operation->bindValue(':title', $_POST['bookmark_title'], PDO::PARAM_STR);
     $pdo_operation->execute();
     echo "edit";
   }

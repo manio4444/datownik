@@ -1,6 +1,6 @@
 <form  method="post">
 
-<table>
+<!-- <table>
 <div class="ui input">
   <input type="text" name="urltitle" value="<?php echo title($_GET['urladd']); ?>" placeholder="Nazwa">
 </div>
@@ -26,28 +26,36 @@
 <input type="submit" class="ui button" value="Dodaj">
 
 </table>
-</form>
+</form> -->
 
 <section id="bookmarks">
+
   <div class="url_container">
     <a href="" target="_blank" class="image"></a>
-    <div class="inputs">
-      <input type="text" class="name" name="" placeholder="Opis zakładki jeszcze nie działa" value="">
-      <span class="tags">TU TAGI</span>
+      <input type="text" class="name" name="" placeholder="Najpierw podaj link" value="" disabled="">
+      <select class="ui search dropdown tags" multiple="multiple" disabled="">
+        <option value="">Dodaj tagi</option>
+        <option value="AL">śmieszne</option>
+        <option value="AK">html</option>
+        <option value="AZ">kotki</option>
+      </select>
       <input type="text" class="href" name="" placeholder="Wklej adres URL aby dodać nowy wpis" data-note="" value="">
-    </div>
   </div>
 
 <?php foreach ($sql_pdo->query('SELECT * FROM `bookmarks` ORDER BY `id` DESC') as $value) : ?>
 
-<div class="url_container">
+<div class="url_container" data-bookmark="<?php echo $value['id']; ?>">
   <a href="<?php echo $value['href']; ?>" target="_blank" class="image">
     <?php if (if_is_this_image($value['href'])) echo '<img src="' . $value['href'] . '" alt="">'; ?>
   </a>
-  <div class="ui input urladd">
-    <input type="text" class="name" name="" placeholder="Opis zakładki jeszcze nie działa" value="">
-    <input type="text" class="href" name="" placeholder="Adres URL" data-note="<?php echo $value['id']; ?>" value="<?php echo $value['href']; ?>">
-  </div>
+  <input type="text" class="name" name="" placeholder="Najpierw podaj link" value="<?php echo $value['title']; ?>">
+  <select class="ui search dropdown tags" multiple="multiple">
+    <option value="">Dodaj tagi</option>
+    <option value="AL">śmieszne</option>
+    <option value="AK">html</option>
+    <option value="AZ">kotki</option>
+  </select>
+  <input type="text" class="href" name="" placeholder="Adres URL" value="<?php echo $value['href']; ?>">
 </div>
 
 <?php endforeach; ?>

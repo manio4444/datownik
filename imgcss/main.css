@@ -118,66 +118,56 @@ textarea:focus {
 
 #bookmarks .url_container {
   margin-bottom: 20px;
-  /*border: 1px solid rgb(222, 222, 222);
-  border-radius: 4.5px;*/
+  padding-left: 100px;
   box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.25);
   background-color: white;
   display: flex;
-  flex-direction: row;
+  height: 100px;
+  flex-direction: column;
   align-items: stretch;
   /*flex-wrap: wrap;*/
+  position: relative;
 }
-
-
-#bookmarks .inputs {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  justify-content: space-between;
-}
-
-#bookmarks .inputs>input {
+#bookmarks input {
   width: auto;
   border: none;
 }
-
-#bookmarks .inputs .name {
+#bookmarks input:disabled, #bookmarks .tags.disabled {
+  background-color: rgb(235, 235, 228);
+  opacity: 1;
+}
+#bookmarks .name {
   border-bottom: 1px solid rgb(222, 222, 222);
   font-size: 18px;
   padding: 5px;
 }
-
-#bookmarks .inputs .tags {
+#bookmarks .tags {
+  box-sizing: border-box;
+  border-radius: 0;
+  border: 0;
   border-bottom: 1px solid rgb(222, 222, 222);
   padding: 5px;
   flex: 1;
 }
-
-#bookmarks .inputs .href {
-  /*border-bottom: 1px solid rgb(222, 222, 222);*/
+#bookmarks .href {
   border-top: 1px solid white;
   padding: 2px 5px;
+  color: #7d7d7d;
+}
+#bookmarks .href:focus {
   color: #0057ff;
 }
-
-#bookmarks .inputs ::placeholder {
+#bookmarks ::placeholder {
   color: rgb(199, 199, 199);
 }
-
-#bookmarks .urladd input {
-  vertical-align: bottom;
-  display: block;
-  margin-top: 5px;
-}
-
 #bookmarks .image {
   width: 100px;
   height: 100px;
   display: inline-block;
   background-color: rgb(224, 225, 226);
-  flex: 0 0 100px;
+  position: absolute;
+  left: 0;
 }
-
 #bookmarks img {
   display: inline-block;
   background-color: black;
@@ -185,7 +175,10 @@ textarea:focus {
   height: 100%;
   vertical-align: bottom;
 }
-
+#bookmarks .error input, #bookmarks .error .dropdown {
+  background-color: rgb(255, 51, 51);
+  border-color: #E52E2E;
+}
 
 
 .close_bgn {
