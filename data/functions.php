@@ -179,7 +179,18 @@ function load_plugins() {
   }
 }
 
-
+function get_title($url) {
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_HEADER, 0);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_URL, $url);
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+  $html = curl_exec($ch);
+  curl_close($ch);
+  preg_match('/<title>(.+)<\/title>/',$html,$matches);
+  $title = $matches[1];
+  return $title.'';
+}
 
 
 function if_is_this_image($path) {

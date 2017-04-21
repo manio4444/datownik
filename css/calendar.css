@@ -9,6 +9,7 @@ td.calendar-day, td.calendar-day-np {
   height:107px;
   position:relative;
   width:120px;
+  max-width: 120px;
   padding:5px;
   border-bottom:1px solid #999;
   border-right:1px solid #999;
@@ -34,6 +35,7 @@ td.calendar-day p.day-event {
   margin-bottom: 3px;
   font-size: 11px;
   font-weight: normal;
+  overflow: hidden;
 }
 td.calendar-day p.day-event:last-of-type { margin-bottom: 0; }
 td.calendar-day p.day-event a { display: block; color: inherit; }
