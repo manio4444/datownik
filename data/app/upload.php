@@ -4,3 +4,9 @@
     <br>
     <input type="submit" value="Upload Image" name="submit">
 </form>
+
+<div class="filelist">
+  <?php foreach (scandir('upload') as $key => $value) {
+    echo "<a href='upload/$value'>$value</a><br>";
+  } ?>
+</div>
