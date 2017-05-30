@@ -25,62 +25,11 @@ h2 {
   margin-bottom: 10px;
 }
 
-header, main { width: 100%; box-sizing: border-box; }
-
-header { background-color: rgba(51,51,51,0.95); color: #a2b3bf; font-size:1.25em; }
-header {
--webkit-box-shadow: 0px -20px 30px 18px rgba(0,0,0,0.75);
--moz-box-shadow: 0px -20px 30px 18px rgba(0,0,0,0.75);
-box-shadow: 0px -20px 30px 18px rgba(0,0,0,0.75);
-}
-header nav {max-width: 1200px; margin: 0 auto; position: relative; min-height: 80px; }
-header ul { font-size: 0;   }
-header ul li { display: inline-block; margin: 0 20px;  }
-header ul li a {
-  height: 80px;
-  box-sizing: border-box;
-  font-size:1.25em;
-  padding: 24px 5px 0;
-  text-decoration: none;
-  color: inherit;
-  display: block;
-  border-bottom: 5px solid transparent;
-}
-header ul li:hover a, header ul li .active { color: #ffffff; border-color: white; }
+main { width: 100%; box-sizing: border-box; }
 
 main section { max-width: 1200px; box-sizing: border-box; padding: 30px 10px; margin: 0 auto; }
 
-.hamburger {
-  display: none;
-  width: 45px;
-  height: 34px;
-  position: absolute;
-  right: 20px;
-  top: 23px;
-  /*transform: translateY(-50%);*/
-  border-style: solid none;
-  border-width: 6px 0;
-  border-color: white;
-  background-color: transparent;
-  padding: 0;
-  opacity: 0.7;
-  border-radius: 6px;
-  outline: 0;
-}
 
-.hamburger::after {
-  content: '';
-  height: 6px;
-  display: block;
-  position: relative;
-  background-color: white;
-}
-
-.hamburger:hover {
-  opacity: 1;
-}
-
-.hamburger:hover {}
 
 .ui.selection.dropdown { min-height: 0; }
 
@@ -207,7 +156,6 @@ textarea:focus {
 
 @media (max-width: 1023px) {
 
-header nav ul li { margin: 0 10px; }
 
 } /* media end*/
 
@@ -215,41 +163,11 @@ header nav ul li { margin: 0 10px; }
 
 main section { padding: 10px 0px; margin: 0 auto; }
 
-.hamburger {  display: block; }
-
-header nav ul { display: none; }
-header nav ul::before { content: ''; display: block; float: right; width: 80px; height: 70px; }
-
-.hamburger:hover + ul, ul:hover {  display: block; }
 
 } /* media end*/
 
 @media (max-width: 640px) {
 
-.hamburger {
-  top: 10px;
-  width: 42px;
-  height: 27px;
-  position: absolute;
-  right: 20px;
-  border-style: solid none;
-  border-width: 5px 0;
-  border-color: white;
-  background-color: transparent;
-  padding: 0;
-  opacity: 0.7;
-  border-radius: 6px;
-}
 
-.hamburger::after {
-    content: '';
-    height: 5px;
-    display: block;
-    position: relative;
-    background-color: white;
-}
-
-header nav { min-height: 50px; }
-header nav ul li a { padding: 9px 5px 0; height: 50px; }
 
 } /* media end*/

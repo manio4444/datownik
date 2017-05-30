@@ -35,7 +35,7 @@ td.calendar-day p.day-event {
   margin-bottom: 3px;
   font-size: 11px;
   font-weight: normal;
-  overflow: hidden;
+  /*overflow: hidden;*/
 }
 td.calendar-day p.day-event:last-of-type { margin-bottom: 0; }
 td.calendar-day p.day-event a { display: block; color: inherit; }

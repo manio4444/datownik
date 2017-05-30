@@ -17,6 +17,7 @@ $kontroller_tab['kontakty'] = 'contactsvcf';
 $kontroller_tab['ustawienia'] = 'settings';
 $kontroller_tab['pliki'] = 'upload';
 $kontroller_tab['notatki'] = 'notepad';
+$kontroller_tab['do-zrobienia'] = 'tasks';
 
 
 $list_ini_files = array(

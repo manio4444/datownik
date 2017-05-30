@@ -6,9 +6,7 @@
 <link href='css/reset.css' rel='stylesheet' type='text/css'>
 <link rel="icon" type="image/png" href="favicon.ico" >
 <?php load_plugins(); ?>
-<link href='css/main.css?v=<?php echo time(); ?>' rel='stylesheet' type='text/css'>
-<link href='css/calendar.css' rel='stylesheet' type='text/css'>
-<link href='css/contactsvcf.css' rel='stylesheet' type='text/css'>
+<link href='css/import.css?v=<?php echo time(); ?>' rel='stylesheet' type='text/css'>
 
 <link href="https://fonts.googleapis.com/css?family=Kalam:300,400,700&amp;subset=latin-ext" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,300,400,500,600,700&amp;subset=latin-ext" rel="stylesheet">
