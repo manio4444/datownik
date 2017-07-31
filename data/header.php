@@ -14,4 +14,3 @@
   </nav>
 </header>
 <main>
-<section>

@@ -27,7 +27,7 @@ h2 {
 
 main { width: 100%; box-sizing: border-box; }
 
-main section { max-width: 1200px; box-sizing: border-box; padding: 30px 10px; margin: 0 auto; }
+main>section { max-width: 1200px; box-sizing: border-box; padding: 30px 10px; margin: 0 auto; }
 
 
 

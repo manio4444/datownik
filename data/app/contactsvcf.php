@@ -1,3 +1,4 @@
+<section>
 <!-- Rounded switch -->
 pokaż źródło
 <label class="switch">
@@ -70,3 +71,4 @@ foreach (explode(PHP_EOL, file_get_contents('contacts.vcf')) as $key => $value) 
 }
 
 ?>
+</section>

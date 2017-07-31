@@ -219,9 +219,16 @@ input.change(function() {
 });
 
 
+var tasks = document.querySelectorAll('#todo .task');
 
-
-
+if (tasks) {
+  var counter = setInterval(timer, 1000); //1000 will  run it every 1 second
+  function timer() {
+    tasks.forEach(function(t){
+      // t.querySelector('');
+    });
+  }
+}
 
 
 
