@@ -5,10 +5,10 @@
 <br><br>
 
 
-<form method="POST">
-  MULTICONTENT<br>
+<form method="POST" class="start_form">
+  <span class="start_form_title">MULTICONTENT</span>
   <textarea name="urladd" rows="5" cols="100"><?php echo isset($_GET['urladd']) ? $_GET['urladd'] : null; ?></textarea>
-  <div class="ui buttons">
+  <div class="ui vertical buttons">
     <button type="send" name="action" class="ui disabled button red" value="zadanie">Zadanie</button>
     <button type="send" name="action" class="ui red button" value="wydarzenie">Wydarzenie</button>
     <button type="send" name="action" class="ui button red" value="zakladka">Zakładka</button>

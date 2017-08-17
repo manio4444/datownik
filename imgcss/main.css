@@ -48,7 +48,12 @@ header ul li a {
 }
 header ul li:hover a, header ul li .active { color: #ffffff; border-color: white; }
 
-main section { max-width: 1200px; box-sizing: border-box; padding: 30px 10px; margin: 0 auto; }
+main section {
+  max-width: 1200px;
+  box-sizing: border-box;
+  padding: 30px 10px;
+  margin: 0 auto;
+}
 
 .hamburger {
   display: none;
@@ -101,7 +106,6 @@ textarea {
   resize: vertical;
   display: block;
 }
-
 textarea:focus {
   color: rgba(0,0,0,.95);
   border-color: #85B7D9;
@@ -109,6 +113,25 @@ textarea:focus {
   background: #FFF;
   box-shadow: 0 0 0 0 rgba(34,36,38,.35) inset;
   -webkit-appearance: none;
+}
+
+pre {
+  background-color: #1D1F20;
+  color: #ddca7e;
+  display: flex;
+  flex-direction: column;
+  white-space: normal;
+  padding: 10px;
+}
+pre:empty {display: none;}
+
+#main_page .start_form {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#main_page .start_form_title {
+
 }
 
 #main_page [name="urladd"] {
@@ -213,7 +236,7 @@ header nav ul li { margin: 0 10px; }
 
 @media (max-width: 767px) {
 
-main section { padding: 10px 0px; margin: 0 auto; }
+main section { padding: 20px 5px; }
 
 .hamburger {  display: block; }
 
