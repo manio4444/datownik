@@ -1,3 +1,4 @@
+<section id="bookmarks">
 <form  method="post">
 
 <!-- <table>
@@ -28,7 +29,6 @@
 </table>
 </form> -->
 
-<section id="bookmarks">
 
   <div class="url_container">
     <a href="" target="_blank" class="image"></a>
@@ -59,4 +59,5 @@
 </div>
 
 <?php endforeach; ?>
+</form>
 </section>

@@ -1,3 +1,4 @@
+<section>
 <?php
 
 $months_names = array(
@@ -55,3 +56,4 @@ for ($i=1; $i < 13 ; $i++) {
 
 
  ?>
+</section>

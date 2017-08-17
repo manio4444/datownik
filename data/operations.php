@@ -75,18 +75,22 @@ if(isset($_POST['note_ajax'])) {
 
 
 if(isset($_POST['action']) && $_POST['action']=="zakladka" && $_POST['urladd']) {
-  $pdo_operation = $sql_pdo->prepare( 'INSERT INTO `bookmarks` (`href`) VALUES (:href)' );
+    $bookmark_title = get_title($_POST['urladd']);
+    $pdo_operation = $sql_pdo->prepare( 'INSERT INTO `bookmarks` (`href`, `title`) VALUES (:href, :title)' );
     $pdo_operation->bindValue(':href', $_POST['urladd'], PDO::PARAM_STR);
+    $pdo_operation->bindValue(':title', $bookmark_title, PDO::PARAM_STR);
     $pdo_operation->execute();
     $header_back = 'zakladki'; //robi przekierowanie headerem po skończeniu operacji
 }
 
 if(isset($_POST['bookmark_ajax'])) {
   if (!$_POST['bookmark_id'] && $_POST['bookmark_href']) {
-    $pdo_operation = $sql_pdo->prepare( 'INSERT INTO `bookmarks` (`href`) VALUES (:href)' );
+    $bookmark_title = get_title($_POST['bookmark_href']);
+    $pdo_operation = $sql_pdo->prepare( 'INSERT INTO `bookmarks` (`href`, `title`) VALUES (:href, :title)' );
     $pdo_operation->bindValue(':href', $_POST['bookmark_href'], PDO::PARAM_STR);
+    $pdo_operation->bindValue(':title', $bookmark_title, PDO::PARAM_STR);
     $pdo_operation->execute();
-    echo $sql_pdo->lastInsertId();
+    echo json_encode(array('id' => $sql_pdo->lastInsertId(), 'title' => $bookmark_title));
   } elseif (!$_POST['bookmark_href'] && $_POST['bookmark_delete']) {
     $pdo_operation = $sql_pdo->prepare( 'DELETE FROM `bookmarks` WHERE `id` = :id' );
     $pdo_operation->bindValue(':id', $_POST['bookmark_id'], PDO::PARAM_INT);
