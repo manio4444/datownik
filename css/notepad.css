@@ -54,6 +54,7 @@
   box-sizing: border-box;
   padding: 20px;
   font-family: 'Kalam', cursive;
+  font-weight: normal;
   font-size:20px;
   overflow: hidden;
   text-align: justify;

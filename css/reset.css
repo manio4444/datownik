@@ -43,3 +43,8 @@ caption, th {
 q:after, q:before {
   content: "";
 }
+
+input, textarea {
+  font: inherit;
+  color: inherit;
+}

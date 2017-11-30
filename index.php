@@ -32,17 +32,19 @@ if (@$_COOKIE['admin']!=1) {
   if (isset($_GET['page'])) {
     $appFilename = $config['app_path_start'] . "/" . $kontroller_tab[$_GET['page']]['appFileName'];
     $classFilename = $config['class_path_start'] . "/" . $kontroller_tab[$_GET['page']]['classFileName'];
-    
-    if (isset($kontroller_tab[$_GET['page']]['classFileName']) && file_exists($classFilename)) {
-      include($classFilename);
-    } else {
-      echo "nie ma pliku $classFilename <br>";
+
+    if (!empty($kontroller_tab[$_GET['page']]['classFileName'])) {
+      if (file_exists($classFilename)) {
+        include($classFilename);
+      } else {
+        echo "<pre>nie ma pliku $classFilename</pre>";
+      }
     }
 
     if (file_exists($appFilename)) {
       include($appFilename);
     } else {
-      echo "nie ma pliku $appFilename <br>";
+      echo "<pre>nie ma pliku $appFilename</pre>";
     }
   /*
     foreach (array_diff(scandir('data/app'), array('..', '.')) as $key => $value) {
