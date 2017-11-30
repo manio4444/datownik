@@ -7,17 +7,47 @@ $config['plugins_folder'] = "plugins";
 $config['ini_folder'] = "data/config";
 
 $config['app_path_start'] = 'data/app';
-$config['app_path_end'] = '.php';
+$config['class_path_start'] = 'data/class';
 
 
-//identyfikator tablicy to nazwa url, wartość to nazwa pliku BEZ KOŃCÓWKI PHP.
-$kontroller_tab['kalendarz'] = 'kalendarz';
-$kontroller_tab['zakladki'] = 'urladd';
-$kontroller_tab['kontakty'] = 'contactsvcf';
-$kontroller_tab['ustawienia'] = 'settings';
-$kontroller_tab['pliki'] = 'upload';
-$kontroller_tab['notatki'] = 'notepad';
-$kontroller_tab['do-zrobienia'] = 'tasks';
+/*
+* 'GET name'
+*
+*
+*
+*
+*
+*/
+$kontroller_tab = array(
+  'kalendarz' => array(
+    'appFileName' => 'kalendarz.php',
+    'classFileName' => '',
+  ),
+  'zakladki' => array(
+    'appFileName' => 'urladd.php',
+    'classFileName' => 'bookmarks.php',
+  ),
+  'kontakty' => array(
+    'appFileName' => 'contactsvcf.php',
+    'classFileName' => '',
+  ),
+  'ustawienia' => array(
+    'appFileName' => 'settings.php',
+    'classFileName' => '',
+  ),
+  'pliki' => array(
+    'appFileName' => 'upload.php',
+    'classFileName' => '',
+  ),
+  'notatki' => array(
+    'appFileName' => 'notepad.php',
+    'classFileName' => '',
+  ),
+  'do-zrobienia' => array(
+    'appFileName' => 'tasks.php',
+    'classFileName' => 'tasks.php',
+  ),
+);
 
 
 $list_ini_files = array(

@@ -30,10 +30,20 @@ if (@$_COOKIE['admin']!=1) {
   include('data/header.php');
   // MINI VIEV MODULE
   if (isset($_GET['page'])) {
-    $filename = $config['app_path_start'] . "/" . $kontroller_tab[$_GET['page']] . $config['app_path_end'];
-    if (file_exists($filename)) include($filename);
-    else echo "nie ma pliku $filename <br>";
+    $appFilename = $config['app_path_start'] . "/" . $kontroller_tab[$_GET['page']]['appFileName'];
+    $classFilename = $config['class_path_start'] . "/" . $kontroller_tab[$_GET['page']]['classFileName'];
+    
+    if (isset($kontroller_tab[$_GET['page']]['classFileName']) && file_exists($classFilename)) {
+      include($classFilename);
+    } else {
+      echo "nie ma pliku $classFilename <br>";
+    }
 
+    if (file_exists($appFilename)) {
+      include($appFilename);
+    } else {
+      echo "nie ma pliku $appFilename <br>";
+    }
   /*
     foreach (array_diff(scandir('data/app'), array('..', '.')) as $key => $value) {
       if(is_dir($value)) echo "<img src='../icons/folder.gif'>&nbsp;";
