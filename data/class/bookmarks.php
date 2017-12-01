@@ -15,10 +15,14 @@ class bookmarks {
 
     if (isset($data['id'])) {
       $data_bookmark = ' data-bookmark="' . $data['id'] . '"';
+      $disabled = ''; // TODO because shows error if not exists
       $href_placeholder = 'Adres URL';
     } else {
+      $data_bookmark = ''; // TODO because shows error if not exists
       $disabled = '  disabled';
       $href_placeholder = 'Wklej adres URL aby dodać nowy wpis';
+      $data['href'] = ''; // TODO because shows error if not exists
+      $data['title'] = ''; // TODO because shows error if not exists
     }
     return '
     <div class="url_container"' . $data_bookmark . '>
