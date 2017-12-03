@@ -22,10 +22,6 @@
   justify-content: center;
 }
 
-#statusbar-40 {
-  height: 40px;
-}
-
 #title {
   font-size: 18px;
   font-family: 'Work Sans', Arial, sans-serif;
@@ -112,11 +108,3 @@
 .row_btn #btn_7::after { content: 'pqrs'; }
 .row_btn #btn_8::after { content: 'tuv'; }
 .row_btn #btn_9::after { content: 'wxyz'; }
-
-
-#loading-div {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  display: none;
-}
