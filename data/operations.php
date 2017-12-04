@@ -73,7 +73,6 @@ if(isset($_POST['note_ajax'])) {
   }
 }
 
-
 if(isset($_POST['action']) && $_POST['action']=="zakladka" && $_POST['urladd']) {
     $bookmark_title = get_title($_POST['urladd']);
     $pdo_operation = $sql_pdo->prepare( 'INSERT INTO `bookmarks` (`href`, `title`) VALUES (:href, :title)' );
@@ -111,6 +110,25 @@ if(isset($_POST['bookmark_ajax'])) {
   }
 }
 
+if(isset($_POST['lockscreen_ajax'])) {
+  if ($_POST['lockscreen_code']) {
+    require FOLDER_CLASSES . '/' . 'lockscreen.php';
+    $lockscreen = new lockscreen();
+    echo $lockscreen->ajax_try_pin_code($_POST['lockscreen_code']);
+  } else {
+    echo "No code";
+  }
+}
+
+if(isset($_POST['lockscreen_code'])) {
+  require FOLDER_CLASSES . '/' . 'lockscreen.php';
+  $lockscreen = new lockscreen();
+  if ($lockscreen->try_pin_code($_POST['lockscreen_code']) ===true) {
+    setcookie( "admin", 1, strtotime( '+30 days' ) );
+    $header_back = true;
+  }
+
+}
 
 if(isset($_POST['action']) && $_POST['action']=="wydarzenie" && $_POST['urladd']) {
   $header_back['app'] = 'kalendarz';
@@ -125,8 +143,8 @@ if ($header_back===true) header("Location:" . get_url());
 else if (!empty($header_back)) {
 
   $filename = (is_array($header_back))
-    ? $config['app_path_start'] . "/" . $kontroller_tab[$header_back['app']] . $config['app_path_end']
-    : $config['app_path_start'] . "/" . $kontroller_tab[$header_back] . $config['app_path_end'];
+    ? FOLDER_APPS . "/" . $kontroller_tab[$header_back['app']] . $config['app_path_end']
+    : FOLDER_APPS . "/" . $kontroller_tab[$header_back] . $config['app_path_end'];
 
   if (is_array($header_back) && file_exists($filename)) {
     $return = "Location:" . get_url('clean') . '?page='.$header_back['app'];

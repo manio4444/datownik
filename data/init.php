@@ -1,13 +1,11 @@
 <?php
-// echo "<pre>";
-// var_dump( read_folder($config['plugins_folder']) );
-// echo "</pre>";
 
-$config['plugins_folder'] = "plugins";
 $config['ini_folder'] = "data/config";
 
-$config['app_path_start'] = 'data/app';
-$config['class_path_start'] = 'data/class';
+define("FOLDER_PLUGINS", "plugins");
+define("FOLDER_INI", "data/config");
+define("FOLDER_CLASSES", "data/class");
+define("FOLDER_APPS", "data/app");
 
 
 /*
@@ -53,7 +51,8 @@ $kontroller_tab = array(
 $list_ini_files = array(
   'plugins',
   'config',
-  'db'
+  'db',
+  'lockscreen',
 );
 
 foreach ($list_ini_files as $value) {
@@ -61,6 +60,6 @@ foreach ($list_ini_files as $value) {
 	if (file_exists($ini_filename)) $ini[$value] = parse_ini_file($config['ini_folder'] . "/$value.ini");
 	else $error[] = "Problem z załadowaniem pliku konfiguracyjnego:  /$value.ini";
 }
-// echo "<pre>";var_dump($ini);
+// echo "<pre>";var_dump($ini);die();
 
  ?>

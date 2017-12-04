@@ -3,6 +3,7 @@ var lockscreen = {
   buttons: $('#lockscreen .row_btn button'),
   input: $('#lockscreen #code_input'),
   dotsContainer: $('#lockscreen #row_input'), //konterner kropek
+  lockscreenForm: $('#lockscreen #lockscreen_form'),
   clicksNumber: 0,
 
   clickButton: function (button) {
@@ -13,12 +14,7 @@ var lockscreen = {
     lockscreen.fillDot(lockscreen.clicksNumber);
 
       if (lockscreen.clicksNumber===4) {
-        if (lockscreen.input.val()==1712) {
-          window.location.href = "?code=1234";
-        } else {
-          this.resetLockscreen();
-          // location.reload();
-        }
+        lockscreen.tryLogin();
       }
 
   },
@@ -40,6 +36,30 @@ var lockscreen = {
     }, 1000);
 
 },
+
+  tryLogin: function () {
+
+    if (lockscreen.input.val()==1712) {
+      lockscreen.lockscreenForm.submit();
+
+    } else {
+      this.resetLockscreen();
+    }
+
+    $.ajax({
+      type: 'post',
+      dataType : 'text',
+      data: {
+        'lockscreen_ajax': true,
+        'lockscreen_code': lockscreen.input.val(),
+      },
+      success: function(data){
+      },
+      error: function(data){
+      },
+    });
+
+  },
 
   init: function () {
 

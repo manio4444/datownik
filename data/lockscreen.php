@@ -1,3 +1,13 @@
+<?php
+
+// require FOLDER_CLASSES . '/' . 'lockscreen.php';
+// $lockscreen = new lockscreen();
+
+/*
+* Acually is there need for implement lockscreen class?
+*/
+
+?>
 <section id="lockscreen">
   <div id="main-div">
     <div id="title">Enter Passcode</div>
@@ -26,8 +36,8 @@
       <button id="btn_0">0</button>
     </div>
   </div>
-  <form method="post">
-    <input type="hidden" name="code_input" value="" id="code_input">
+  <form method="post" id="lockscreen_form">
+    <input type="hidden" name="lockscreen_code" value="" id="code_input">
   </form>
 </section>
 

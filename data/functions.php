@@ -1,9 +1,5 @@
 <?php
 
-// $config['plugins_folder'] = "data/plugins";
-// $config['ini_folder'] = "data/config";
-
-
 function config($temp) {
   global $config;
   return $config[$temp];
@@ -155,7 +151,7 @@ function read_folder_tree($folder) {
 
 function ini_zmiana($ini, $co, $value) {
 	global $config;
-  $ini_file = $config['ini_folder'] . "/$ini.ini";
+  $ini_file = FOLDER_INI . "/$ini.ini";
   $ini_tab = parse_ini_file($ini_file);
 	$ini_tab[$co] = $value;
 	foreach ($ini_tab as $temp=>$temp2) {
@@ -170,7 +166,7 @@ function load_plugins() {
   global $config;
   foreach ($ini['plugins'] as $key => $value) {
     if ($value == 'tak') {
-      $full_path = $config['plugins_folder'] . $key;
+      $full_path = FOLDER_PLUGINS . $key;
       $pathinfo = pathinfo($full_path);
       if ($pathinfo['extension']=='css') echo "<link href='$full_path' rel='stylesheet' type='text/css'>" . PHP_EOL;
       else if ($pathinfo['extension']=='js') echo "<script src='$full_path'></script>" . PHP_EOL;

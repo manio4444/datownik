@@ -5,10 +5,7 @@ if (!include("data/functions.php")) { echo "<p>[!] Błąd krytyczny systemu - ni
 if (!include("data/db.php")) { echo "<p>[!] Błąd krytyczny systemu - nie można zaimplementować pliku z połączeniem SQL.</p><p>[!] die();</p>"; die();  } //pobiera funkcje
 
 // setcookie( "admin", 1, strtotime( '+30 days' ) );
-if (isset($_GET['code']) && $_GET['code']==1234) {
-  setcookie( "admin", 1, strtotime( '+30 days' ) );
-  header("Location: " . get_url('clean'));
-}
+
 
 
 
@@ -30,8 +27,8 @@ if (@$_COOKIE['admin']!=1) {
   include('data/header.php');
   // MINI VIEV MODULE
   if (isset($_GET['page'])) {
-    $appFilename = $config['app_path_start'] . "/" . $kontroller_tab[$_GET['page']]['appFileName'];
-    $classFilename = $config['class_path_start'] . "/" . $kontroller_tab[$_GET['page']]['classFileName'];
+    $appFilename = FOLDER_APPS . "/" . $kontroller_tab[$_GET['page']]['appFileName'];
+    $classFilename = FOLDER_CLASSES . "/" . $kontroller_tab[$_GET['page']]['classFileName'];
 
     if (!empty($kontroller_tab[$_GET['page']]['classFileName'])) {
       if (file_exists($classFilename)) {

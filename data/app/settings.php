@@ -1,7 +1,7 @@
 <section id="settings_page">
 <?php
 mcrypt_encrypt();
-foreach (read_folder($config['plugins_folder']) as $value) {
+foreach (read_folder(FOLDER_PLUGINS) as $value) {
   $read_folder[$value[0] . $value[1]] = '';   //tworzy tablice o id takim jak folder+nazwa pliku
 }
 
@@ -13,7 +13,7 @@ $read_folder = array_merge($read_folder, $ini['plugins']); //łączy tablice tak
 // echo "<br><br><br><br>";
 foreach ($read_folder as $key => $value) {
   $plugins_return[$key]['permission'] = $value;
-  $plugins_return[$key]['exists'] = (file_exists($config['plugins_folder'] . "$key")) ? true : false;
+  $plugins_return[$key]['exists'] = (file_exists(FOLDER_PLUGINS . "$key")) ? true : false;
 }
 
 //echo "<pre>";var_dump($plugins_return);echo "</pre>";
@@ -33,7 +33,7 @@ echo '
   <tbody>
 ';
 foreach ($plugins_return as $key => $value) {
-  // $value[0] = ( $value[0] == $config['plugins_folder']) ? '/' : str_replace($config['plugins_folder'], '', $value[0]);
+  // $value[0] = ( $value[0] == FOLDER_PLUGINS) ? '/' : str_replace(FOLDER_PLUGINS, '', $value[0]);
 
   echo "<tr>";
   echo "<td><i class='file outline icon'></i>$key</td>";
