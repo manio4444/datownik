@@ -11,9 +11,10 @@ header {
   width: 320px;
   z-index: 1;
   color: #ffffff;
-  /*font-family: 'Arimo', Arial, sans-serif;*/
   font-weight: 300;
   font-size: 10px;
+  overflow: hidden;
+  transition: transform .2s ease;
 }
 
 header>nav {
@@ -22,23 +23,33 @@ header>nav {
   align-items: center;
   height: 100%;
   width: 100%;
-  overflow: hidden;
+  overflow-y: scroll;
+  /* for put scrollbar on left - for FF && IE */
+  direction: rtl;
+}
+
+header>nav::-webkit-scrollbar {
+  width: 10px;
+}
+
+header>nav::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+header>nav::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  -webkit-box-shadow: inset 0 0 2px 0 rgba(255,255,255,1);
+  border-radius: 2px;
 }
 
 header>nav>ul {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  overflow-y: scroll;
-  padding-right: -17px;
-  direction: rtl;
+  direction: ltr;
 }
 
 header>nav>ul>li {
-  direction: ltr;
   font-size: 16px;
   margin: 20px;
 }
@@ -90,7 +101,17 @@ header ul li .active {
 
 .hamburger:hover {}
 
+/* BEFORE OPENING STYLES */
 
+body:not(.nav_open) header {
+  transform: translateX(-100%);
+}
+
+/* AFTER OPENING STYLES */
+
+body.nav_open main {
+  filter: blur(4px);
+}
 
 @media (max-width: 1023px) {
 

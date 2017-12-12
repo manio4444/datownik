@@ -9,8 +9,8 @@
 
 ?>
 <section id="lockscreen">
-  <div id="main-div">
-    <div id="title">Enter Passcode</div>
+  <div class="lockscreen_container">
+    <div class="lockscreen_title">Enter Passcode</div>
     <div id="row_input">
       <span data-input="1"></span>
       <span data-input="2"></span>

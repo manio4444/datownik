@@ -6,6 +6,10 @@ if (this.href == window.location.href) $(this).addClass("active");
 });
 
 
+$("nav .hamburger").click(function() {
+  $('body').toggleClass("nav_open");
+});
+
 $('.dropdown').dropdown();
 
 Flatpickr.l10ns.default.firstDayOfWeek = 1; // Monday
