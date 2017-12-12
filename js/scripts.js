@@ -6,7 +6,7 @@ if (this.href == window.location.href) $(this).addClass("active");
 });
 
 
-$("nav .hamburger").click(function() {
+$(".hamburger, .hamburger_close").click(function() {
   $('body').toggleClass("nav_open");
 });
 
