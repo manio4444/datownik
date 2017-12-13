@@ -10,6 +10,15 @@ $(".hamburger, .hamburger_close").click(function() {
   $('body').toggleClass("nav_open");
 });
 
+// $(document).on('click', '', function(event) {
+//   var target = $(event.target);
+//   // console.log(target);
+//   if (!target.parents('header').length && $('body').hasClass("nav_open")) {
+//     console.log('klik poza');
+//     $('body').toggleClass("nav_open");
+//   }
+// });
+
 $('.dropdown').dropdown();
 
 Flatpickr.l10ns.default.firstDayOfWeek = 1; // Monday
