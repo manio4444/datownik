@@ -34,7 +34,7 @@ main { width: 100%; box-sizing: border-box; }
 main section {
   max-width: 1200px;
   box-sizing: border-box;
-  padding: 30px 10px;
+  padding: 60px 10px;
   margin: 0 auto;
 }
 
@@ -203,7 +203,7 @@ pre:empty {display: none;}
 
 @media (max-width: 767px) {
 
-main section { padding: 20px 5px; }
+main section { padding: 60px 5px; }
 
 
 } /* media end*/
