@@ -9,40 +9,42 @@ define("FOLDER_APPS", "data/app");
 
 
 /*
-* 'GET name'
-*
-*
-*
-*
+* Table of views (took form url) corresponding to them controllers filenames
 *
 */
+
+
 $kontroller_tab = array(
   'kalendarz' => array(
-    'appFileName' => 'kalendarz.php',
+    'viewFileName' => 'kalendarz.php',
     'classFileName' => '',
   ),
   'zakladki' => array(
-    'appFileName' => 'urladd.php',
+    'viewFileName' => 'urladd.php',
     'classFileName' => 'bookmarks.php',
   ),
   'kontakty' => array(
-    'appFileName' => 'contactsvcf.php',
+    'viewFileName' => 'contactsvcf.php',
     'classFileName' => '',
   ),
   'ustawienia' => array(
-    'appFileName' => 'settings.php',
+    'viewFileName' => 'settings.php',
     'classFileName' => '',
   ),
   'pliki' => array(
-    'appFileName' => 'upload.php',
+    'viewFileName' => 'upload.php',
     'classFileName' => '',
   ),
   'notatki' => array(
-    'appFileName' => 'notepad.php',
+    'viewFileName' => 'notepad.php',
     'classFileName' => '',
   ),
   'do-zrobienia' => array(
-    'appFileName' => 'tasks.php',
+    'viewFileName' => 'tasks.php',
+    'classFileName' => 'tasks.php',
+  ),
+  'dokumenty' => array(
+    'viewFileName' => 'tasks.php',
     'classFileName' => 'tasks.php',
   ),
 );
