@@ -44,8 +44,8 @@ $kontroller_tab = array(
     'classFileName' => 'tasks.php',
   ),
   'dokumenty' => array(
-    'viewFileName' => 'tasks.php',
-    'classFileName' => 'tasks.php',
+    'viewFileName' => 'docs.php',
+    'classFileName' => 'docs.php',
   ),
 );
 

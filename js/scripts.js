@@ -47,6 +47,10 @@ $('.checkbox_switcher').change(function() {
 
 $.fn.outerHTML = function() {  return (this[0]) ? this[0].outerHTML : '';  };
 
+tinymce.init({
+  selector: 'textarea.tinymce'
+});
+
 function ajax_notes_send(this_note, note_delete) {
   $.ajax({
     type: 'post',
