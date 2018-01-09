@@ -3,6 +3,8 @@
 if (!include("data/init.php")) { echo "<p>[!] Błąd krytyczny systemu - nie można zaimplementować pliku inicjującego.</p><p>[!] die();</p>"; die();  } //pobiera funkcje
 if (!include("data/functions.php")) { echo "<p>[!] Błąd krytyczny systemu - nie można zaimplementować pliku z funkcjami.</p><p>[!] die();</p>"; die();  } //pobiera funkcje
 if (!include("data/db.php")) { echo "<p>[!] Błąd krytyczny systemu - nie można zaimplementować pliku z połączeniem SQL.</p><p>[!] die();</p>"; die();  } //pobiera funkcje
+if (!include('data/core/router.php')) { echo "<p>[!] Błąd krytyczny systemu - nie można zaimplementować pliku z routingiem.</p><p>[!] die();</p>"; die();  } //pobiera funkcje
+
 
 // setcookie( "admin", 1, strtotime( '+30 days' ) );
 
@@ -26,17 +28,19 @@ if (@$_COOKIE['admin']!=1) {
 
   if (isset($_GET['page'])) {
     $viewName = $_GET['page'];
-    if (!array_key_exists($viewName, $kontroller_tab)) {
+    if (!Router::isViewExists($viewName)) {
       echo "<pre>nie ma widoku o nazwie " . $viewName . "</pre>";
       include($defaultView);
     } else {
-      $viewFileName = FOLDER_APPS . "/" . $kontroller_tab[$viewName]['viewFileName'];
-      $classFileName = FOLDER_CLASSES . "/" . $kontroller_tab[$viewName]['classFileName'];
-      if (!empty($kontroller_tab[$viewName]['classFileName'])) {
+      $viewFileName = FOLDER_APPS . "/" . Router::getViewFileName($viewName);
+      $classFileName = FOLDER_CLASSES . "/" . Router::getClassFileName($viewName);
+
+      if (Router::isClassExists($viewName)) {
         if (file_exists($classFileName)) {
           include($classFileName);
         } else {
           echo "<pre>nie ma pliku $classFileName</pre>";
+          echo "<pre>nie można załadowac klasy do widoku: $viewName</pre>";
         }
       }
 

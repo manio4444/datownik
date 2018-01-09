@@ -142,9 +142,11 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
 if ($header_back===true) header("Location:" . get_url());
 else if (!empty($header_back)) {
 
-  $filename = (is_array($header_back))
-    ? FOLDER_APPS . "/" . $kontroller_tab[$header_back['app']] . $config['app_path_end']
-    : FOLDER_APPS . "/" . $kontroller_tab[$header_back] . $config['app_path_end'];
+  if (is_array($header_back)) {
+    $filename = FOLDER_APPS . "/" . Router::getViewFileName($header_back['app']);
+  } else {
+    $filename = FOLDER_APPS . "/" . Router::getViewFileName($header_back);
+  }
 
   if (is_array($header_back) && file_exists($filename)) {
     $return = "Location:" . get_url('clean') . '?page='.$header_back['app'];
