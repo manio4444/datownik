@@ -40,6 +40,14 @@ class Router {
     ),
   );
 
+  public function getGetParams($name) {
+    if (isset($_GET[$name])) {
+      return $_GET[$name];
+    } else {
+      return false;
+    }
+  }
+
   public function getViewFileName($name) {
     return self::$routingArray[$name]['viewFileName'];
   }

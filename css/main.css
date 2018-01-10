@@ -172,6 +172,17 @@ pre:empty {display: none;}
 }
 
 
+#docs .docs-element:not(:last-of-type) {
+  margin-bottom: 35px;
+}
+#docs .docs-options {
+  margin-bottom: 10px;
+}
+#docs .docs-options .ui.button {
+  font-size: 14px;
+}
+
+
 .close_bgn {
   background-color: rgba(0, 0, 0, 0.5);
 }

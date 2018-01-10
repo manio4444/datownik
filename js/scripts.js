@@ -48,7 +48,12 @@ $('.checkbox_switcher').change(function() {
 $.fn.outerHTML = function() {  return (this[0]) ? this[0].outerHTML : '';  };
 
 tinymce.init({
-  selector: 'textarea.tinymce'
+  selector: 'textarea.tinymce',
+  init_instance_callback: function (editor) {
+    editor.on('input', function () {
+      console.log('asdasdasdasdasdsa');
+    });
+  }
 });
 
 function ajax_notes_send(this_note, note_delete) {
