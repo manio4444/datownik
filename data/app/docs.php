@@ -26,8 +26,5 @@ $docs = new docs;
   ?>
 
 </section>
-<script>
-$(document).on("input keypress paste change", "textarea.tinymce", function () {
-    console.log("input entered");
-});
-</script>
+
+<script src="js/docs.js"></script>

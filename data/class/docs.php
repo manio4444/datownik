@@ -22,12 +22,12 @@ class docs {
       $text = (isset($data['txt'])) ? $data['txt'] : NULL;
 
     return '
-    <form method="post" class="docs-element">
+    <form method="post" class="docs-element js-docs--element">
       <div class="docs-options">
-        <button class="ui primary button">Save</button>
+        <button class="ui blue button js-docs--save">Save</button>
         <button class="ui button">Discard</button>
       </div>
-      <textarea name="" id="" class="tinymce">' . $text . '</textarea>
+      <textarea name="" id="" class="tinymce js-docs--txt">' . $text . '</textarea>
     </form>
     ';
 
