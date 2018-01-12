@@ -19,15 +19,21 @@ class docs {
 
   public function getTemplate($data = array()) {
 
-      $text = (isset($data['txt'])) ? $data['txt'] : NULL;
+    $text = (isset($data['txt'])) ? $data['txt'] : NULL;
+    $title = (isset($data['title'])) ? $data['title'] : NULL;
 
     return '
     <form method="post" class="docs-element js-docs--element">
+      <h2 class="docs-title">
+        ' . $title . '
+      </h2>
       <div class="docs-options">
         <button class="ui blue button js-docs--save">Save</button>
         <button class="ui button">Discard</button>
       </div>
-      <textarea name="" id="" class="tinymce js-docs--txt">' . $text . '</textarea>
+      <div class="docs-textarea">
+        <textarea name="" id="" class="tinymce js-docs--txt">' . $text . '</textarea>
+      </div>
     </form>
     ';
 

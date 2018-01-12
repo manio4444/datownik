@@ -19,7 +19,7 @@
     transform: translateY(-100px);
     opacity: 0;
   }
-  55% {
+  25% {
     transform: translateY(-100px);
     opacity: 0;
   }
@@ -37,7 +37,7 @@
   justify-content: center;
   align-items: center;
   animation-name: downFadeIn;
-  animation-duration: 2.3s;
+  animation-duration: 1.5s;
 }
 
 .lockscreen_title {

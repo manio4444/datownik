@@ -18,15 +18,21 @@ background-color: #F5F5F5;
 li { font-size: 16px; } /* TODO do usunięcia */
 input {width: 300px;}
 h1,h2,h3,h4,h5,h6 {
-  color: #f55b50;
-  font-weight: 600;
+  color: #826384;
+  font-weight: 300;
+  margin-bottom: 0.8em;
+  font-size: 'Work Sans';
 }
 
-h1 { font-size: 30px; }
-
+h1 {
+  font-size: 26px;
+  font-weight: 400;
+}
 h2 {
-  font-size: 25px;
-  margin-bottom: 10px;
+  font-size: 20px;
+}
+h3 {
+  font-size: 16px;
 }
 
 main { width: 100%; box-sizing: border-box; }
@@ -170,6 +176,30 @@ pre:empty {display: none;}
   background-color: rgb(255, 51, 51);
   border-color: #E52E2E;
 }
+
+main {
+  height: 100%;
+}
+#docs.docs-single {
+  height: 100%;
+}
+#docs.docs-single .docs-element {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+#docs.docs-single .docs-textarea,
+#docs.docs-single .mce-tinymce,.mce-stack-layout,
+#docs.docs-single .mce-edit-area {
+  display: flex!important;
+  flex-direction: column;
+  flex: 1;
+  align-items:stretch;
+}
+#docs.docs-single .mce-tinymce iframe{
+  flex: 1;
+}
+
 
 
 #docs .docs-element:not(:last-of-type) {

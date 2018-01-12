@@ -2,7 +2,7 @@
 $docs = new docs;
 ?>
 
-<section id="docs">
+<section id="docs" class="<?php if (Router::getGetParams('id')) echo 'docs-single';  ?>">
 
   <?php
 

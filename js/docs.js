@@ -8,6 +8,8 @@ dat.docs = {
 
     tinymce.init({
       selector: 'textarea.tinymce',
+      height: "200",
+      // plugins: "",
       init_instance_callback: function (editor) {
         editor.on('input', function () {
           console.log('asdasdasdasdasdsa');
