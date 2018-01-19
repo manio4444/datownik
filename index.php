@@ -5,6 +5,10 @@ if (!include("data/functions.php")) { echo "<p>[!] Błąd krytyczny systemu - ni
 if (!include("data/db.php")) { echo "<p>[!] Błąd krytyczny systemu - nie można zaimplementować pliku z połączeniem SQL.</p><p>[!] die();</p>"; die();  } //pobiera funkcje
 if (!include('data/core/router.php')) { echo "<p>[!] Błąd krytyczny systemu - nie można zaimplementować pliku z routingiem.</p><p>[!] die();</p>"; die();  } //pobiera funkcje
 
+if (!include("data/core/database.php")) { echo "<p>[!] Błąd krytyczny systemu - nie można zaimplementować pliku z połączeniem SQL.</p><p>[!] die();</p>"; die();  } //pobiera funkcje
+if (!include("data/core/defaultController.php")) { echo "<p>[!] Błąd krytyczny systemu - nie można zaimplementować pliku z klasą dla kontrolerów.</p><p>[!] die();</p>"; die();  } //pobiera funkcje
+
+$dat_db = new database();
 
 // setcookie( "admin", 1, strtotime( '+30 days' ) );
 

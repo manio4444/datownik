@@ -2,7 +2,7 @@
 /**
 *
 */
-class docs {
+class docs extends defaultController {
 
   public $sqlReturn;
 
