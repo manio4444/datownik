@@ -1,20 +1,18 @@
-<section id="notepad">
-
-  <div class="note_element">
-    <textarea placeholder="Zacznij wpisywać tekst aby dodać nową notatkę"></textarea>
-  </div>
 <?php
+$notes = new notes;
+?>
 
-foreach ($sql_pdo->query('SELECT * FROM `notes` ORDER BY `id` DESC') as $value) :
- ?>
+<section id="notepad" class="notes_container">
 
-<div class="note_element">
-  <textarea data-note="<?php echo $value['id']; ?>"><?php echo $value['txt']; ?></textarea>
-</div>
+  <?php
 
-<?php endforeach; ?>
+  echo $notes->getTemplate(); //first empty
 
+  foreach ($notes->sqlReturn as $data) {
 
+    echo $notes->getTemplate($data);
 
+  }
+  ?>
 
 </section>

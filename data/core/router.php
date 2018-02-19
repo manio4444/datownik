@@ -28,7 +28,7 @@ class Router {
     ),
     'notatki' => array(
       'viewFileName' => 'notepad.php',
-      'classFileName' => '',
+      'classFileName' => 'notes.php',
     ),
     'do-zrobienia' => array(
       'viewFileName' => 'tasks.php',
