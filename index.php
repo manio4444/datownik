@@ -17,50 +17,14 @@ include('data/operations.php');
 
 include('data/head.php'); //początek kodu do otwarcia znacznika body
 
-//w przyszłości zabezpieczyć operacje przed zalogowaniem
+// TODO dodać zamiast tego poniżej klasę do sprawdzania uprawnień
 if (@$_COOKIE['admin']!=1) {
   include('data/lockscreen.php');
 } else {
   include('data/header.php');
 
-  /**
-   * Mini Viev Module
-   * TODO in future move to other file, maybe make class for this
-   */
 
-   $defaultView = 'data/app/start.php';
-
-  if (isset($_GET['page'])) {
-    $viewName = $_GET['page'];
-    if (!Router::isViewExists($viewName)) {
-      echo "<pre>nie ma widoku o nazwie " . $viewName . "</pre>";
-      include($defaultView);
-    } else {
-      $viewFileName = FOLDER_APPS . "/" . Router::getViewFileName($viewName);
-      $classFileName = FOLDER_CLASSES . "/" . Router::getClassFileName($viewName);
-
-      if (Router::isClassExists($viewName)) {
-        if (file_exists($classFileName)) {
-          include($classFileName);
-        } else {
-          echo "<pre>nie ma pliku $classFileName</pre>";
-          echo "<pre>nie można załadowac klasy do widoku: $viewName</pre>";
-        }
-      }
-
-      if (file_exists($viewFileName)) {
-        include($viewFileName);
-      } else {
-        echo "<pre>nie ma pliku $viewFileName</pre>";
-      }
-    }
-  } else {
-    include($defaultView);
-  }
-
-  /**
-   * Mini Viev Module - END
-   */
+   Router::prepareView();
 
 
 } // koniec else w ktory jest wszystko poza lockscreenem

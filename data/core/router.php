@@ -6,6 +6,11 @@
 class Router {
 
   private static $routingArray = array(
+
+    'start' => array(
+      'viewFileName' => 'data/app/start.php',
+      // '' => 'data/app/start.php',
+    ),
     'kalendarz' => array(
       'viewFileName' => 'kalendarz.php',
       'classFileName' => '',
@@ -40,7 +45,7 @@ class Router {
     ),
   );
 
-  public function getGetParams($name) {
+  public static function getGetParams($name) {
     if (isset($_GET[$name])) {
       return $_GET[$name];
     } else {
@@ -48,23 +53,56 @@ class Router {
     }
   }
 
-  public function getViewFileName($name) {
+  public static function getViewFileName($name) {
     return self::$routingArray[$name]['viewFileName'];
   }
 
-    public function getClassFileName($name) {
+    public static function getClassFileName($name) {
       return self::$routingArray[$name]['classFileName'];
     }
 
-    public function isViewExists($viewName) {
+    public static function isViewExists($viewName) {
       return array_key_exists($viewName, self::$routingArray);
     }
 
-    public function isClassExists($viewName) {
+    public static function isClassExists($viewName) {
       if (!empty(self::$routingArray[$viewName]['classFileName'])) return true;
       return false;
     }
 
+    public static function prepareView() {
+
+      $defaultView = 'data/app/start.php';
+
+     if (isset($_GET['page'])) {
+       $viewName = $_GET['page'];
+       if (!Router::isViewExists($viewName)) {
+         echo "<pre>nie ma widoku o nazwie " . $viewName . "</pre>";
+         include($defaultView);
+       } else {
+         $viewFileName = FOLDER_APPS . "/" . Router::getViewFileName($viewName);
+         $classFileName = FOLDER_CLASSES . "/" . Router::getClassFileName($viewName);
+
+         if (Router::isClassExists($viewName)) {
+           if (file_exists($classFileName)) {
+             include($classFileName);
+           } else {
+             echo "<pre>nie ma pliku $classFileName</pre>";
+             echo "<pre>nie można załadowac klasy do widoku: $viewName</pre>";
+           }
+         }
+
+         if (file_exists($viewFileName)) {
+           include($viewFileName);
+         } else {
+           echo "<pre>nie ma pliku $viewFileName</pre>";
+         }
+       }
+     } else {
+       include($defaultView);
+     }
+
+    }
 }
 
 ?>
