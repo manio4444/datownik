@@ -48,14 +48,14 @@ $('.checkbox_switcher').change(function() {
 $.fn.outerHTML = function() {  return (this[0]) ? this[0].outerHTML : '';  };
 
 
-function ajax_notes_send(this_note, note_delete) {
+function ajax_notes_send(note_operation, this_note) {
   $.ajax({
     type: 'post',
     data: {
       'note_ajax': true,
       'note_id': this_note.attr('data-note'),
       'note_txt': this_note.val(),
-      'note_delete': note_delete,
+      'note_operation': note_operation,
      },
      dataType : 'text',
      success: function(data){
@@ -63,7 +63,7 @@ function ajax_notes_send(this_note, note_delete) {
          this_note.attr('data-note', data);
          console.log('Nowy wpis numer: '+data);
        } else if (data=='deleted') {
-         this_note.parent().remove();
+         this_note.parents('.note_element').remove();
          console.log('Usunięto wpis numer: '+this_note.attr('data-note'));
        } else if (data=='edit') {
          console.log('Edytowano wpis numer: '+this_note.attr('data-note'));
@@ -77,12 +77,14 @@ function notesListener(this_note) {
   $(this_note).on('input', function() {
     if ($(this).val()) {
       if (!$(this).attr('data-note')) {
-        $('#notepad').prepend(new_note);
-        ajax_notes_send( $(this) );
+        $(this).parents('.note_element').parent().prepend(new_note);
+        // $('#notepad').prepend(new_note);
         $(this).attr('data-note', 'waiting');
+        ajax_notes_send('note_new', $(this));
         notesListener(this_note);
       }
-      ajax_notes_send( $(this) );
+      // console.log($(this));
+      ajax_notes_send('note_edit', $(this));
     }
   });
 
@@ -92,15 +94,15 @@ function notesListener(this_note) {
 
     if (!$(this).val() && $(this).attr('data-note')) {
       console.log('Wysłano prośbę o usunięcie wpisu: '+$(this).attr('data-note'));
-      ajax_notes_send( $(this), true );
+      ajax_notes_send('note_delete', $(this));
     }
   });
 
 } //function notesListener
 
-var new_note = $('.note_area').outerHTML(); //dodanie do zmiennej czystej notatki w html
+var new_note = $('.note_element').outerHTML(); //dodanie do zmiennej czystej notatki w html
 
-notesListener( '.note_area textarea' ); //pierwsze uruchomienie
+notesListener( '.note_element textarea' ); //pierwsze uruchomienie
 
 
 

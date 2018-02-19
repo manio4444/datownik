@@ -1,9 +1,7 @@
 <section id="main_page">
-  <br><br>
-
 
   <form method="POST" class="start_form">
-    <span class="start_form_title">MULTICONTENT:</span>
+    <h1 class="start_form_title">Multicontent:</h1>
     <textarea name="urladd" rows="5" cols="100"><?php echo isset($_GET['urladd']) ? $_GET['urladd'] : null; ?></textarea>
 
 
@@ -93,5 +91,30 @@
   <pre>
     <?php echo 'Current PHP version: ' . phpversion(); ?>
   </pre>
+
+</section>
+
+<section id="main_page_notes">
+
+  <h1 class="notes_title">Ostatnie notatki:</h1>
+
+  <div class="notes_container">
+
+    <?php
+    Router::importViewClass('notatki');
+
+    $notes = new notes;
+
+    // echo $notes->getTemplate(); //first empty
+
+    $foreach_limit = 0;
+
+    foreach ($notes->sqlReturn as $data) {
+      echo $notes->getTemplate($data);
+      if (++$foreach_limit >= 4) break;
+    }
+    ?>
+
+  </div>
 
 </section>

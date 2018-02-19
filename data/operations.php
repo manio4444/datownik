@@ -54,23 +54,29 @@ if(isset($_POST['action']) && $_POST['action']=="notatka" && $_POST['urladd']) {
 }
 
 if(isset($_POST['note_ajax'])) {
-  if (!$_POST['note_id'] && $_POST['note_txt']) {
-    $pdo_operation = $sql_pdo->prepare( 'INSERT INTO `notes` (`txt`) VALUES (:txt)' );
-    $pdo_operation->bindValue(':txt', $_POST['note_txt'], PDO::PARAM_STR);
-    $pdo_operation->execute();
-    echo $sql_pdo->lastInsertId();
-  } elseif (!$_POST['note_txt'] && $_POST['note_id'] && $_POST['note_delete']) {
-    $pdo_operation = $sql_pdo->prepare( 'DELETE FROM `notes` WHERE `id` = :id' );
-    $pdo_operation->bindValue(':id', $_POST['note_id'], PDO::PARAM_INT);
-    $pdo_operation->execute();
-    echo "deleted";
-  } elseif ($_POST['note_id']!=='waiting') {
-    $pdo_operation = $sql_pdo->prepare( 'UPDATE `notes` SET `txt` = :txt WHERE `id` = :id' );
-    $pdo_operation->bindValue(':id', $_POST['note_id'], PDO::PARAM_INT);
-    $pdo_operation->bindValue(':txt', $_POST['note_txt'], PDO::PARAM_STR);
-    $pdo_operation->execute();
-    echo "edit";
-  }
+  if (isset($_POST['note_operation']) && $_POST['note_operation']==='note_new') {
+    if (isset($_POST['note_id']) && $_POST['note_id']==='waiting' && isset($_POST['note_txt']) && !empty($_POST['note_txt'])) {
+      $pdo_operation = $sql_pdo->prepare( 'INSERT INTO `notes` (`txt`) VALUES (:txt)' );
+      $pdo_operation->bindValue(':txt', $_POST['note_txt'], PDO::PARAM_STR);
+      $pdo_operation->execute();
+      echo $sql_pdo->lastInsertId();
+    }
+  } elseif (isset($_POST['note_operation']) && $_POST['note_operation']==='note_delete') {
+    if (isset($_POST['note_id']) && !empty($_POST['note_id']) && isset($_POST['note_txt']) && empty($_POST['note_txt'])) {
+      $pdo_operation = $sql_pdo->prepare( 'DELETE FROM `notes` WHERE `id` = :id' );
+      $pdo_operation->bindValue(':id', $_POST['note_id'], PDO::PARAM_INT);
+      $pdo_operation->execute();
+      echo "deleted";
+    }
+  } elseif (isset($_POST['note_operation']) && $_POST['note_operation']==='note_edit') {
+    if (isset($_POST['note_id']) && $_POST['note_id']!=='waiting' && isset($_POST['note_txt']) && !empty($_POST['note_id'])) {
+      $pdo_operation = $sql_pdo->prepare( 'UPDATE `notes` SET `txt` = :txt WHERE `id` = :id' );
+      $pdo_operation->bindValue(':id', $_POST['note_id'], PDO::PARAM_INT);
+      $pdo_operation->bindValue(':txt', $_POST['note_txt'], PDO::PARAM_STR);
+      $pdo_operation->execute();
+      echo "edit";
+    }
+  } else { echo var_dump($_POST); }
 }
 
 if(isset($_POST['action']) && $_POST['action']=="zakladka" && $_POST['urladd']) {

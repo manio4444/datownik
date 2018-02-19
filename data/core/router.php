@@ -33,7 +33,7 @@ class Router {
     ),
     'notatki' => array(
       'viewFileName' => 'notepad.php',
-      'classFileName' => '',
+      'classFileName' => 'notes.php',
     ),
     'do-zrobienia' => array(
       'viewFileName' => 'tasks.php',
@@ -74,35 +74,43 @@ class Router {
 
       $defaultView = 'data/app/start.php';
 
-     if (isset($_GET['page'])) {
-       $viewName = $_GET['page'];
-       if (!Router::isViewExists($viewName)) {
-         echo "<pre>nie ma widoku o nazwie " . $viewName . "</pre>";
-         include($defaultView);
-       } else {
-         $viewFileName = FOLDER_APPS . "/" . Router::getViewFileName($viewName);
-         $classFileName = FOLDER_CLASSES . "/" . Router::getClassFileName($viewName);
+      if (isset($_GET['page'])) {
+        $viewName = $_GET['page'];
+        if (!Router::isViewExists($viewName)) {
+          echo "<pre>nie ma widoku o nazwie " . $viewName . "</pre>";
+          include($defaultView);
+        } else {
+          $viewFileName = FOLDER_APPS . "/" . Router::getViewFileName($viewName);
+          $classFileName = FOLDER_CLASSES . "/" . Router::getClassFileName($viewName);
 
-         if (Router::isClassExists($viewName)) {
-           if (file_exists($classFileName)) {
-             include($classFileName);
-           } else {
-             echo "<pre>nie ma pliku $classFileName</pre>";
-             echo "<pre>nie można załadowac klasy do widoku: $viewName</pre>";
-           }
-         }
+          if (Router::isClassExists($viewName)) {
+            if (file_exists($classFileName)) {
+              include($classFileName);
+            } else {
+              echo "<pre>nie ma pliku $classFileName</pre>";
+              echo "<pre>nie można załadowac klasy do widoku: $viewName</pre>";
+            }
+          }
 
-         if (file_exists($viewFileName)) {
-           include($viewFileName);
-         } else {
-           echo "<pre>nie ma pliku $viewFileName</pre>";
-         }
-       }
-     } else {
-       include($defaultView);
-     }
+          if (file_exists($viewFileName)) {
+            include($viewFileName);
+          } else {
+            echo "<pre>nie ma pliku $viewFileName</pre>";
+          }
+        }
+      } else {
+        include($defaultView);
+      }
 
     }
+
+    public function importViewClass($viewName) {
+      if (!empty(self::$routingArray[$viewName]['classFileName'])) {
+        include_once(FOLDER_CLASSES . "/" . self::$routingArray[$viewName]['classFileName']);
+      }
+      return false;
+    }
+
 }
 
 ?>

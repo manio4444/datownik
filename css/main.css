@@ -107,11 +107,7 @@ pre.error {
 }
 
 #main_page .start_form_title {
-  width: 100%;
-  color: black;
-  font-weight: 600;
-  font-size: 18px;
-  margin-bottom: 10px;
+  flex-basis: 100%;
 }
 
 #main_page .start_form textarea {
@@ -120,6 +116,10 @@ pre.error {
 
 #main_page [name="urladd"] {
   /* margin-bottom: 25px; */
+}
+
+#main_page_notes .notes_title {
+  flex-basis: 100%;
 }
 
 
