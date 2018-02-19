@@ -65,6 +65,13 @@ class Router {
       return false;
     }
 
+    public function importViewClass($viewName) {
+      if (!empty(self::$routingArray[$viewName]['classFileName'])) {
+        include_once(FOLDER_CLASSES . "/" . self::$routingArray[$viewName]['classFileName']);
+      }
+      return false;
+    }
+
 }
 
 ?>
