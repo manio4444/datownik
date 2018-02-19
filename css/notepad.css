@@ -1,17 +1,6 @@
-#notepad {
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -webkit-justify-content: space-around;
-  -ms-flex-pack: distribute;
-  justify-content: space-around;
+/* NOTEPAD GLOBAL */
 
-} /*notepad*/
-
-#notepad .note_area {
+.note_element {
   position: relative;
   width: 250px;
   height: 250px;
@@ -24,11 +13,11 @@
   box-shadow: -3px 5px 12px 0 rgba(0,0,0,0.3);
   margin: 10px;
   -webkit-transition: all 1s ease-in-out;
--moz-transition: all 1s ease-in-out;
--o-transition: all 1s ease-in-out;
+  -moz-transition: all 1s ease-in-out;
+  -o-transition: all 1s ease-in-out;
 }
 
-#notepad .note_area::before {
+.note_element::before {
   content: '';
   display: block;
   position: absolute;
@@ -45,7 +34,7 @@
   transform: skew(-10deg,2deg);
 }
 
-#notepad .note_area textarea {
+.note_element textarea {
   border: 0;
   resize: none;
   width: 100%;
@@ -60,14 +49,18 @@
   text-align: justify;
 }
 
+/* ERROR */
+.note_element.error {
+  background-color: #fa6161;
+}
 
 @media screen and (max-width:1023px) {
-  #notepad .note_area {
+  .note_element {
     width: 200px;
     height: 200px;
     /*margin: 5px;*/
   }
-  #notepad .note_area textarea {
+  .note_element textarea {
     font-size: 18px;
     padding: 5px;
   }
@@ -75,14 +68,36 @@
 }
 
 @media screen and (max-width:479px) {
-  #notepad .note_area {
+  .note_element {
     width: 150px;
     height: 150px;
     margin: 5px;
   }
-  #notepad .note_area textarea {
+  .note_element textarea {
     font-size: 13px;
     padding: 5px;
   }
 
+}
+
+
+/* NOTEPAD SUBPAGE */
+
+#notepad {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-justify-content: space-around;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+
+}
+
+@media screen and (max-width:1023px) {
+}
+
+@media screen and (max-width:479px) {
 }
