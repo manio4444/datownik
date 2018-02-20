@@ -9,8 +9,6 @@ if (!include("data/core/system.php")) { echo "<p>[!] Błąd krytyczny systemu - 
 if (!include("data/core/database.php")) { echo "<p>[!] Błąd krytyczny systemu - nie można zaimplementować pliku z połączeniem SQL.</p><p>[!] die();</p>"; die();  } //pobiera funkcje
 if (!include("data/core/defaultController.php")) { echo "<p>[!] Błąd krytyczny systemu - nie można zaimplementować pliku z klasą dla kontrolerów.</p><p>[!] die();</p>"; die();  } //pobiera funkcje
 
-$dat_db = new database();
-
 // setcookie( "admin", 1, strtotime( '+30 days' ) );
 
 

@@ -1,6 +1,5 @@
 <section id="settings_page">
 <?php
-mcrypt_encrypt();
 foreach (read_folder(FOLDER_PLUGINS) as $value) {
   $read_folder[$value[0] . $value[1]] = '';   //tworzy tablice o id takim jak folder+nazwa pliku
 }
@@ -8,6 +7,7 @@ foreach (read_folder(FOLDER_PLUGINS) as $value) {
 // echo "<pre>";var_dump($read_folder);echo "</pre>";
 // echo "[PLUGINS.INI]<br>"; foreach ($ini['plugins'] as $key => $value) echo "$key = $value<BR>";
 
+global $ini;
 $read_folder = array_merge($read_folder, $ini['plugins']); //łączy tablice tak że dopisuje zezwolenia
 // echo "<pre>";var_dump($read_folder);echo "</pre>";
 // echo "<br><br><br><br>";
