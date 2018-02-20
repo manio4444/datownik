@@ -1,3 +1,7 @@
+<?php
+$tasks = new tasks;
+?>
+
 <section id="todo">
 
   <div class="task">
@@ -42,7 +46,7 @@
 
 <?php
 
-foreach ($sql_pdo->query('SELECT * FROM `tasks` ORDER BY `id` DESC') as $value) :
+foreach ($tasks->sqlReturn as $value) :
  ?>
 
 
