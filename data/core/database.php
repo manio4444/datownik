@@ -20,7 +20,7 @@ class database {
       || !isset($ini['db']['sql_encoding'])
     ) {
 
-      $error[] = "Problem z załadowaniem konfiguracji do połączenia bazy danych";
+      System::error("Problem z załadowaniem konfiguracji do połączenia bazy danych");
 
       return false;
     }
@@ -39,13 +39,17 @@ class database {
 
     } catch(PDOException $e) {
 
-      $error[] = 'Połączenie z bazą danch nie mogło zostać utworzone: ' . $e->getMessage();
+      System::error('Połączenie z bazą danch nie mogło zostać utworzone: ' . $e->getMessage());
 
     }
 
   }
 
   public function getInstance() {
+
+    if (!isset($this->dbInstance)) {
+      $this->startPDO();
+    }
 
     return $this->dbInstance;
 

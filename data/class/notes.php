@@ -7,8 +7,11 @@ class notes extends defaultController {
   public $sqlReturn;
 
   public function __construct() {
-    global $sql_pdo; //TODO try not to do like that, maybe extedns from pdo?
-    $this->sqlReturn = $sql_pdo->query('SELECT * FROM `notes` ORDER BY `id` DESC'); //TODO make it to another function
+    if (null === $this->getInstance()) {
+      System::error('Klasa "' . get_class() . '" Nie ma dostępu do połączenia SQL');
+      return false;
+    }
+    $this->sqlReturn = $this->getInstance()->query('SELECT * FROM `notes` ORDER BY `id` DESC'); //TODO make it to another function
   }
 
   public function getTemplate($data = array()) {

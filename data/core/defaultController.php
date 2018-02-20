@@ -3,7 +3,7 @@
 /**
  * defaultController
  */
-class defaultController {
+class defaultController extends database {
 
 
 }

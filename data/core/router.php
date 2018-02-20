@@ -78,6 +78,7 @@ class Router {
         $viewName = $_GET['page'];
         if (!Router::isViewExists($viewName)) {
           echo "<pre>nie ma widoku o nazwie " . $viewName . "</pre>";
+          global $sql_pdo;    //TEMP - for views which doesn't use their own classes yet
           include($defaultView);
         } else {
           $viewFileName = FOLDER_APPS . "/" . Router::getViewFileName($viewName);
