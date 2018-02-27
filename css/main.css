@@ -82,12 +82,10 @@ pre {
   font-size: 13px;
   line-height: 1.42857143;
   padding: 10px 15px;
-  margin: 0 40px 12px;
+  margin: 12px 40px;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-shadow: 2px 2px 12px -3px #ababab;
-  display: flex;
-  flex-direction: column;
   white-space: normal;
   word-break: break-all;
   word-wrap: break-word;
@@ -100,7 +98,7 @@ pre.error {
 }
 
 main section pre {
-  margin: 0 0 12px;
+  margin: 12px 0;
 }
 
 #main_page .start_form {
