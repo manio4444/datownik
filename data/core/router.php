@@ -8,8 +8,8 @@ class Router {
   private static $routingArray = array(
 
     'start' => array(
-      'viewFileName' => 'data/app/start.php',
-      // '' => 'data/app/start.php',
+      'viewFileName' => 'start.php',
+      // 'classFileName' => 'start.php',
     ),
     'kalendarz' => array(
       'viewFileName' => 'kalendarz.php',
@@ -54,10 +54,16 @@ class Router {
   }
 
   public static function getViewFileName($name) {
+    if (!array_key_exists('viewFileName', self::$routingArray[$name])) {
+      return false;
+    }
     return self::$routingArray[$name]['viewFileName'];
   }
 
     public static function getClassFileName($name) {
+      if (!array_key_exists('classFileName', self::$routingArray[$name])) {
+        return false;
+      }
       return self::$routingArray[$name]['classFileName'];
     }
 
@@ -72,44 +78,51 @@ class Router {
 
     public static function prepareView() {
 
-      $defaultView = 'data/app/start.php';
-
-      if (isset($_GET['page'])) {
+      if (isset($_GET['page']) && !Router::isViewExists($_GET['page'])) {
+        System::error("Błąd - nie ma widoku o nazwie: " . $_GET['page']);
+        $viewName = DEFAULT_VIEW;
+      } elseif (isset($_GET['page']) && Router::isViewExists($_GET['page'])) {
         $viewName = $_GET['page'];
-        if (!Router::isViewExists($viewName)) {
-          echo "<pre>nie ma widoku o nazwie " . $viewName . "</pre>";
-          global $sql_pdo;    //TEMP - for views which doesn't use their own classes yet
-          include($defaultView);
-        } else {
-          $viewFileName = FOLDER_APPS . "/" . Router::getViewFileName($viewName);
-          $classFileName = FOLDER_CLASSES . "/" . Router::getClassFileName($viewName);
-
-          if (Router::isClassExists($viewName)) {
-            if (file_exists($classFileName)) {
-              include($classFileName);
-            } else {
-              echo "<pre>nie ma pliku $classFileName</pre>";
-              echo "<pre>nie można załadowac klasy do widoku: $viewName</pre>";
-            }
-          }
-
-          if (file_exists($viewFileName)) {
-            include($viewFileName);
-          } else {
-            echo "<pre>nie ma pliku $viewFileName</pre>";
-          }
-        }
+      } elseif (!Router::isViewExists(DEFAULT_VIEW)) {
+        System::error("Błąd - nie ma widoku domyślnego: " . DEFAULT_VIEW);
+        return false;
       } else {
-        include($defaultView);
+        $viewName = DEFAULT_VIEW;
       }
+
+      $viewFileName = FOLDER_APPS . "/" . Router::getViewFileName($viewName);
+      $classFileName = FOLDER_CLASSES . "/" . Router::getClassFileName($viewName);
+
+      if (!Router::getViewFileName($viewName)) {
+        System::error("Błąd - nieznana ścieżka widoku: " . $viewName);
+      } elseif (!file_exists($viewFileName)) {
+        System::error("Błąd - nie znaleziono pliku widoku: " . $viewName);
+      }
+
+      if (Router::isClassExists($viewName) && !file_exists($classFileName)) {
+        System::error("Błąd - nie znaleziono pliku kontrolera: " . $viewName);
+      } elseif (Router::isClassExists($viewName)) {
+          include($classFileName);
+      }
+
+      include($viewFileName);
 
     }
 
     public function importViewClass($viewName) {
-      if (!empty(self::$routingArray[$viewName]['classFileName'])) {
-        include_once(FOLDER_CLASSES . "/" . self::$routingArray[$viewName]['classFileName']);
+
+      $classFileName = FOLDER_CLASSES . "/" . Router::getClassFileName($viewName);
+      if (!Router::isClassExists($viewName)) {
+        System::error("Błąd - nie ma kontrolera do widoku: " . $viewName);
+      } elseif (Router::isClassExists($viewName) && !file_exists($classFileName)) {
+        System::error("Błąd - nie znaleziono pliku kontrolera do widoku: " . $viewName);
+      } elseif (Router::isClassExists($viewName)) {
+          include($classFileName);
+          return true;
+      } else {
+        return false;
       }
-      return false;
+
     }
 
 }

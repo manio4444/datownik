@@ -101,18 +101,22 @@
   <div class="notes_container">
 
     <?php
-    Router::importViewClass('notatki');
 
-    $notes = new notes;
+    if (Router::importViewClass('notatki')) {
 
-    // echo $notes->getTemplate(); //first empty
+      $notes = new notes;
 
-    $foreach_limit = 0;
+      echo $notes->getTemplate(); //first empty
 
-    foreach ($notes->sqlReturn as $data) {
-      echo $notes->getTemplate($data);
-      if (++$foreach_limit >= 4) break;
+      $foreach_limit = 0;
+
+      foreach ($notes->sqlReturn as $data) {
+        echo $notes->getTemplate($data);
+        if (++$foreach_limit >= 7) break;
+      }
+
     }
+
     ?>
 
   </div>

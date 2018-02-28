@@ -89,6 +89,7 @@ pre {
   white-space: normal;
   word-break: break-all;
   word-wrap: break-word;
+  width: 100%;
 }
 
 pre.error {

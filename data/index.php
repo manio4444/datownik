@@ -18,7 +18,7 @@ include_once('data/operations.php');
 * TEMPLATE PART
 * in future move to layout.php views controller
 */
-include('data/view/head.php'); //początek kodu do otwarcia znacznika body
+include('data/view/head.php'); //template up to body tag
 
 // TODO dodać zamiast tego poniżej klasę do sprawdzania uprawnień
 if (@$_COOKIE['admin']!=1) {
