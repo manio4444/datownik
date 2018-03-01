@@ -9,6 +9,9 @@ if (!include_once("data/core/system.php")) { echo "<p>[!] Błąd krytyczny syste
 if (!include_once("data/core/database.php")) { echo "<p>[!] Błąd krytyczny systemu - nie można zaimplementować pliku z połączeniem SQL.</p><p>[!] die();</p>"; die();  } //pobiera funkcje
 if (!include_once("data/core/defaultController.php")) { echo "<p>[!] Błąd krytyczny systemu - nie można zaimplementować pliku z klasą dla kontrolerów.</p><p>[!] die();</p>"; die();  } //pobiera funkcje
 
+include_once('data/core/ajaxRouter.php');
+ajaxRouter::tryAjax();
+
 include_once('data/operations.php');
 
 

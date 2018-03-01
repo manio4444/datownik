@@ -4,6 +4,7 @@ define("FOLDER_PLUGINS", "plugins");
 define("FOLDER_INI", "data/config");
 define("FOLDER_CLASSES", "data/class");
 define("FOLDER_APPS", "data/app");
+define("FOLDER_AJAX", "data/ajax");
 
 define("DEFAULT_VIEW", "start");
 

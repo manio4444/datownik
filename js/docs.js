@@ -4,6 +4,24 @@ if (window.dat === undefined) {
 
 dat.docs = {
 
+  edit: function (id, content) {
+
+    $.ajax({
+        url: '?ajax_action=docsAjax',
+        method: 'POST',
+        data: {
+            operation   :'editText',
+            id          : id,
+            text        : content,
+        }
+    }).done(function(data) {
+
+        console.log(data);
+
+    });
+
+  },
+
   init: function () {
 
     var _this = this;
