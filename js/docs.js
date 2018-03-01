@@ -6,41 +6,46 @@ dat.docs = {
 
   init: function () {
 
+    var _this = this;
+
     tinymce.init({
       selector: 'textarea.tinymce',
       height: "200",
-      // plugins: "",
+      menubar: false,
+      plugins: 'print preview fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists code textcolor wordcount imagetools contextmenu colorpicker textpattern help',
+      toolbar: 'undo redo | bold italic underline strikethrough | bullist numlist | outdent indent | blockquote subscript superscript | image link insert | removeformat code fullscreen',
       init_instance_callback: function (editor) {
-        editor.on('input', function () {
-          console.log('asdasdasdasdasdsa');
+        editor.on('change', function (e) {
+          // console.log(editor);
+          editor.save(); //hack for textarea live updates
         });
       }
     });
 
-    $(document).on("input keypress paste change", "textarea.tinymce", function () {
-      console.log("input entered");
+    $(document).on("submit", ".js-docs--element", function (e) {
+      e.preventDefault();
     });
 
-    $(document).on("submit", ".js-docs--element", function (e) {
-      console.log("form submit");
+    $(document).on("click", ".js-docs--save", function (e) {
       e.preventDefault();
+      var textarea = $(this).parents('.js-docs--element').find('.docs-textarea textarea.js-docs--txt');
+      var id = $(this).parents('.js-docs--element').attr('data-docs');
+      var text = textarea.val();
+      console.log("form submit");
+      // console.log(textarea.val());
+      console.log(id, text);
+      _this.edit(id, text);
+    });
 
+    $(document).on("click", ".docs-title .icon, .js-docs--editname", function () {
+      $(this).parents('.js-docs--element').find('.js-docs--title').focus();
     });
 
   }
 
 }
 
-
-
-
-
-
-
-
-
-
-$(function() {
+$(function() { //document ready
 
   dat.docs.init();
 

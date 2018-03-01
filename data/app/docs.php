@@ -13,7 +13,10 @@ $docs = new docs;
 
   } else {
 
-    echo $docs->getTemplate();
+    //first empty
+    echo $docs->getTemplate(array(
+      'title' => 'Nowy dokument',
+    ));
 
     foreach ($docs->sqlReturn as $data) {
 

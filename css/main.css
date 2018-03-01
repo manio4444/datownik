@@ -214,10 +214,29 @@ main {
 }
 
 
-
 #docs .docs-element:not(:last-of-type) {
   margin-bottom: 35px;
 }
+
+#docs .docs-title {
+  display: flex;
+    align-items: center;
+}
+
+#docs .docs-title .icon {
+  cursor: pointer;
+}
+
+#docs .docs-title input {
+  flex-grow: 1;
+}
+
+#docs .docs-title input:not(:focus) {
+  border-color: transparent;
+  background-color: transparent;
+  cursor: pointer;
+}
+
 #docs .docs-options {
   margin-bottom: 10px;
 }
