@@ -7,6 +7,7 @@ define("FOLDER_APPS", "data/app");
 define("FOLDER_AJAX", "data/ajax");
 
 define("DEFAULT_VIEW", "start");
+define("DEFAULT_TITLE", "Datownik");
 
 $list_ini_files = array(
   'plugins',
