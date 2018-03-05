@@ -22,6 +22,23 @@ dat.docs = {
 
   },
 
+  new: function (content) {
+
+    $.ajax({
+        url: '?ajax_action=docsAjax',
+        method: 'POST',
+        data: {
+            operation   :'newDoc',
+            text        : content,
+        }
+    }).done(function(data) {
+
+        console.log(data);
+
+    });
+
+  },
+
   init: function () {
 
     var _this = this;
@@ -34,7 +51,6 @@ dat.docs = {
       toolbar: 'undo redo | bold italic underline strikethrough | bullist numlist | outdent indent | blockquote subscript superscript | image link insert | removeformat code fullscreen',
       init_instance_callback: function (editor) {
         editor.on('change', function (e) {
-          // console.log(editor);
           editor.save(); //hack for textarea live updates
         });
       }
@@ -49,10 +65,13 @@ dat.docs = {
       var textarea = $(this).parents('.js-docs--element').find('.docs-textarea textarea.js-docs--txt');
       var id = $(this).parents('.js-docs--element').attr('data-docs');
       var text = textarea.val();
-      console.log("form submit");
-      // console.log(textarea.val());
-      console.log(id, text);
-      _this.edit(id, text);
+      // console.log(Boolean(id));
+      // return;
+      if (id) {
+        _this.edit(id, text);
+      } else {
+        _this.new(text);
+      }
     });
 
     $(document).on("click", ".docs-title .icon, .js-docs--editname", function () {
