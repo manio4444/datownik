@@ -4,7 +4,7 @@ if (window.dat === undefined) {
 
 dat.docs = {
 
-  edit: function (id, content) {
+  edit: function (id, content, name) {
 
     $.ajax({
         url: '?ajax_action=docsAjax',
@@ -13,6 +13,7 @@ dat.docs = {
             operation   :'editText',
             id          : id,
             text        : content,
+            name        : name,
         }
     }).done(function(data) {
 
@@ -22,7 +23,7 @@ dat.docs = {
 
   },
 
-  new: function (content) {
+  new: function (content, name) {
 
     $.ajax({
         url: '?ajax_action=docsAjax',
@@ -30,6 +31,7 @@ dat.docs = {
         data: {
             operation   :'newDoc',
             text        : content,
+            name        : name,
         }
     }).done(function(data) {
 
@@ -64,13 +66,14 @@ dat.docs = {
       e.preventDefault();
       var textarea = $(this).parents('.js-docs--element').find('.docs-textarea textarea.js-docs--txt');
       var id = $(this).parents('.js-docs--element').attr('data-docs');
+      var name = $(this).parents('.js-docs--element').find('.js-docs--title').val();
       var text = textarea.val();
       // console.log(Boolean(id));
       // return;
       if (id) {
-        _this.edit(id, text);
+        _this.edit(id, text, name);
       } else {
-        _this.new(text);
+        _this.new(text, name);
       }
     });
 

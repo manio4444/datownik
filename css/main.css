@@ -229,12 +229,17 @@ main {
 
 #docs .docs-title input {
   flex-grow: 1;
+  transition: background-color .3s ease;
 }
 
 #docs .docs-title input:not(:focus) {
   border-color: transparent;
   background-color: transparent;
   cursor: pointer;
+}
+
+#docs .docs-title input:hover:not(:focus) {
+  background-color: #fcf59b;
 }
 
 #docs .docs-options {

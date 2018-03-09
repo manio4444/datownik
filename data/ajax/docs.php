@@ -17,11 +17,11 @@ class docsAjax extends defaultController {
 
     if (isset($_POST['operation']) && $_POST['operation'] === 'editText') {
 
-      return $this->editText($_POST['id'], $_POST['text']);
+      return $this->editText($_POST['id'], $_POST['text'], $_POST['name']);
 
     } elseif (isset($_POST['operation']) && $_POST['operation'] === 'newDoc') {
 
-      return $this->newDoc($_POST['text']);
+      return $this->newDoc($_POST['text'], $_POST['name']);
 
     } else {
 
@@ -35,12 +35,13 @@ class docsAjax extends defaultController {
 
   }
 
-  private function editText($DocId, $DocText) {
+  private function editText($DocId, $DocText, $DocTitle) {
 
     if (isset($DocId) && isset($DocText) && !empty($DocId)) {
-      $sqlObj = $this->dbInstance->prepare( 'UPDATE `docs` SET `txt` = :txt WHERE `id` = :id' );
+      $sqlObj = $this->dbInstance->prepare( 'UPDATE `docs` SET `txt` = :txt, `title` = :title WHERE `id` = :id' );
       $sqlObj->bindValue(':id', $DocId, PDO::PARAM_INT);
       $sqlObj->bindValue(':txt', $DocText, PDO::PARAM_STR);
+      $sqlObj->bindValue(':title', $DocTitle, PDO::PARAM_STR);
       $sqlObj->execute();
       $message = "Edytowano poprawnie";
       return array(
@@ -54,11 +55,12 @@ class docsAjax extends defaultController {
 
   }
 
-  private function newDoc($DocText) {
+  private function newDoc($DocText, $DocTitle) {
 
     if (isset($DocText)) {
-      $sqlObj = $this->dbInstance->prepare( 'INSERT INTO `docs` (`txt`) VALUES (:txt)' );
+      $sqlObj = $this->dbInstance->prepare( 'INSERT INTO `docs` (`txt`, `title`) VALUES (:txt, :title)' );
       $sqlObj->bindValue(':txt', $DocText, PDO::PARAM_STR);
+      $sqlObj->bindValue(':title', $DocTitle, PDO::PARAM_STR);
       $sqlObj->execute();
       $DocId = $this->dbInstance->lastInsertId();
       $message = "Utworzono nowy dokument";
