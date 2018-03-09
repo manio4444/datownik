@@ -4,7 +4,7 @@ if (window.dat === undefined) {
 
 dat.docs = {
 
-  edit: function (id, content, name) {
+  edit: function (id, content, name, callback) {
 
     $.ajax({
         url: '?ajax_action=docsAjax',
@@ -19,11 +19,15 @@ dat.docs = {
 
         console.log(data);
 
+        if (callback !== undefined) {
+          callback();
+        }
+
     });
 
   },
 
-  new: function (content, name) {
+  new: function (content, name, callback) {
 
     $.ajax({
         url: '?ajax_action=docsAjax',
@@ -36,6 +40,10 @@ dat.docs = {
     }).done(function(data) {
 
         console.log(data);
+
+        if (callback !== undefined) {
+          callback();
+        }
 
     });
 
@@ -64,16 +72,24 @@ dat.docs = {
 
     $(document).on("click", ".js-docs--save", function (e) {
       e.preventDefault();
-      var textarea = $(this).parents('.js-docs--element').find('.docs-textarea textarea.js-docs--txt');
-      var id = $(this).parents('.js-docs--element').attr('data-docs');
-      var name = $(this).parents('.js-docs--element').find('.js-docs--title').val();
-      var text = textarea.val();
+      var textarea    = $(this).parents('.js-docs--element').find('.docs-textarea textarea.js-docs--txt');
+      var id          = $(this).parents('.js-docs--element').attr('data-docs');
+      var name        = $(this).parents('.js-docs--element').find('.js-docs--title').val();
+      var text        = textarea.val();
+      var _this_btn   = $(this);
       // console.log(Boolean(id));
       // return;
+      if (_this_btn.hasClass('loading')) {
+        return false;
+      }
+      _this_btn.addClass('loading');
+      var callback = function() {
+        _this_btn.removeClass('loading');
+      }
       if (id) {
-        _this.edit(id, text, name);
+        _this.edit(id, text, name, callback);
       } else {
-        _this.new(text, name);
+        _this.new(text, name, callback);
       }
     });
 
