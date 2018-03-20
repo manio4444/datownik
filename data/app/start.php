@@ -91,6 +91,9 @@
   <pre>
     <?php echo 'Current PHP version: ' . phpversion(); ?>
   </pre>
+  <pre>
+    https://stackoverflow.com/questions/18377891/how-can-i-let-user-paste-image-data-from-the-clipboard-into-a-canvas-element-in
+  </pre>
 
 </section>
 

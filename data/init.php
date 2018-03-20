@@ -17,9 +17,12 @@ $list_ini_files = array(
 );
 
 foreach ($list_ini_files as $value) {
-	$ini_filename = FOLDER_INI . "/$value.ini";
-	if (file_exists($ini_filename)) $ini[$value] = parse_ini_file(FOLDER_INI . "/$value.ini");
-	else $error[] = "Problem z załadowaniem pliku konfiguracyjnego:  /$value.ini";
+  $ini_filename = FOLDER_INI . "/$value.ini";
+  if (file_exists($ini_filename)) {
+    $ini[$value] = parse_ini_file(FOLDER_INI . "/$value.ini");
+  } else {
+    $error[] = "Problem z załadowaniem pliku konfiguracyjnego:  /$value.ini";
+  }
 }
 // echo "<pre>";var_dump($ini);die();
 

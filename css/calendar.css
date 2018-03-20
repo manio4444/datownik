@@ -71,3 +71,18 @@ td.calendar-day p.day-event:hover .details { display: block; }
    border-left: 7px solid transparent;
    border-right: 7px solid transparent;
  }
+
+
+
+ .calendar__buttons {
+   display: flex;
+   flex-wrap: wrap;
+ }
+
+ .calendar__buttons > .ui {
+   margin-bottom: 5px;
+ }
+
+ .calendar__buttons > .ui:not(.first-of-type) {
+   margin-left: 5px;
+ }
