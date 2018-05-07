@@ -47,7 +47,19 @@ $(document).ready(function() {
   // timer();
   var tasksCounter = setInterval(timer, 1000); //1000 will  run it every 1 second
 
+  $('[data-task-check]').click(function() {
+  });
 
+  $('[data-task-details]').click(function() {
+    var task = $(this).parents('[data-task]');
+    if (task.length>0 && task.hasClass('details_open')) {
+      task.find('.field.disabled').slideUp();
+      task.removeClass('details_open');
+    } else if (task.length>0) {
+      task.find('.field.disabled').slideDown();
+      task.addClass('details_open');
+    }
+  });
 
 
 }); //end document ready

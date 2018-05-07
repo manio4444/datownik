@@ -7,16 +7,25 @@ $tasks = new tasks;
   <div class="todo_list">
 
 
-    <div class="ui card">
+    <div class="ui card task">
       <div class="content">
-        <div class="header">Jenny Hess</div>
-        <div class="description">
-          Jenny is a student studying Media Management at the New School
+        <div class="header">Nowy task</div>
+        <div class="description ui form">
+          <div class="field">
+            <label>tytuł:</label>
+            <input type="text" name="" value="">
+          </div>
+
+          <div class="field">
+            <label>deadline:</label>
+            <input type="text" name="" class="flatpickr" value="">
+          </div>
+
         </div>
       </div>
       <div class="ui bottom attached button">
         <i class="add icon"></i>
-        Add Friend
+        Dodaj nowy
       </div>
     </div>
 
@@ -24,43 +33,49 @@ $tasks = new tasks;
 
       <div class="ui card task" data-task="<?php echo $value['id']; ?>">
         <div class="content">
-          <div class="header">
-            <?php echo $value['txt']; ?>
-            <!-- <div class="ui fluid input" style="font-size:14px;">
-              <input type="text" name="" value="<?php echo $value['txt']; ?>">
-            </div> -->
-          </div>
-          <div class="meta">[id: <?php echo $value['id']; ?>]</div>
-          <div class="description">
-            <span>date_mk:</span>
-            <div class="ui fluid input disabled" style="font-size:14px;">
+          <div class="header"><?php echo $value['txt']; ?></div>
+          <div class="meta" data-task-details>szczegóły</div>
+
+          <div class="description ui form">
+            <div class="field disabled">
+              <label>id:</label>
+              <input type="text" name="" value="<?php echo $value['id']; ?>">
+            </div>
+
+            <div class="field disabled">
+              <label>date_mk:</label>
               <input type="text" name="" value="<?php echo $value['date_mk']; ?>">
             </div>
-            <br>
-            <span>deadline: <?php echo $value['deadline']; ?></span>
-            <div class="ui fluid input" style="font-size:14px;">
+
+            <div class="field">
+              <label>deadline:</label>
               <input type="text" name="" class="flatpickr" data-timer-deadline value="<?php echo $value['deadline']; ?>">
             </div>
-            <br>
-            <span>date_fn: <?php echo $value['date_fn']; ?></span>
-            <div class="ui fluid input disabled" style="font-size:14px;">
+
+            <div class="field disabled">
+              <label>date_fn:</label>
               <input type="text" name="" value="<?php echo $value['date_fn']; ?>">
             </div>
-            <br>
-            <span>finished: <input type="checkbox" <?php echo ($value['finished']>0 ? 'checked ' : null); ?>></span><br>
-            <span>countdown: </span><span class="counter"></span>
-            <div class="ui fluid input" style="font-size:14px;">
+
+            <div class="field disabled">
+              <label>finished:</label>
+              <input type="text" name="" value="<?php echo $value['finished']; ?>">
+            </div>
+
+            <div class="field">
+              <label>countdown:</label>
               <input type="text" name="" data-timer-output value="">
             </div>
-            <br>
+
+            <div class="field">
+              <label>txt:</label>
+              <textarea rows="2"><?php echo $value['txt']; ?></textarea>
+            </div>
           </div>
         </div>
-        <div class="content">
-          txt:
-          <textarea><?php echo $value['txt']; ?></textarea>
-        </div>
 
-        <button class="ui teal button">
+
+        <button class="ui teal button" data-task->
           <i class="square outline icon"></i>
           Zrobione
         </button>

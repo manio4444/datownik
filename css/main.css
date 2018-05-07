@@ -262,7 +262,12 @@ main {
 .todo_list .task {
 }
 
-.todo_list .task {
+.todo_list .task .field {
+      font-size: 14px;
+}
+
+.todo_list .task .field.disabled {
+      display: none;
 }
 
 
