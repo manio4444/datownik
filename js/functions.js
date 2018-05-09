@@ -7,7 +7,6 @@ $.fn.outerHTML = function() {
 };
 
 function timer(tasksAll) {
-  console.log('second');
   var tasksAll = document.querySelectorAll('[data-task]');
   if (tasksAll) {
     for (var i = 0; i < tasksAll.length; i++) {

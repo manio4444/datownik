@@ -155,6 +155,7 @@ body:not(.nav_open) header {
 
 body.nav_open main {
   filter: blur(4px);
+  pointer-events: none;
 }
 
 @media (max-width: 1023px) {

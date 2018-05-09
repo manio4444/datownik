@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(function() {
 
 
   $("[href]").each(function() {
@@ -10,14 +10,16 @@ $(document).ready(function() {
     $('body').toggleClass("nav_open");
   });
 
-  // $(document).on('click', '', function(event) {
-  //   var target = $(event.target);
-  //   // console.log(target);
-  //   if (!target.parents('header').length && $('body').hasClass("nav_open")) {
-  //     console.log('klik poza');
-  //     $('body').toggleClass("nav_open");
-  //   }
-  // });
+  $(document).on('click', '', function(event) {
+    var target = $(event.target);
+    if (
+      $('body').hasClass("nav_open")
+      && target.closest('header').length === 0
+      && target.closest('.hamburger').length === 0
+    ) {
+      $('body').removeClass("nav_open");
+    }
+  });
 
   $('.dropdown').dropdown();
 
