@@ -18,18 +18,23 @@ function timer(tasksAll) {
 
       if (deadlineTs > nowTs) {
         outputReturn = getTimerCounted(nowTs, deadlineTs);
-        console.log(outputReturn);
         output.parentNode.classList.remove('error');
       } else {
         outputReturn = getTimerCounted(nowTs, deadlineTs);
-        console.log(outputReturn);
         output.parentNode.classList.add('error');
       }
-      output.value = ''
+
+      var returnValue = ''
       + outputReturn.days + 'Dni, '
       + outputReturn.hours + 'Godz. '
       + outputReturn.minutes + 'Min. '
       + outputReturn.seconds + 'Sek.';
+
+      if (output.tagName.toLowerCase() === 'input') {
+        output.value = returnValue;
+      } else {
+        output.innerHTML = returnValue;
+      }
     }
   }
 }

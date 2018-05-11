@@ -13,7 +13,7 @@ class Router {
     ),
     'kalendarz' => array(
       'viewFileName' => 'kalendarz.php',
-      'classFileName' => '',
+      'classFileName' => 'calendar.php',
     ),
     'zakladki' => array(
       'viewFileName' => 'urladd.php',

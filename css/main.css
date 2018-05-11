@@ -99,13 +99,22 @@ pre.error {
 }
 
 main section pre {
-  margin: 12px 0;
+  margin: 0 0 12px 0;
+}
+
+#main_page {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 #main_page .start_form {
+  flex-grow: 1;
+  flex-basis: 50%;
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
+  align-content: flex-start;
   margin-bottom: 25px;
 }
 
@@ -115,10 +124,17 @@ main section pre {
 
 #main_page .start_form textarea {
   margin-right: 20px;
+  width: 100%;
 }
 
 #main_page [name="urladd"] {
   /* margin-bottom: 25px; */
+}
+
+#main_page .main_page_dates {
+ flex-grow: 1;
+ flex-basis: 50%;
+ margin-bottom: 25px;
 }
 
 #main_page_notes .notes_title {

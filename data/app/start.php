@@ -5,53 +5,6 @@
     <textarea name="urladd" rows="5" cols="100"><?php echo isset($_GET['urladd']) ? $_GET['urladd'] : null; ?></textarea>
 
 
-
-    <div class="ui icon right pointing dropdown button">
-  <div class="text">File</div>
-  <i class="dropdown icon"></i>
-  <div class="menu">
-    <div class="item">New</div>
-    <div class="item">
-      <span class="description">ctrl + o</span>
-      Open...
-    </div>
-    <div class="item">
-      <span class="description">ctrl + s</span>
-      Save as...
-    </div>
-    <div class="item">
-      <span class="description">ctrl + r</span>
-      Rename
-    </div>
-    <div class="item">Make a copy</div>
-    <div class="item">
-      <i class="folder icon"></i>
-      Move to folder
-    </div>
-    <div class="item">
-      <i class="trash icon"></i>
-      Move to trash
-    </div>
-    <div class="divider"></div>
-    <div class="item">Download As...</div>
-    <div class="item">
-      <i class="dropdown icon"></i>
-      Publish To Web
-      <div class="menu">
-        <div class="item">Google Docs</div>
-        <div class="item">Google Drive</div>
-        <div class="item">Dropbox</div>
-        <div class="item">Adobe Creative Cloud</div>
-        <div class="item">Private FTP</div>
-        <div class="item">Another Service...</div>
-      </div>
-    </div>
-    <div class="item">E-mail Collaborators</div>
-  </div>
-</div>
-
-
-
     <div class="ui vertical buttons">
       <button type="send" name="action" class="ui labeled icon disabled button" value="zadanie">
         <i class="checked calendar icon"></i>
@@ -84,6 +37,52 @@
     </div>
   </form>
 
+  <div class="main_page_dates">
+
+    <h1 class="start_form_title">Kalendarz:</h1>
+
+    <?php
+    // SELECT *  FROM `calendar_static` WHERE `data` > CURRENT_TIMESTAMP ORDER BY `calendar_static`.`data` ASC LIMIT 10
+
+    if (Router::importViewClass('kalendarz')) {
+
+      $calendar = new calendar;
+
+      if ($calendar->getFutureEvents()->rowCount() > 0) {
+
+        foreach ($calendar->getFutureEvents() as $value) : ?>
+
+        <div class="ui card task" data-task="<?php echo $value['id']; ?>">
+          <input type="hidden" data-timer-deadline value="<?php echo $value['data']; ?>">
+          <div class="content">
+            <div class="header"><?php echo $value['txt']; ?></div>
+            <div class="meta"><?php echo $value['data']; ?></div>
+
+          </div>
+          <div class="content">
+            <span type="text" name="" data-timer-output value="">&nbsp;</span>
+
+          </div>
+        </div>
+
+        <?php
+        endforeach;
+
+      } else {
+
+        echo "<pre>";
+        echo "Brak nadchodzących wydarzeń z kalendarza";
+        echo "</pre>";
+
+
+      }
+
+
+    }
+
+    ?>
+
+  </div>
 
   <pre>
     <span>javascript:(function(){var win = window.open('http://studiocitrus.pl/datownik/?urladd='+window.location.href, '_blank'); win.focus();})();</span>
