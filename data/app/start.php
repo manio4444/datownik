@@ -1,40 +1,50 @@
 <section id="main_page">
 
   <form method="POST" class="start_form">
+
     <h1 class="start_form_title">Multicontent:</h1>
     <textarea name="urladd" rows="5" cols="100"><?php echo isset($_GET['urladd']) ? $_GET['urladd'] : null; ?></textarea>
 
 
     <div class="ui vertical buttons">
-      <button type="send" name="action" class="ui labeled icon disabled button" value="zadanie">
-        <i class="checked calendar icon"></i>
-        Zadanie
+
+      <button type="send" name="action" class="ui labeled icon button" value="zadanie">
+        <span class="far fa-calendar-check icon"></span>
+        <span>Zadanie</span>
       </button>
+
       <button type="send" name="action" class="ui labeled icon button" value="wydarzenie">
-        <i class="calendar icon"></i>
-        Wydarzenie
+        <span class="far fa-calendar icon"></span>
+        <span>Wydarzenie</span>
       </button>
+
       <button type="send" name="action" class="ui labeled icon button" value="zakladka">
-        <i class="external icon"></i>
-        Zakładka
+        <span class="fas fa-external-link-square-alt icon"></span>
+        <span>Zakładka</span>
       </button>
+
       <button type="send" name="action" class="ui labeled icon button" value="notatka">
-        <i class="sticky note outline icon"></i>
-        Notatka
+        <span class="far fa-sticky-note icon"></span>
+        <span>Notatka</span>
       </button>
+
       <button type="send" name="action" class="ui labeled icon disabled button" value="dokument">
-        <i class="calendar icon"></i>
-        Dokument
+        <span class="far fa- icon"></span>
+        <span>Dokument</span>
       </button>
+
       <button type="send" name="action" class="ui labeled icon disabled button" value="kontakt">
-        <i class="calendar icon"></i>
-        Kontakt
+        <span class="far fa- icon"></span>
+        <span>Kontakt</span>
       </button>
+
       <button type="send" name="action" class="ui labeled icon disabled button" value="kod/haslo">
-        <i class="calendar icon"></i>
-        Kod/hasło
+        <span class="far fa- icon"></span>
+        <span>Kod/hasło</span>
       </button>
+
     </div>
+
   </form>
 
   <div class="main_page_dates">
@@ -52,14 +62,15 @@
 
         foreach ($calendar->getFutureEvents() as $value) : ?>
 
-        <div class="ui card task" data-task="<?php echo $value['id']; ?>">
+        <div class="ui card red task" data-task="<?php echo $value['id']; ?>">
           <input type="hidden" data-timer-deadline value="<?php echo $value['data']; ?>">
           <div class="content">
             <div class="header"><?php echo $value['txt']; ?></div>
             <div class="meta"><?php echo $value['data']; ?></div>
 
           </div>
-          <div class="content">
+          <div class="extra content">
+            <i class="fas fa-stopwatch"></i>
             <span type="text" name="" data-timer-output value="">&nbsp;</span>
 
           </div>
@@ -83,6 +94,57 @@
     ?>
 
   </div>
+
+
+  <div class="main_page_dates">
+
+    <h1 class="start_form_title">To do:</h1>
+
+    <?php
+    // SELECT *  FROM `calendar_static` WHERE `data` > CURRENT_TIMESTAMP ORDER BY `calendar_static`.`data` ASC LIMIT 10
+
+    // if (Router::importViewClass('kalendarz')) {
+    if (1===1) {
+
+      // $calendar = new calendar;
+
+      if ($calendar->getFutureEvents()->rowCount() > 0) {
+
+        foreach ($calendar->getFutureEvents() as $value) : ?>
+
+        <div class="ui card teal task" data-task="<?php echo $value['id']; ?>">
+          <input type="hidden" data-timer-deadline value="<?php echo $value['data']; ?>">
+          <div class="content">
+            <div class="header"><?php echo $value['txt']; ?></div>
+            <div class="meta"><?php echo $value['data']; ?></div>
+
+          </div>
+          <div class="extra content">
+            <i class="fas fa-stopwatch"></i>
+            <span type="text" name="" data-timer-output value="">&nbsp;</span>
+
+          </div>
+        </div>
+
+        <?php
+        endforeach;
+
+      } else {
+
+        echo "<pre>";
+        echo "Brak nadchodzących zadań";
+        echo "</pre>";
+
+
+      }
+
+
+    }
+
+    ?>
+
+  </div>
+
 
   <pre>
     <span>javascript:(function(){var win = window.open('http://studiocitrus.pl/datownik/?urladd='+window.location.href, '_blank'); win.focus();})();</span>
