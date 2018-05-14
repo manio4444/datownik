@@ -60,7 +60,7 @@
 
       if ($calendar->getFutureEvents()->rowCount() > 0) {
 
-        foreach ($calendar->getFutureEvents() as $value) : ?>
+        foreach ($calendar->getFutureEvents(5) as $value) : ?>
 
         <div class="ui card red task" data-task="<?php echo $value['id']; ?>">
           <input type="hidden" data-timer-deadline value="<?php echo $value['data']; ?>">
@@ -110,7 +110,7 @@
 
       if ($calendar->getFutureEvents()->rowCount() > 0) {
 
-        foreach ($calendar->getFutureEvents() as $value) : ?>
+        foreach ($calendar->getFutureEvents(5) as $value) : ?>
 
         <div class="ui card teal task" data-task="<?php echo $value['id']; ?>">
           <input type="hidden" data-timer-deadline value="<?php echo $value['data']; ?>">

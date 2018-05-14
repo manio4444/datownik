@@ -15,7 +15,7 @@ class calendar extends defaultController {
 
   public function getFutureEvents($limit = 10) {
 
-    $query = $this->getInstance()->query('SELECT * FROM `calendar_static` WHERE `data` > CURRENT_TIMESTAMP ORDER BY `calendar_static`.`data` ASC LIMIT 10');
+    $query = $this->getInstance()->query('SELECT * FROM `calendar_static` WHERE `data` > CURRENT_TIMESTAMP ORDER BY `calendar_static`.`data` ASC LIMIT '.$limit.'');
 
     return $query;
 
