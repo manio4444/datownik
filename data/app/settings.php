@@ -51,16 +51,10 @@ echo '
   <tfoot class="full-width">
     <tr>
       <th></th>
-      <th colspan="4">
-        <div class="ui right floated small primary labeled icon button">
-          <i class="user icon"></i> Add User
-        </div>
-        <div class="ui small  button">
-          Approve
-        </div>
-        <div class="ui small  disabled button">
-          Approve All
-        </div>
+      <th colspan="4" class="right aligned">
+        <a class="ui button orange" href="?page=debug">
+          Debug info
+        </a>
       </th>
     </tr>
   </tfoot>
