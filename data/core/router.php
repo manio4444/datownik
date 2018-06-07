@@ -43,6 +43,9 @@ class Router {
       'viewFileName' => 'docs.php',
       'classFileName' => 'docs.php',
     ),
+    'debug' => array(
+      'viewFileName' => 'debug.php',
+    ), 
   );
 
   public static function getGetParams($name) {

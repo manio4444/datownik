@@ -25,10 +25,10 @@ function timer(tasksAll) {
       }
 
       var returnValue = ''
-      + outputReturn.days + 'Dni, '
-      + outputReturn.hours + 'Godz. '
-      + outputReturn.minutes + 'Min. '
-      + outputReturn.seconds + 'Sek.';
+      + outputReturn.days + ' Dni, '
+      + outputReturn.hours + ' Godz. '
+      + outputReturn.minutes + ' Min. '
+      + outputReturn.seconds + ' Sek.';
 
       if (output.tagName.toLowerCase() === 'input') {
         output.value = returnValue;
