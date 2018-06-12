@@ -13,6 +13,10 @@ function timer(tasksAll) {
       var deadline = tasksAll[i].querySelector('[data-timer-deadline]');
       var output = tasksAll[i].querySelector('[data-timer-output]');
 
+      if (!deadline) {
+        continue;
+      }
+
       var nowTs = new Date().getTime();
       var deadlineTs = new Date(deadline.value).getTime();
 

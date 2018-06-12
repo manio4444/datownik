@@ -7,7 +7,7 @@ $tasks = new tasks;
   <div class="todo_list">
 
 
-    <div class="ui card task">
+    <div class="ui card task" data-task>
       <div class="content">
         <div class="header">Nowy task</div>
         <div class="description ui form">
@@ -16,14 +16,22 @@ $tasks = new tasks;
             <input type="text" name="" value="">
           </div>
 
-          <div class="field">
+          <div class="field deadline">
             <label>deadline:</label>
-            <input type="text" name="" class="flatpickr" value="">
+            <div class="ui icon input">
+              <input type="text" name="" class="flatpickr" value="">
+              <i class="fas fa-trash icon link" data-task-deadlock></i>
+            </div>
+          </div>
+
+          <div class="field disabled">
+            <label>no_deadline:</label>
+            <input type="text" name="no_deadline">
           </div>
 
         </div>
       </div>
-      <div class="ui bottom attached button">
+      <div class="ui bottom attached button" data-task-save>
         <i class="add icon"></i>
         Dodaj nowy
       </div>
@@ -47,9 +55,17 @@ $tasks = new tasks;
               <input type="text" name="" value="<?php echo $value['date_mk']; ?>">
             </div>
 
-            <div class="field">
+            <div class="field deadline">
               <label>deadline:</label>
-              <input type="text" name="" class="flatpickr" data-timer-deadline value="<?php echo $value['deadline']; ?>">
+              <div class="ui icon input">
+                <input type="text" name="" class="flatpickr" data-timer-deadline value="<?php echo $value['deadline']; ?>">
+                <i class="fas fa-trash icon link" data-task-deadlock></i>
+              </div>
+            </div>
+
+            <div class="field disabled">
+              <label>no_deadline:</label>
+              <input type="text" name="no_deadline" value="<?php echo $value['no_deadline']; ?>">
             </div>
 
             <div class="field disabled">
@@ -67,7 +83,7 @@ $tasks = new tasks;
               <input type="text" name="" data-timer-output value="">
             </div>
 
-            <div class="field">
+            <div class="field disabled">
               <label>txt:</label>
               <textarea rows="2"><?php echo $value['txt']; ?></textarea>
             </div>

@@ -49,7 +49,22 @@ $(function() {
   // timer();
   var tasksCounter = setInterval(timer, 1000); //1000 will  run it every 1 second
 
-  $('[data-task-check]').click(function() {
+  $('[data-task-deadlock]').click(function() {
+    var task = $(this).parents('[data-task]');
+    var deadlocker = task.find('[name="no_deadline"]');
+    var field_deadline = task.find('.field.deadline');
+
+    if (!deadlocker) {
+      return;
+    }
+
+    if (deadlocker.val() === '1') {
+      deadlocker.val(0);
+      field_deadline.removeClass('no-deadline');
+    } else {
+      deadlocker.val(1);
+      field_deadline.addClass('no-deadline');
+    }
   });
 
   $('[data-task-details]').click(function() {
@@ -63,5 +78,13 @@ $(function() {
     }
   });
 
+  $('[data-task-save]').click(function() {
+    var task = $(this).parents('[data-task]');
+    var deadlocker = task.find('[name="no_deadline"]');
+
+    console.log('######### SAVE #########');
+
+
+  });
 
 }); //end document ready
