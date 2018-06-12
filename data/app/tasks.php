@@ -7,19 +7,20 @@ $tasks = new tasks;
   <div class="todo_list">
 
 
-    <div class="ui card task" data-task>
+    <form method="post" class="ui card task" data-task>
+      <input type="hidden" name="task_id" value="">
       <div class="content">
         <div class="header">Nowy task</div>
         <div class="description ui form">
           <div class="field">
             <label>tytuł:</label>
-            <input type="text" name="" value="">
+            <input type="text" name="txt" value="">
           </div>
 
           <div class="field deadline">
             <label>deadline:</label>
             <div class="ui icon input">
-              <input type="text" name="" class="flatpickr" value="">
+              <input type="text" name="deadline" class="flatpickr" value="">
               <i class="fas fa-trash icon link" data-task-deadlock></i>
             </div>
           </div>
@@ -35,11 +36,11 @@ $tasks = new tasks;
         <i class="add icon"></i>
         Dodaj nowy
       </div>
-    </div>
+    </form>
 
     <?php foreach ($tasks->sqlReturn as $value) : ?>
 
-      <div class="ui card task" data-task="<?php echo $value['id']; ?>">
+      <form class="ui card task" data-task="<?php echo $value['id']; ?>">
         <div class="content">
           <div class="header"><?php echo $value['txt']; ?></div>
           <div class="meta" data-task-details>szczegóły</div>
@@ -47,7 +48,7 @@ $tasks = new tasks;
           <div class="description ui form">
             <div class="field disabled">
               <label>id:</label>
-              <input type="text" name="" value="<?php echo $value['id']; ?>">
+              <input type="text" name="id" value="<?php echo $value['id']; ?>">
             </div>
 
             <div class="field disabled">
@@ -58,7 +59,7 @@ $tasks = new tasks;
             <div class="field deadline">
               <label>deadline:</label>
               <div class="ui icon input">
-                <input type="text" name="" class="flatpickr" data-timer-deadline value="<?php echo $value['deadline']; ?>">
+                <input type="text" name="deadline" class="flatpickr" data-timer-deadline value="<?php echo $value['deadline']; ?>">
                 <i class="fas fa-trash icon link" data-task-deadlock></i>
               </div>
             </div>
@@ -95,7 +96,7 @@ $tasks = new tasks;
           <i class="square outline icon"></i>
           Zrobione
         </button>
-      </div>
+      </form>
 
     <?php endforeach; ?>
 

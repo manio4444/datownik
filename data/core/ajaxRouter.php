@@ -29,24 +29,9 @@ class ajaxRouter extends database {
       return null;
     }
 
-    header("Access-Control-Allow-Origin: *");
-    header("Content-Type: application/json; charset=UTF-8");
-    header("Access-Control-Allow-Methods: POST");
-    header("Access-Control-Max-Age: 3600");
-    header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-
-    ob_start();
+    static::startAjaxOutput();
     $data = static::doAjax();
-    $content = ob_get_contents();
-    ob_end_clean();
-
-    echo json_encode(
-      array(
-        'data' => $data,
-        'content' => $content,
-      )
-    );
-    die();
+    static::endAjaxOutput($data);
   }
 
   private function existsAjaxController() {
@@ -86,6 +71,29 @@ class ajaxRouter extends database {
     if (isset($ajaxController) && class_exists($ajaxController)) {
       $controller = new $ajaxController;
     }
+  }
+
+  public function startAjaxOutput() {
+    header("Access-Control-Allow-Origin: *");
+    header("Content-Type: application/json; charset=UTF-8");
+    header("Access-Control-Allow-Methods: POST");
+    header("Access-Control-Max-Age: 3600");
+    header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+
+    ob_start();
+  }
+
+  public function endAjaxOutput($data) {
+    $content = ob_get_contents();
+    ob_end_clean();
+
+    echo json_encode(
+      array(
+        'data' => $data,
+        'content' => $content,
+      )
+    );
+    die();
   }
 
 }

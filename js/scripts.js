@@ -84,6 +84,7 @@ $(function() {
 
     console.log('######### SAVE #########');
 
+    task.submit();
 
   });
 
