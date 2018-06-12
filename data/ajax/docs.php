@@ -5,8 +5,6 @@
 // class docsAjax extends docs {
 class docsAjax extends defaultController {
 
-  private $dbInstance;
-
   public function render() {
 
     // var_dump($this->getInstance()); die();
