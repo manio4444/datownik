@@ -11,7 +11,7 @@ class System {
     echo "<pre class='error'>! Error - $value</pre>";
   }
 
-  public function headerBack($value) {
+  public function headerBack() {
     header("Location:" . get_url());
     exit;
   }
