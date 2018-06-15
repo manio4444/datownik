@@ -56,7 +56,7 @@ $tasks = new tasks;
               <input type="text" name="" value="<?php echo $value['date_mk']; ?>">
             </div>
 
-            <div class="field deadline">
+            <div class="field deadline<?php if($value['no_deadline']==="1") echo " no-deadline"; ?>">
               <label>deadline:</label>
               <div class="ui icon input">
                 <input type="text" name="deadline" class="flatpickr" data-timer-deadline value="<?php echo $value['deadline']; ?>">
