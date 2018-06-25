@@ -108,7 +108,12 @@ class Router {
           include($classFileName);
       }
 
+      ob_start();
       include($viewFileName);
+      $viewOutput = ob_get_contents();
+      ob_end_clean();
+      return $viewOutput;
+
 
     }
 

@@ -21,6 +21,8 @@ include_once('data/operations.php');
 * TEMPLATE PART
 * in future move to layout.php views controller
 */
+
+ob_start();
 include('data/view/head.php'); //template up to body tag
 
 // TODO dodać zamiast tego poniżej klasę do sprawdzania uprawnień
@@ -29,11 +31,13 @@ if (@$_COOKIE['admin']!=1) {
 } else {
   include('data/view/header.php');
 
-
-   Router::prepareView();
-
+  echo Router::prepareView();
 
 } // koniec else w ktory jest wszystko poza lockscreenem
+
+$tempateOutput = ob_get_contents();
+ob_end_clean();
+echo $tempateOutput;
 
 include('data/view/footer.php');
 /*
