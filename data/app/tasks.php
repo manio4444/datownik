@@ -43,7 +43,7 @@ $tasks = new tasks;
       <form class="ui card task" data-task="<?php echo $value['id']; ?>">
         <div class="content">
           <div class="header"><?php echo $value['txt']; ?></div>
-          <div class="meta" data-task-details>szczegóły</div>
+          <div class="meta" data-task-details><span class="far fa-eye"></span></div>
 
           <div class="description ui form">
             <div class="field disabled">
@@ -87,6 +87,10 @@ $tasks = new tasks;
             <div class="field disabled">
               <label>txt:</label>
               <textarea rows="2"><?php echo $value['txt']; ?></textarea>
+            </div>
+
+            <div class="field disabled delete">
+              <div class="ui button fluid" data-task-delete>Usuń</div>
             </div>
           </div>
         </div>

@@ -321,6 +321,10 @@ main {
       display: none;
 }
 
+.todo_list .task .field.disabled.delete {
+      pointer-events: auto;
+}
+
 .todo_list .task [data-task-details] {
   cursor: pointer;
 }

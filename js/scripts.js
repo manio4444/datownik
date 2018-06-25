@@ -79,12 +79,42 @@ $(function() {
   });
 
   $('[data-task-save]').click(function() {
-    var task = $(this).parents('[data-task]');
+    var task = $(this).closest('[data-task]');
     var deadlocker = task.find('[name="no_deadline"]');
 
     console.log('######### SAVE #########');
 
     task.submit();
+
+  });
+
+  $('[data-task-delete]').click(function() {
+
+    var deleteContainer = $(this).closest('.field.delete');
+    var task = $(this).closest('[data-task]');
+    var id = task.attr('[data-task]');
+
+    deleteContainer.addClass('loading');
+
+    $.ajax({
+        url: '?ajax_action=tasksAjax',
+        method: 'POST',
+        data: {
+            operation   :'delTask',
+            id          : id,
+        }
+    }).done(function(data) {
+
+      deleteContainer.removeClass('loading');
+
+      if (data.data.status !== 200) {
+        console.log(data);
+        return;
+      }
+
+      // TODO tutaj usuwanie
+
+    });
 
   });
 
