@@ -1,17 +1,31 @@
 <?php
 
-if (!include_once("data/init.php")) { echo "<p>[!] Błąd krytyczny systemu - nie można zaimplementować pliku inicjującego.</p><p>[!] die();</p>"; die();  } //pobiera funkcje
-if (!include_once("data/functions.php")) { echo "<p>[!] Błąd krytyczny systemu - nie można zaimplementować pliku z funkcjami.</p><p>[!] die();</p>"; die();  } //pobiera funkcje
-if (!include_once("data/db.php")) { echo "<p>[!] Błąd krytyczny systemu - nie można zaimplementować pliku z połączeniem SQL.</p><p>[!] die();</p>"; die();  } //pobiera funkcje
-if (!include_once('data/core/router.php')) { echo "<p>[!] Błąd krytyczny systemu - nie można zaimplementować pliku z routingiem.</p><p>[!] die();</p>"; die();  } //pobiera funkcje
+$baseIncludes[] = "data/init.php";
+$baseIncludes[] = "data/functions.php";
+$baseIncludes[] = "data/db.php";
+$baseIncludes[] = 'data/core/router.php';
+$baseIncludes[] = "data/core/system.php";
+$baseIncludes[] = "data/core/database.php";
+$baseIncludes[] = "data/core/defaultController.php";
 
-if (!include_once("data/core/system.php")) { echo "<p>[!] Błąd krytyczny systemu - nie można zaimplementować pliku z klasą obsługi systemu.</p><p>[!] die();</p>"; die();  } //pobiera funkcje
-if (!include_once("data/core/database.php")) { echo "<p>[!] Błąd krytyczny systemu - nie można zaimplementować pliku z połączeniem SQL.</p><p>[!] die();</p>"; die();  } //pobiera funkcje
-if (!include_once("data/core/defaultController.php")) { echo "<p>[!] Błąd krytyczny systemu - nie można zaimplementować pliku z klasą dla kontrolerów.</p><p>[!] die();</p>"; die();  } //pobiera funkcje
+try {
+  foreach ($baseIncludes as $key => $value) {
+    if (file_exists($value) && is_readable($value)) {
+      include_once($value);
+    } else {
+      throw new Exception('Nie można załadować pliku: ' . $value);
+    }
+  }
+} catch (Exception $e) {
+  echo 'Błąd krytyczny systemu: '.$e->getMessage();
+  die;
+}
 
+// TODO docelowo pozbyć się oddzielnego routera do ajaxa ???
 include_once('data/core/ajaxRouter.php');
 ajaxRouter::tryAjax();
 
+// TODO docelowo poprzenosić operacje do konkretnych modelów
 include_once('data/operations.php');
 
 
