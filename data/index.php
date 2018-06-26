@@ -13,7 +13,7 @@ try {
     if (file_exists($value) && is_readable($value)) {
       include_once($value);
     } else {
-      throw new Exception('Nie można załadować pliku: ' . $value);
+      throw new Exception('[BASE] - Nie można załadować pliku: ' . $value);
     }
   }
 } catch (Exception $e) {

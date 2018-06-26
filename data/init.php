@@ -5,6 +5,7 @@ define("FOLDER_INI", "data/config");
 define("FOLDER_CLASSES", "data/class");
 define("FOLDER_APPS", "data/app");
 define("FOLDER_AJAX", "data/ajax");
+define("FOLDER_CONTROLLERS", "data/controllers");
 
 define("DEFAULT_VIEW", "start");
 define("DEFAULT_TITLE", "Datownik");
