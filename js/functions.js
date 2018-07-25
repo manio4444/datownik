@@ -17,22 +17,27 @@ function timer(tasksAll) {
         continue;
       }
 
-      var nowTs = new Date().getTime();
-      var deadlineTs = new Date(deadline.value).getTime();
-
-      if (deadlineTs > nowTs) {
-        outputReturn = getTimerCounted(nowTs, deadlineTs);
-        output.parentNode.classList.remove('error');
+      if (deadline.value == '' || deadline.value == '0000-00-00 00:00:00') {
+        returnValue = null;
       } else {
-        outputReturn = getTimerCounted(nowTs, deadlineTs);
-        output.parentNode.classList.add('error');
-      }
 
-      var returnValue = ''
-      + outputReturn.days + ' Dni, '
-      + outputReturn.hours + ' Godz. '
-      + outputReturn.minutes + ' Min. '
-      + outputReturn.seconds + ' Sek.';
+        var nowTs = new Date().getTime();
+        var deadlineTs = new Date(deadline.value).getTime();
+
+        if (deadlineTs > nowTs) {
+          outputReturn = getTimerCounted(nowTs, deadlineTs);
+          output.parentNode.classList.remove('error');
+        } else {
+          outputReturn = getTimerCounted(nowTs, deadlineTs);
+          output.parentNode.classList.add('error');
+        }
+
+        var returnValue = ''
+        + outputReturn.days + ' Dni, '
+        + outputReturn.hours + ' Godz. '
+        + outputReturn.minutes + ' Min. '
+        + outputReturn.seconds + ' Sek.';
+      }
 
       if (output.tagName.toLowerCase() === 'input') {
         output.value = returnValue;
