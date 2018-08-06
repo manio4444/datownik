@@ -346,10 +346,20 @@ main {
   width: 1.3em;
 }
 
+#upload {
+}
 
+#upload [name="file_upload"] {
+  background-color: #ddd;
+}
 
+#upload .filelist__element {
+  line-height: 26px;
+}
 
-
+#upload .filelist__element:nth-child(odd) {
+  background-color: #ddd;
+}
 
 
 

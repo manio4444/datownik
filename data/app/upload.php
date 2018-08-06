@@ -1,14 +1,25 @@
-<section>
+<section id="upload">
   <form action="" method="post" enctype="multipart/form-data">
-    Wybierz pliki do wrzucenia:<br><br>
-    <input type="file" name="file_upload"><br><br>
+    Wybierz pliki do wrzucenia:
     <br>
-    <input type="submit" value="Upload Image" name="submit">
+    <br>
+    <input type="file" name="file_upload">
+    <br>
+    <br>
+    <input type="submit" value="Upload" name="submit" class="ui green button">
+    <br>
+    <br>
   </form>
 
-  <div class="filelist">
-    <?php foreach (scandir('upload') as $key => $value) {
-      echo "<a href='upload/$value'>$value</a><br>";
+  <ul class="filelist">
+    <?php
+    $excluded_filelist = array('.', '..');
+    foreach (array_diff(scandir('upload'), $excluded_filelist) as $key => $value) {
+      echo "
+      <li class='filelist__element'>
+        
+        <a href='upload/$value'>$value</a>
+      </li>";
     } ?>
-  </div>
+  </ul>
 </section>
