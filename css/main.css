@@ -314,24 +314,24 @@ main {
 }
 
 .todo_list .task .field {
-      font-size: 14px;
+  font-size: 14px;
 }
 
 .todo_list .task .field.disabled {
-      display: none;
-}
-
-.todo_list .task .field.disabled.delete {
-      pointer-events: auto;
+  display: none;
 }
 
 .todo_list .task [data-task-details] {
   cursor: pointer;
 }
 
-.todo_list .task .flatpickr + .icon.fa-trash {
-  font-size: 1.6em;
-  width: 1.6em;
+.todo_list .task .flatpickr + i.toggle-deadline {
+  line-height: 1.2142em;
+  padding: .67861429em 1em;
+  width: auto;
+  background-color: rgba(34,36,38,.15);
+  border-left: 1px solid rgba(34,36,38,.15);
+  font-family: inherit;
 }
 
 .todo_list .task .field.deadline.no-deadline input[type="text"].flatpickr {
@@ -339,11 +339,10 @@ main {
   pointer-events: none;
 }
 
-.todo_list .task .field.deadline.no-deadline .flatpickr + .icon.fa-trash {
-  color: red;
+.todo_list .task .field.deadline.no-deadline .flatpickr + i.toggle-deadline {
+  background-color: rgba(245, 91, 80, 1);
   opacity: 1;
-  font-size: 2em;
-  width: 1.3em;
+  color: white;
 }
 
 #upload {

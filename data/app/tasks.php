@@ -43,7 +43,7 @@ $tasks = new tasks;
       <form class="ui card task" data-task="<?php echo $value['id']; ?>">
         <div class="content">
           <div class="header"><?php echo $value['txt']; ?></div>
-          <div class="meta" data-task-details><span class="far fa-eye"></span></div>
+          <span data-task-details class="meta far fa-eye"></span>
 
           <div class="description ui form">
             <div class="field disabled">
@@ -60,7 +60,7 @@ $tasks = new tasks;
               <label>deadline:</label>
               <div class="ui icon input">
                 <input type="text" name="deadline" class="flatpickr" data-timer-deadline value="<?php echo $value['deadline']; ?>">
-                <i class="fas fa-trash icon link" data-task-deadlock></i>
+                <i class="toggle-deadline icon link" data-task-deadlock>WYŁ</i>
               </div>
             </div>
 
