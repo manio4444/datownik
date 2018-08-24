@@ -117,7 +117,7 @@ class Router {
 
     }
 
-    public function importViewClass($viewName) {
+    public static function importViewClass($viewName) {
 
       $classFileName = FOLDER_CLASSES . "/" . Router::getClassFileName($viewName);
       if (!Router::isClassExists($viewName)) {

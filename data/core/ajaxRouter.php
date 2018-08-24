@@ -13,7 +13,7 @@ class ajaxRouter extends database {
     ),
   );
 
-  public function detectAjax() {
+  public static function detectAjax() {
     if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH'])=='xmlhttprequest') {
       return true;
     } else {
@@ -21,7 +21,7 @@ class ajaxRouter extends database {
     }
   }
 
-  public function tryAjax() {
+  public static function tryAjax() {
     if (static::detectAjax() === false) {
       return null;
     }
