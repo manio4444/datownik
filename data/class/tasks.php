@@ -71,6 +71,14 @@ class tasks extends defaultController {
 
   }
 
+  public function getTasksWidget($limit = 10) {
+
+    $query = $this->getInstance()->query('SELECT * FROM `tasks` WHERE `finished` = 0 ORDER BY `id` DESC LIMIT '.$limit.'');
+
+    return $query;
+
+  }
+
 }
 
 ?>

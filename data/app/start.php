@@ -52,46 +52,39 @@
     <h1 class="start_form_title">Kalendarz:</h1>
 
     <?php
-    // SELECT *  FROM `calendar_static` WHERE `data` > CURRENT_TIMESTAMP ORDER BY `calendar_static`.`data` ASC LIMIT 10
 
-    if (Router::importViewClass('kalendarz')) {
+    $calendar = new calendar;
 
-      $calendar = new calendar;
+    if ($calendar->getFutureEvents()->rowCount() > 0) {
 
-      if ($calendar->getFutureEvents()->rowCount() > 0) {
+      foreach ($calendar->getFutureEvents(5) as $value) : ?>
 
-        foreach ($calendar->getFutureEvents(5) as $value) : ?>
+      <div class="ui card red task" data-task="<?php echo $value['id']; ?>">
+        <input type="hidden" data-timer-deadline value="<?php echo $value['data']; ?>">
+        <div class="content">
+          <div class="header"><?php echo $value['txt']; ?></div>
+          <div class="meta"><?php echo $value['data']; ?></div>
 
-        <div class="ui card red task" data-task="<?php echo $value['id']; ?>">
-          <input type="hidden" data-timer-deadline value="<?php echo $value['data']; ?>">
-          <div class="content">
-            <div class="header"><?php echo $value['txt']; ?></div>
-            <div class="meta"><?php echo $value['data']; ?></div>
-
-          </div>
-          <div class="extra content">
-            <i class="fas fa-stopwatch"></i>
-            <span type="text" name="" data-timer-output value="">&nbsp;</span>
-
-          </div>
         </div>
+        <div class="extra content">
+          <i class="fas fa-stopwatch"></i>
+          <span type="text" name="" data-timer-output value="">&nbsp;</span>
 
-        <?php
-        endforeach;
+        </div>
+      </div>
 
-      } else {
+      <?php
+    endforeach;
 
-        echo "<pre>";
-        echo "Brak nadchodzących wydarzeń z kalendarza";
-        echo "</pre>";
+  } else {
 
+    echo "<pre>";
+    echo "Brak nadchodzących wydarzeń z kalendarza";
+    echo "</pre>";
 
-      }
+  }
 
-
-    }
-
-    ?>
+  ?>
 
   </div>
 
@@ -101,47 +94,38 @@
     <h1 class="start_form_title">To do:</h1>
 
     <?php
-    // SELECT *  FROM `calendar_static` WHERE `data` > CURRENT_TIMESTAMP ORDER BY `calendar_static`.`data` ASC LIMIT 10
 
-    // if (Router::importViewClass('kalendarz')) {
-    if (1===1) {
+    $tasks = new tasks;
 
-      // $calendar = new calendar;
+    if ($tasks->getTasksWidget()->rowCount() > 0) {
 
-      if ($calendar->getFutureEvents()->rowCount() > 0) {
+      foreach ($tasks->getTasksWidget(5) as $value) : ?>
 
-        foreach ($calendar->getFutureEvents(5) as $value) : ?>
+      <div class="ui card teal task" data-task="<?php echo $value['id']; ?>">
+        <input type="hidden" data-timer-deadline value="<?php echo $value['deadline']; ?>">
+        <div class="content">
+          <div class="header"><?php echo $value['txt']; ?></div>
+          <div class="meta"><?php echo $value['deadline']; ?></div>
 
-        <div class="ui card teal task" data-task="<?php echo $value['id']; ?>">
-          <input type="hidden" data-timer-deadline value="<?php echo $value['data']; ?>">
-          <div class="content">
-            <div class="header"><?php echo $value['txt']; ?></div>
-            <div class="meta"><?php echo $value['data']; ?></div>
-
-          </div>
-          <div class="extra content">
-            <i class="fas fa-stopwatch"></i>
-            <span type="text" name="" data-timer-output value="">&nbsp;</span>
-
-          </div>
         </div>
+        <div class="extra content">
+          <i class="fas fa-stopwatch"></i>
+          <span type="text" name="" data-timer-output value="">&nbsp;</span>
 
-        <?php
-        endforeach;
+        </div>
+      </div>
 
-      } else {
+      <?php
+    endforeach;
 
-        echo "<pre>";
-        echo "Brak nadchodzących zadań";
-        echo "</pre>";
+  } else {
 
+    echo "<pre>";
+    echo "Brak nadchodzących zadań";
+    echo "</pre>";
 
-      }
-
-
-    }
-
-    ?>
+  }
+  ?>
 
   </div>
 
