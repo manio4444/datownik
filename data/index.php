@@ -3,6 +3,7 @@
 $baseIncludes[] = "data/init.php";
 $baseIncludes[] = "data/functions.php";
 $baseIncludes[] = "data/db.php";
+$baseIncludes[] = 'data/core/classLoader.php';
 $baseIncludes[] = 'data/core/router.php';
 $baseIncludes[] = "data/core/system.php";
 $baseIncludes[] = "data/core/database.php";
