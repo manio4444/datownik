@@ -95,7 +95,7 @@ function get_events_month($month,$year) {
   $ts_start = mktime(0,0,0,$month,1,$year);	// timestamt start
   $ts_end = mktime(23,59,59,$month,$days_in_month,$year);	// timestamt start
   // echo "$ts_start<br>$ts_end<br>";
-  foreach ($sql_pdo->query("SELECT id, data, DAY(data) AS 'day', txt FROM `calendar_static` WHERE `data` >= FROM_UNIXTIME('$ts_start') AND `data` <= FROM_UNIXTIME('$ts_end')")->fetchAll(PDO::FETCH_ASSOC) as $key => $value) $return[$value['day']][] = $value;
+  foreach ($sql_pdo->query("SELECT id, data, DAY(data) AS 'day', txt FROM `calendar_static` WHERE `data` >= FROM_UNIXTIME('$ts_start') AND `data` <= FROM_UNIXTIME('$ts_end') ORDER BY data ASC")->fetchAll(PDO::FETCH_ASSOC) as $key => $value) $return[$value['day']][] = $value;
   // echo "<pre>";
   // var_dump($return);
   if (!empty($return)) return $return;
