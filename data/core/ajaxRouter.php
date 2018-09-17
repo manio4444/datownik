@@ -30,19 +30,22 @@ class ajaxRouter extends database {
       return null;
     }
 
-    static::startAjaxOutput();
+    // static::startAjaxOutput();
 
     $existsAjaxController = static::existsAjaxController();
     if ($existsAjaxController === false) {
-      $data = array(
-        'status' => 404,
-        'message' => 'Nie podano parametru ajax_action.',
-      );
+      return null; //temporarily must do nothing, because of lost of functionality doing ajax calls in operations.php
+      // $data = array(
+      //   'status' => 404,
+      //   'message' => 'Nie podano parametru ajax_action.',
+      // );
     } else {
+      static::startAjaxOutput();
       $data = static::doAjax($existsAjaxController);
+      static::endAjaxOutput($data);
     }
 
-    static::endAjaxOutput($data);
+    // static::endAjaxOutput($data);
   }
 
   private static function existsAjaxController() {
