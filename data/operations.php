@@ -116,26 +116,6 @@ if(isset($_POST['bookmark_ajax'])) {
   }
 }
 
-if(isset($_POST['lockscreen_ajax'])) {
-  if ($_POST['lockscreen_code']) {
-    require FOLDER_CLASSES . '/' . 'lockscreen.php';
-    $lockscreen = new lockscreen();
-    echo $lockscreen->ajax_try_pin_code($_POST['lockscreen_code']);
-  } else {
-    echo "No code";
-  }
-}
-
-if(isset($_POST['lockscreen_code'])) {
-  require FOLDER_CLASSES . '/' . 'lockscreen.php';
-  $lockscreen = new lockscreen();
-  if ($lockscreen->try_pin_code($_POST['lockscreen_code']) ===true) {
-    setcookie( "admin", 1, strtotime( '+30 days' ) );
-    $header_back = true;
-  }
-
-}
-
 if(isset($_POST['action']) && $_POST['action']=="wydarzenie" && $_POST['urladd']) {
   $header_back['app'] = 'kalendarz';
   $header_back['get']['txt'] = $_POST['urladd'];

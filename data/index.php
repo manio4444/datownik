@@ -29,9 +29,6 @@ ajaxRouter::tryAjax();
 // TODO docelowo poprzenosić operacje do konkretnych modelów
 include_once('data/operations.php');
 
-
-// setcookie( "admin", 1, strtotime( '+30 days' ) );
-
 /*
 * TEMPLATE PART
 * in future move to layout.php views controller
@@ -41,7 +38,9 @@ ob_start();
 include('data/view/head.php'); //template up to body tag
 
 // TODO dodać zamiast tego poniżej klasę do sprawdzania uprawnień
-if (@$_COOKIE['admin']!=1) {
+
+// setcookie( 'datownik_' . md5('_admin'), md5('datownik_access'), strtotime( '+1 days' ) );
+if (@$_COOKIE['datownik_' . md5('_admin')] !== md5('datownik_access')) {
   include('data/view/lockscreen.php');
 } else {
   include('data/view/header.php');

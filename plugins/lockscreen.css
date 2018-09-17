@@ -1,4 +1,4 @@
-#lockscreen {
+.lockscreen {
   color: #ffffff;
   margin: 0px;
   background-image: url('bg_lockscreen.png');
@@ -31,7 +31,7 @@
   }
 }
 
-.lockscreen_container {
+.lockscreen__container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -40,20 +40,18 @@
   animation-duration: 1.5s;
 }
 
-.lockscreen_title {
+.lockscreen__title {
   font-size: 18px;
   font-family: 'Work Sans', Arial, sans-serif;
   font-weight: 300;
   margin-bottom: 5px;
 }
 
-#main-div { text-align: center; }
-
-#row_input {
+.lockscreen__inputs {
   margin-bottom: 22px;
 }
 
-#row_input span {
+[data-input] {
   width: 10px;
   height: 10px;
   border: 1px solid white;
@@ -62,15 +60,11 @@
   border-radius: 50%;
 }
 
-#row_input .filled {
+[data-input].filled {
   background-color: white;
 }
 
-.input-num {
-  /*margin: 0px 15px;*/
-}
-
-.row_btn {
+.lockscreen__buttons_row {
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
@@ -84,7 +78,7 @@
   -ms-flex-pack: center;
   justify-content: center;
 }
-.row_btn button {
+[data-button] {
   width: 70px;
   min-width: 70px;
   height: 70px;
@@ -105,24 +99,24 @@
   transition: all 0.1s ease;
 }
 
-.row_btn button:active {
+[data-button]:active {
   background-color: white;
 }
 
-.row_btn button::after {
+[data-button]::after {
   display: block;
   font-size: 10px;
   text-transform: uppercase;
   line-height: 13px;
-  font-weight: normal;;
+  font-weight: normal;
 }
 
-.row_btn #btn_1::after { content: '\0000a0'; }
-.row_btn #btn_2::after { content: 'abc'; }
-.row_btn #btn_3::after { content: 'def'; }
-.row_btn #btn_4::after { content: 'ghi'; }
-.row_btn #btn_5::after { content: 'jkl'; }
-.row_btn #btn_6::after { content: 'mno'; }
-.row_btn #btn_7::after { content: 'pqrs'; }
-.row_btn #btn_8::after { content: 'tuv'; }
-.row_btn #btn_9::after { content: 'wxyz'; }
+[data-button="1"]::after { content: '\0000a0'; }
+[data-button="2"]::after { content: 'abc'; }
+[data-button="3"]::after { content: 'def'; }
+[data-button="4"]::after { content: 'ghi'; }
+[data-button="5"]::after { content: 'jkl'; }
+[data-button="6"]::after { content: 'mno'; }
+[data-button="7"]::after { content: 'pqrs'; }
+[data-button="8"]::after { content: 'tuv'; }
+[data-button="9"]::after { content: 'wxyz'; }

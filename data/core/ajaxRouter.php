@@ -11,6 +11,10 @@ class ajaxRouter extends database {
     'docsAjax' => array(
       'ajaxControllerFileName' => 'docs.php',
     ),
+
+    'lockscreenAjax' => array(
+      'ajaxControllerFileName' => 'lockscreen.php',
+    ),
   );
 
   public static function detectAjax() {
@@ -25,43 +29,52 @@ class ajaxRouter extends database {
     if (static::detectAjax() === false) {
       return null;
     }
-    if (static::existsAjaxController() === false) {
-      return null;
-    }
 
     static::startAjaxOutput();
-    $data = static::doAjax();
+
+    $existsAjaxController = static::existsAjaxController();
+    if ($existsAjaxController === false) {
+      $data = array(
+        'status' => 404,
+        'message' => 'Nie podano parametru ajax_action.',
+      );
+    } else {
+      $data = static::doAjax($existsAjaxController);
+    }
+
     static::endAjaxOutput($data);
   }
 
-  private function existsAjaxController() {
+  private static function existsAjaxController() {
     if (isset($_GET['ajax_action']) && !empty($_GET['ajax_action'])) {
-      return true;
+      return $_GET['ajax_action'];
+    } elseif (isset($_POST['ajax_action']) && !empty($_POST['ajax_action'])) {
+      return $_POST['ajax_action'];
     } else {
       return false;
     }
   }
 
-  private function getAjaxController() {
+  private static function getAjaxController($ajaxController) {
     if (
-      !array_key_exists($_GET['ajax_action'], self::$routingArray)
-      || !array_key_exists('ajaxControllerFileName', self::$routingArray[$_GET['ajax_action']])
-      || empty(self::$routingArray[$_GET['ajax_action']]['ajaxControllerFileName'])
-      || !file_exists(FOLDER_AJAX . '/' . self::$routingArray[$_GET['ajax_action']]['ajaxControllerFileName'])
+      !array_key_exists($ajaxController, self::$routingArray)
+      || !array_key_exists('ajaxControllerFileName', self::$routingArray[$ajaxController])
+      || empty(self::$routingArray[$ajaxController]['ajaxControllerFileName'])
+      || !file_exists(FOLDER_AJAX . '/' . self::$routingArray[$ajaxController]['ajaxControllerFileName'])
     ) {
       return false;
     }
 
-    include(FOLDER_AJAX . '/' . self::$routingArray[$_GET['ajax_action']]['ajaxControllerFileName']);
-    return $_GET['ajax_action'];
+    include(FOLDER_AJAX . '/' . self::$routingArray[$ajaxController]['ajaxControllerFileName']);
+    return $ajaxController;
   }
 
-  private function doAjax() {
-    $ajaxController = static::getAjaxController();
+  private static function doAjax($ajaxController) {
+    $ajaxController = static::getAjaxController($ajaxController);
     if ($ajaxController === false) {
       return array(
         'status' => 404,
-        'message' => 'Nie można załadować klasy: ' . $_GET['ajax_action'],
+        'message' => 'Nie można załadować klasy: ' . $ajaxController,
       );
     } else {
       // echo 'ajax' . $ajaxController;
@@ -73,7 +86,7 @@ class ajaxRouter extends database {
     }
   }
 
-  public function startAjaxOutput() {
+  public static function startAjaxOutput() {
     header("Access-Control-Allow-Origin: *");
     header("Content-Type: application/json; charset=UTF-8");
     header("Access-Control-Allow-Methods: POST");
@@ -83,7 +96,7 @@ class ajaxRouter extends database {
     ob_start();
   }
 
-  public function endAjaxOutput($data) {
+  public static function endAjaxOutput($data) {
     $content = ob_get_contents();
     ob_end_clean();
 
