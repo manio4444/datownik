@@ -86,6 +86,8 @@
 
   ?>
 
+    <a class="ui button fluid" href="?page=kalendarz">Zobacz wszystkie</a>
+
   </div>
 
 
@@ -126,6 +128,8 @@
 
   }
   ?>
+
+    <a class="ui button fluid" href="?page=do-zrobienia">Zobacz wszystkie</a>
 
   </div>
 

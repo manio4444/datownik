@@ -144,6 +144,15 @@ main section pre {
   width: 100%;
 }
 
+#main_page .main_page_dates .ui.card > .content > .header {
+  max-height: calc(1.278em * 1);
+  overflow: hidden;
+}
+
+#main_page .main_page_dates .ui.card > .content > .header:hover {
+  overflow: visible;
+}
+
 #main_page .main_page_dates .ui.red.card {
   box-shadow: 0 0 0 1px #d4d4d5, 0 3px 0px 1px #db2828, 0 1px 3px 0 #d4d4d5;
 }
