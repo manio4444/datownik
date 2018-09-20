@@ -69,7 +69,7 @@ var lockscreen = {
     var _this = lockscreen;
 
     _this.buttons.click(function() {
-      _this.clickButton($(this));
+      _this.clickButton($(this).data('button'));
     });
 
     $('body').keydown(function (e) {
