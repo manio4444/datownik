@@ -6,6 +6,7 @@ define("FOLDER_CLASSES", "data/class");
 define("FOLDER_APPS", "data/app");
 define("FOLDER_AJAX", "data/ajax");
 define("FOLDER_CONTROLLERS", "data/controllers"); //TODO in future use instead of FOLDER_CLASSES
+define("FOLDER_LOGS", "logs");
 
 define("DEFAULT_VIEW", "start");
 define("DEFAULT_TITLE", "Datownik");

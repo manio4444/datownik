@@ -143,6 +143,10 @@
   <pre>
     https://stackoverflow.com/questions/18377891/how-can-i-let-user-paste-image-data-from-the-clipboard-into-a-canvas-element-in
   </pre>
+  <pre>
+    do code snippetów -
+    https://codepen.io/chriscoyier/pen/GBbOJd
+  </pre>
 
 </section>
 
