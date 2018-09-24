@@ -175,6 +175,10 @@
 
     ?>
 
+    <div class="notes_more">
+      <a class="ui button" href="?page=notatki">Zobacz wszystkie</a>
+    </div>
+
   </div>
 
 </section>

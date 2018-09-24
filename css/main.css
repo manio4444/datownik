@@ -176,6 +176,12 @@ main section pre {
   flex-basis: 100%;
 }
 
+#main_page_notes .notes_more {
+  flex-basis: 100%;
+  margin-top: 20px;
+  text-align: center;
+}
+
 
 #bookmarks .url_container {
   margin-bottom: 20px;
