@@ -84,9 +84,6 @@ class ajaxRouter extends database {
       $controller = new $ajaxController;
       return $controller->render();
     }
-    if (isset($ajaxController) && class_exists($ajaxController)) {
-      $controller = new $ajaxController;
-    }
   }
 
   public static function startAjaxOutput() {
