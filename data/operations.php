@@ -37,6 +37,15 @@ if(isset($_POST['plugin_change_perm'])) {
 }
 
 
+if(isset($_POST['calendar_dayoff_ts']) && isset($_POST['calendar_dayoff_txt'])) {
+  $pdo_operation = $sql_pdo->prepare( 'INSERT INTO `calendar_dayoff` (`data`, `txt`) VALUES (:data, :txt)' );
+  $pdo_operation->bindValue(':data', $_POST['calendar_dayoff_ts'], PDO::PARAM_STR);
+  $pdo_operation->bindValue(':txt', $_POST['calendar_dayoff_txt'], PDO::PARAM_STR);
+  $pdo_operation->execute();
+  $header_back = true; //robi przekierowanie headerem po skończeniu operacji
+}
+
+
 if(isset($_POST['calendar_ts']) && isset($_POST['calendar_txt'])) {
   $pdo_operation = $sql_pdo->prepare( 'INSERT INTO `calendar_static` (`data`, `txt`) VALUES (:data, :txt)' );
   $pdo_operation->bindValue(':data', $_POST['calendar_ts'], PDO::PARAM_STR);

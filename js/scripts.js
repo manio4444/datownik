@@ -32,6 +32,15 @@ $(function() {
     time_24hr: true,
   });
 
+  // Flatpickr.l10ns.default.firstDayOfWeek = 1; // Monday
+  $(".flatpickr-dateonly").flatpickr({
+    // enableTime:true,
+    locale: 'pl',
+    altInput: true,
+    altFormat: "j F Y",
+    time_24hr: true,
+  });
+
 
   $('.checkbox_switcher').change(function() {
     var nodes = document.querySelectorAll('.reszta');

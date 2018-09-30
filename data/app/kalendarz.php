@@ -23,21 +23,31 @@ $calendar_txt_value = (isset($_GET['txt'])) ? $_GET['txt'] : '';
 ?>
 
 
-<form action="" method="post">
-  <div class="calendar__buttons">
-
-    <div class="ui input">
-      <input type="text" class="calendar_txt" name="calendar_txt" placeholder="Opis" value="<?php echo $calendar_txt_value; ?>">
-    </div>
-    <div class="ui input">
-      <input type="text" class="calendar_ts flatpickr" name="calendar_ts" placeholder="Data" data-note="" value="">
-    </div>
-    <button type="send" class="ui labeled icon button">
-      <i class="plus icon"></i>
-      Dodaj wydarzenie
-    </button>
+<form class="calendar__buttons" action="" method="post">
+  <div class="ui input">
+    <input type="text" class="calendar_txt" name="calendar_txt" placeholder="Opis" value="<?php echo $calendar_txt_value; ?>">
   </div>
-</form>
+  <div class="ui input">
+    <input type="text" class="calendar_ts flatpickr" name="calendar_ts" placeholder="Data" data-note="" value="">
+  </div>
+  <button type="send" class="ui labeled icon button">
+    <i class="plus icon"></i>
+    Dodaj wydarzenie
+  </button>
+  </form>
+
+<form class="calendar__buttons calendar__buttons--dayoff" action="" method="post">
+  <div class="ui input">
+    <input type="text" class="calendar_txt" name="calendar_dayoff_txt" placeholder="Opis" value="<?php echo $calendar_txt_value; ?>">
+  </div>
+  <div class="ui input">
+    <input type="text" class="calendar_ts flatpickr-dateonly" name="calendar_dayoff_ts" placeholder="Data" data-note="" value="">
+  </div>
+  <button type="send" class="ui labeled icon button">
+    <i class="plus icon"></i>
+    Wolne praca
+  </button>
+  </form>
 
 <?php
 $m = date('m');
