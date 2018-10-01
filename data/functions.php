@@ -29,7 +29,7 @@ function draw_calendar2($month,$year) {
   $days_in_this_week = 1;
   $dates_array = array();
   $events_month = get_events_month($month,$year);
-  // echo "<pre>"; var_dump($events_month); echo "</pre>";
+
 
 /* Start zwracania wartości */
   $calendar = '<table cellpadding="0" cellspacing="0" class="calendar">';
@@ -40,7 +40,6 @@ function draw_calendar2($month,$year) {
 
   if ($first_day > 1) {	// puste zanim zacznie sie od pierwszego dnia
     $days_in_past_month = date('t', strtotime(date('Y-m',mktime(0,0,0,$month,1,$year))." -1 month")); //Ilość dni w POPRZEDNIM miesiącu
-    //$calendar.= '<td>'. $first_day_left_from_past_month .'</td>';
   	for($x = $days_in_past_month-$first_day+2; $x <= $days_in_past_month; $x++) {
   		$calendar.= '<td class="calendar-day-np"><div class="day-number">' . $x . '</div></td>';
   	}
@@ -55,7 +54,11 @@ function draw_calendar2($month,$year) {
 //###################################################################################################
 			/* add in the day number */
 			$calendar.= "<div class='day-number'>$day</div>";
-      if (@is_array($events_month[$day]) && count($events_month[$day])>0) foreach ($events_month[$day] as $value) $calendar.= '<p class="day-event"><a href="' . get_url() . '&id=' . $value['id'] . '">' . $value['txt'] . '</a><span class="details">' . $value['data'] . '</span></p>';
+      if (@is_array($events_month[$day]) && count($events_month[$day])>0) {
+        foreach ($events_month[$day] as $value) {
+          $calendar.= '<p class="day-event day-event--' . $value['type'] . '"><a href="' . get_url() . '&id=' . $value['id'] . '">' . $value['txt'] . '</a><span class="details">' . $value['data'] . '</span></p>';
+        }
+      }
       $calendar.= '<p class="day-event add-event">+</p>';
 //###################################################################################################
 
@@ -89,15 +92,22 @@ function draw_calendar2($month,$year) {
 
 
 
-function get_events_month($month,$year) {
+function get_events_month($month, $year) {
   global $sql_pdo;
-  $days_in_month = date('t',mktime(0,0,0,$month,1,$year)); //Ilość dni w danym miesiącu
-  $ts_start = mktime(0,0,0,$month,1,$year);	// timestamt start
-  $ts_end = mktime(23,59,59,$month,$days_in_month,$year);	// timestamt start
-  // echo "$ts_start<br>$ts_end<br>";
-  foreach ($sql_pdo->query("SELECT id, data, DAY(data) AS 'day', txt FROM `calendar_static` WHERE `data` >= FROM_UNIXTIME('$ts_start') AND `data` <= FROM_UNIXTIME('$ts_end') ORDER BY data ASC")->fetchAll(PDO::FETCH_ASSOC) as $key => $value) $return[$value['day']][] = $value;
-  // echo "<pre>";
-  // var_dump($return);
+
+  $query = "SELECT id, data, DAY(data) AS 'day', txt, 'static' AS type
+  FROM `calendar_static`
+  WHERE MONTH(data) = $month
+  AND YEAR(data) = $year
+  UNION ALL
+  SELECT id, data, DAY(data) AS 'day', txt, 'dayoff' AS type
+  FROM calendar_dayoff
+  ORDER BY data ASC";
+
+  foreach ($sql_pdo->query($query)->fetchAll(PDO::FETCH_ASSOC) as $key => $value) {
+    $return[$value['day']][] = $value;
+  }
+
   if (!empty($return)) return $return;
 }
 

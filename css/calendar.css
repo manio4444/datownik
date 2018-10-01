@@ -37,6 +37,9 @@ td.calendar-day p.day-event {
   font-weight: normal;
   /*overflow: hidden;*/
 }
+td.calendar-day p.day-event--dayoff {
+  background-color: #00b5ad;
+}
 td.calendar-day p.day-event:last-of-type { margin-bottom: 0; }
 td.calendar-day p.day-event a { display: block; color: inherit; }
 td.calendar-day p.add-event {
