@@ -96,12 +96,14 @@ function get_events_month($month, $year) {
   global $sql_pdo;
 
   $query = "SELECT id, data, DAY(data) AS 'day', txt, 'static' AS type
-  FROM `calendar_static`
+  FROM calendar_static
   WHERE MONTH(data) = $month
   AND YEAR(data) = $year
   UNION ALL
   SELECT id, data, DAY(data) AS 'day', txt, 'dayoff' AS type
-  FROM calendar_dayoff
+  FROM `calendar_dayoff`
+  WHERE MONTH(data) = $month
+  AND YEAR(data) = $year
   ORDER BY data ASC";
 
   foreach ($sql_pdo->query($query)->fetchAll(PDO::FETCH_ASSOC) as $key => $value) {
