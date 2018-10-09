@@ -360,6 +360,24 @@ main {
   color: white;
 }
 
+.tasks__modal .ui.icon.header {
+  text-align: center;
+  font-weight: 700;
+  line-height: 1.28571429em;
+}
+
+.tasks__modal .ui.icon.header .icon {
+  float: none;
+  display: block;
+  width: auto;
+  height: auto;
+  line-height: 1;
+  padding: 0;
+  font-size: 3em;
+  margin: 0 auto .5rem;
+  opacity: 1;
+}
+
 #upload {
 }
 

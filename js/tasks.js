@@ -72,5 +72,15 @@ $(function() {
 
   });
 
+  var tasksModal = $('.ui.modal')
+  tasksModal.modal();
+
+  $('[data-task-done]').click(function(ev) {
+    var task = $(this).closest('[data-task]');
+    ev.preventDefault();
+    tasksModal.find('.tasks__modal_content').text(task.find('.content .header').text());
+    tasksModal.modal('show');
+  });
+
 
 }); //end document ready

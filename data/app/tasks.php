@@ -40,7 +40,7 @@ $tasks = new tasks;
 
     <?php foreach ($tasks->sqlReturn as $value) : ?>
 
-      <form class="ui card task" data-task="<?php echo $value['id']; ?>">
+      <form method="post" class="ui card task" data-task="<?php echo $value['id']; ?>">
         <div class="content">
           <div class="header"><?php echo $value['txt']; ?></div>
           <span data-task-details class="meta far fa-eye"></span>
@@ -96,7 +96,7 @@ $tasks = new tasks;
         </div>
 
 
-        <button class="ui teal button" data-task->
+        <button class="ui teal button" data-task-done>
           <i class="square outline icon"></i>
           Zrobione
         </button>
@@ -108,21 +108,22 @@ $tasks = new tasks;
 
 </section>
 
-<div class="ui modal">
-  <i class="close icon"></i>
-  <div class="header">
-    Modal Title
+<div class="ui small basic modal tasks__modal">
+  <div class="ui icon header">
+    <i class="archive icon"></i>
+    Potwierdź wykonanie zadania:
   </div>
-  <div class="image content">
-    <div class="image">
-      An image can appear on left or an icon
-    </div>
-    <div class="description">
-      A description can appear on the right
-    </div>
+  <div class="content tasks__modal_content">
+    {{TEXT}}
   </div>
   <div class="actions">
-    <div class="ui button">Cancel</div>
-    <div class="ui button">OK</div>
+    <div class="ui green ok inverted button">
+      <i class="checkmark icon"></i>
+      Tak
+    </div>
+    <div class="ui red cancel inverted button">
+      <i class="remove icon"></i>
+      Nie
+    </div>
   </div>
 </div>
