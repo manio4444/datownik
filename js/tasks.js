@@ -79,6 +79,32 @@ $(function() {
     var task = $(this).closest('[data-task]');
     ev.preventDefault();
     tasksModal.find('.tasks__modal_content').text(task.find('.content .header').text());
+    tasksModal.modal({
+      onApprove: function () {
+        $.ajax({
+          url: '?ajax_action=tasksAjax',
+          method: 'POST',
+          data: {
+            operation   :'doneTask',
+            id          : task.data('id'),
+          }
+        }).done(function(data) {
+
+          console.log(data);
+
+
+
+
+          if (data.data.status !== 200) {
+            console.log(data);
+            return;
+          }
+
+        });
+      },
+      onDeny: function () {
+      }
+    });
     tasksModal.modal('show');
   });
 

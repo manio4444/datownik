@@ -34,7 +34,7 @@ class ajaxRouter extends database {
 
     $existsAjaxController = static::existsAjaxController();
     if ($existsAjaxController === false) {
-      return null; //temporarily must do nothing, because of lost of functionality doing ajax calls in operations.php
+      return null; //temporarily must do nothing, because of lots of functionality doing ajax calls in operations.php
       // $data = array(
       //   'status' => 404,
       //   'message' => 'Nie podano parametru ajax_action.',
@@ -73,6 +73,7 @@ class ajaxRouter extends database {
   }
 
   private static function doAjax($ajaxController) {
+    var_dump($ajaxController);
     $ajaxController = static::getAjaxController($ajaxController);
     if ($ajaxController === false) {
       return array(
