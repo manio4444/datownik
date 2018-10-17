@@ -393,7 +393,10 @@ main {
   background-color: #ddd;
 }
 
-
+.upload__manager-iframe {
+  width: 100%;
+  min-height: 600px;
+}
 
 
 

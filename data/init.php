@@ -1,6 +1,7 @@
 <?php
 
 define("FOLDER_PLUGINS", "plugins");
+define("FOLDER_VENDORS", "data/vendors");
 define("FOLDER_INI", "data/config");
 define("FOLDER_CLASSES", "data/class");
 define("FOLDER_APPS", "data/app");
