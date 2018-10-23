@@ -74,7 +74,7 @@ $config = array(
 	| with start and final /
 	|
 	*/
-	'upload_dir' => '/source/',
+	'upload_dir' => '/upload/',
 	/*
 	|--------------------------------------------------------------------------
 	| relative path from filemanager folder to upload folder
@@ -83,7 +83,7 @@ $config = array(
 	| with final /
 	|
 	*/
-	'current_path' => '../source/',
+	'current_path' => '../../../upload/',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -94,7 +94,7 @@ $config = array(
 	| DO NOT put inside upload folder
 	|
 	*/
-	'thumbs_base_path' => '../thumbs/',
+	'thumbs_base_path' => '../../../upload_thumbs/',
 
 
 	/*
@@ -114,7 +114,7 @@ $config = array(
 	|--------------------------------------------------------------------------
 	|
 	| If you want enable ftp use write these parametres otherwise leave empty
-	| Remember to set base_url properly to point in the ftp server domain and 
+	| Remember to set base_url properly to point in the ftp server domain and
 	| upload dir will be ftp_base_folder + upload_dir so without final /
 	|
 	*/
@@ -285,7 +285,7 @@ $config = array(
 	//******************
 	//
 	// WATERMARK IMAGE
-	// 
+	//
 	//Watermark path or false
 	'image_watermark'                          => false,//"../watermark.png",
 	# Could be a pre-determined position such as:
