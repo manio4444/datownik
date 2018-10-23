@@ -72,15 +72,14 @@ class ajaxRouter extends database {
     return $ajaxController;
   }
 
-  private static function doAjax($ajaxController) {
-    $ajaxController = static::getAjaxController($ajaxController);
+  private static function doAjax($ajaxControllerName) {
+    $ajaxController = static::getAjaxController($ajaxControllerName);
     if ($ajaxController === false) {
       return array(
         'status' => 404,
-        'message' => 'Nie można załadować klasy: ' . $ajaxController,
+        'message' => 'Nie można załadować klasy: ' . $ajaxControllerName,
       );
     } else {
-      // echo 'ajax' . $ajaxController;
       $controller = new $ajaxController;
       return $controller->render();
     }
