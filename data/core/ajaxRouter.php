@@ -73,7 +73,6 @@ class ajaxRouter extends database {
   }
 
   private static function doAjax($ajaxController) {
-    var_dump($ajaxController);
     $ajaxController = static::getAjaxController($ajaxController);
     if ($ajaxController === false) {
       return array(
@@ -81,7 +80,6 @@ class ajaxRouter extends database {
         'message' => 'Nie można załadować klasy: ' . $ajaxController,
       );
     } else {
-      // echo 'ajax' . $ajaxController;
       $controller = new $ajaxController;
       return $controller->render();
     }
