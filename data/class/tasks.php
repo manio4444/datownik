@@ -32,14 +32,13 @@ class tasks extends defaultController {
 
 
 
-    $this->sqlReturn = $this->getInstance()->query('SELECT * FROM `tasks` ORDER BY `id` DESC'); //TODO make it to another function
+    $this->sqlReturn = $this->getInstance()->query('SELECT * FROM `tasks` WHERE `finished` = 0 ORDER BY `id` DESC'); //TODO make it to another function
   }
 
   public function getTemplate($data = array()) {
   }
 
   private function saveTask($data) {
-    // var_dump($data['no_deadline'] !== '1');
     if (
       !isset($data['task_id'])
       || !isset($data['txt'])
@@ -51,23 +50,39 @@ class tasks extends defaultController {
       System::error('Błąd, złe dane');
       return;
     }
-
-
     $sqlObj = $this->dbInstance->prepare( 'INSERT INTO `tasks` (`txt`, `no_deadline`, `deadline`) VALUES (:txt, :no_deadline, :deadline)' );
     $sqlObj->bindValue(':txt', $data['txt'], PDO::PARAM_STR);
     $sqlObj->bindValue(':no_deadline', $data['no_deadline'], PDO::PARAM_STR);
     $sqlObj->bindValue(':deadline', $data['deadline'], PDO::PARAM_STR);
     $sqlObj->execute();
-    $DocId = $this->dbInstance->lastInsertId();
+    $TaskId = $this->dbInstance->lastInsertId();
     $message = "Utworzono nowy dokument";
     return array(
       'status' => 200,
       'message' => $message,
-      'id' => $DocId,
-      // 'text' => $_POST['text'],
-      // 'query' => $_POST,
+      'id' => $TaskId,
     );
+  }
 
+  protected function doneTask($TaskId) {
+
+    if (!isset($TaskId) || empty($TaskId)) {
+      $message = 'Nie podano ID.';
+      return array(
+        'status' => 404,
+        'message' => $message,
+      );
+    }
+
+    $sqlObj = $this->dbInstance->prepare( 'UPDATE `tasks` SET `finished` = 1 WHERE `id` = :id' );
+    $sqlObj->bindValue(':id', $TaskId, PDO::PARAM_INT);
+    $sqlObj->execute();
+    $message = "Status ustawiony na: zakończone";
+    return array(
+      'status' => 200,
+      'message' => $message,
+      'id' => $TaskId,
+    );
 
   }
 

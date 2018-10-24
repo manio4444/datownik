@@ -328,6 +328,12 @@ main {
   margin: 0 10px 20px;
 }
 
+.todo_list .task.ui.done {
+  opacity: .2;
+  transition: opacity .3s ease;
+  transition-delay: .3s;
+}
+
 .todo_list .task .field {
   font-size: 14px;
 }

@@ -15,6 +15,10 @@ class ajaxRouter extends database {
     'lockscreenAjax' => array(
       'ajaxControllerFileName' => 'lockscreen.php',
     ),
+
+    'tasksAjax' => array(
+      'ajaxControllerFileName' => 'tasks.php',
+    ),
   );
 
   public static function detectAjax() {
@@ -34,7 +38,7 @@ class ajaxRouter extends database {
 
     $existsAjaxController = static::existsAjaxController();
     if ($existsAjaxController === false) {
-      return null; //temporarily must do nothing, because of lost of functionality doing ajax calls in operations.php
+      return null; //temporarily must do nothing, because of lots of functionality doing ajax calls in operations.php
       // $data = array(
       //   'status' => 404,
       //   'message' => 'Nie podano parametru ajax_action.',
