@@ -15,6 +15,10 @@ class ajaxRouter extends database {
     'lockscreenAjax' => array(
       'ajaxControllerFileName' => 'lockscreen.php',
     ),
+
+    'tasksAjax' => array(
+      'ajaxControllerFileName' => 'tasks.php',
+    ),
   );
 
   public static function detectAjax() {

@@ -46,7 +46,7 @@ $(function() {
 
     var deleteContainer = $(this).closest('.field.delete');
     var task = $(this).closest('[data-task]');
-    var id = task.attr('[data-task]');
+    var taskId = task.data('task');
 
     deleteContainer.addClass('loading');
 
@@ -55,7 +55,7 @@ $(function() {
       method: 'POST',
       data: {
         operation   :'delTask',
-        id          : id,
+        id          : taskId,
       }
     }).done(function(data) {
 
@@ -77,6 +77,7 @@ $(function() {
 
   $('[data-task-done]').click(function(ev) {
     var task = $(this).closest('[data-task]');
+    var taskId = task.data('task');
     ev.preventDefault();
     tasksModal.find('.tasks__modal_content').text(task.find('.content .header').text());
     tasksModal.modal({
@@ -86,14 +87,13 @@ $(function() {
           method: 'POST',
           data: {
             operation   :'doneTask',
-            id          : task.data('id'),
+            id          : taskId,
           }
         }).done(function(data) {
 
-          console.log(data);
-
-
-
+          if (data.data.status == 200) {
+            task.addClass('done');
+          }
 
           if (data.data.status !== 200) {
             console.log(data);
