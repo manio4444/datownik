@@ -1,5 +1,8 @@
 <?php
 
+/**
+define static values
+*/
 define("FOLDER_PLUGINS", "plugins");
 define("FOLDER_VENDORS", "data/vendors");
 define("FOLDER_INI", "data/config");

@@ -16,6 +16,14 @@ class System {
     exit;
   }
 
+  public static function getUrl($type = null) {
+    if ($type=='clean') {
+      return 'http://' . strtok( $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],'?');
+    } else {
+      return 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    }
+  }
+
 }
 
 ?>
