@@ -56,7 +56,7 @@ $preg_match_month = '/\d\d\d\d[-]([0][1-9]|[1][0-2])/'; // for example 2018-12
 if (isset($_GET['month']) && preg_match($preg_match_month, $_GET['month'])) {
 
   $getExplode = explode('-', $_GET['month']);
-  $month = $getExplode[1];
+  $month = ltrim($getExplode[1], '0'); //remove leading zeros
   $year  = $getExplode[0];
   echo '<h2>' . $months_names[$month] ." $year</h2>";
   echo draw_calendar2($month, $year);
