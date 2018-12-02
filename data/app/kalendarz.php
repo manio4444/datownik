@@ -36,7 +36,7 @@ $calendar_txt_value = (isset($_GET['txt'])) ? $_GET['txt'] : '';
 
 <form class="calendar__buttons calendar__buttons--dayoff" action="" method="post">
   <div class="ui input">
-    <input type="text" class="calendar_txt" name="calendar_dayoff_txt" placeholder="Opis" value="<?php echo $calendar_txt_value; ?>">
+    <input type="text" class="calendar_txt" name="calendar_dayoff_txt" placeholder="Opis" value="">
   </div>
   <div class="ui input">
     <input type="text" class="calendar_ts flatpickr-dateonly" name="calendar_dayoff_ts" placeholder="Data" data-note="" value="">
