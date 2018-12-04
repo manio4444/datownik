@@ -53,3 +53,22 @@ function notesListener(this_note) {
 var new_note = $('.note_element').outerHTML(); //dodanie do zmiennej czystej notatki w html
 
 notesListener( '.note_element textarea' ); //pierwsze uruchomienie
+
+
+$(function() {
+
+  $('[data-note-search]').on('input', function() {
+    var input = $(this);
+    $('.note_element textarea').each(function() {
+      var noteDiv = $(this).closest('.note_element');
+      if (input.val() === '') {
+        noteDiv.show();
+      } else if ($(this).text().toLowerCase().indexOf(input.val().toLowerCase()) !== -1) {
+        noteDiv.show();
+      } else {
+        noteDiv.hide();
+      }
+    });
+  });
+
+}); //end document ready
