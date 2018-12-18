@@ -5,19 +5,16 @@ $(function() {
 
   $('[data-task-deadlock]').click(function() {
     var task = $(this).parents('[data-task]');
-    var deadlocker = task.find('[name="no_deadline"]');
+    var deadlocker = task.find('[type="checkbox"][name="no_deadline"]');
     var field_deadline = task.find('.field.deadline');
 
     if (!deadlocker) {
       return;
     }
-
-    if (deadlocker.val() === '1') {
-      deadlocker.val(0);
-      field_deadline.removeClass('no-deadline');
+    if (deadlocker[0].checked === true) {
+      field_deadline.slideDown();
     } else {
-      deadlocker.val(1);
-      field_deadline.addClass('no-deadline');
+      field_deadline.slideUp();
     }
   });
 

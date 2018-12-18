@@ -10,6 +10,7 @@ function timer(tasksAll) {
   var tasksAll = document.querySelectorAll('[data-task]');
   if (tasksAll) {
     for (var i = 0; i < tasksAll.length; i++) {
+      var task = tasksAll[i];
       var deadline = tasksAll[i].querySelector('[data-timer-deadline]');
       var output = tasksAll[i].querySelector('[data-timer-output]');
 
@@ -17,7 +18,7 @@ function timer(tasksAll) {
         continue;
       }
 
-      if (deadline.value == '' || deadline.value == '0000-00-00 00:00:00') {
+      if (deadline.value == '' || deadline.value == '0000-00-00 00:00:00' || task.classList.contains('no-deadline')) {
         returnValue = null;
       } else {
 
