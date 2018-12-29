@@ -346,25 +346,6 @@ main {
   cursor: pointer;
 }
 
-.todo_list .task .flatpickr + i.toggle-deadline {
-  line-height: 1.2142em;
-  padding: .67861429em 1em;
-  width: auto;
-  background-color: rgba(34,36,38,.15);
-  border-left: 1px solid rgba(34,36,38,.15);
-  font-family: inherit;
-}
-
-.todo_list .task .field.deadline.no-deadline input[type="text"].flatpickr {
-  opacity: .45;
-  pointer-events: none;
-}
-
-.todo_list .task .field.deadline.no-deadline .flatpickr + i.toggle-deadline {
-  background-color: rgba(245, 91, 80, 1);
-  opacity: 1;
-  color: white;
-}
 
 .tasks__modal .ui.icon.header {
   text-align: center;

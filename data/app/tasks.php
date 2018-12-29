@@ -17,17 +17,20 @@ $tasks = new tasks;
             <input type="text" name="txt" value="">
           </div>
 
+          <div class="field">
+            <div class="ui toggle checkbox">
+              <input type="hidden" name="no_deadline" value="1">
+              <input type="checkbox" name="no_deadline" value="0" data-task-deadlock checked>
+              <label>enable deadline</label>
+            </div>
+          </div>
+
           <div class="field deadline">
             <label>deadline:</label>
             <div class="ui icon input">
               <input type="text" name="deadline" class="flatpickr" value="">
-              <i class="fas fa-trash icon link" data-task-deadlock></i>
+              <i class="fas fa-trash icon link"></i>
             </div>
-          </div>
-
-          <div class="field disabled">
-            <label>no_deadline:</label>
-            <input type="text" name="no_deadline">
           </div>
 
         </div>
@@ -40,7 +43,7 @@ $tasks = new tasks;
 
     <?php foreach ($tasks->sqlReturn as $value) : ?>
 
-      <form method="post" class="ui card task" data-task="<?php echo $value['id']; ?>">
+      <form method="post" class="ui card task<?php if($value['no_deadline']==="1") echo " no-deadline"; ?>" data-task="<?php echo $value['id']; ?>">
         <div class="content">
           <div class="header"><?php echo $value['txt']; ?></div>
           <span data-task-details class="meta far fa-eye"></span>
@@ -56,11 +59,18 @@ $tasks = new tasks;
               <input type="text" name="" value="<?php echo $value['date_mk']; ?>">
             </div>
 
-            <div class="field deadline<?php if($value['no_deadline']==="1") echo " no-deadline"; ?>">
+            <div class="field">
+              <div class="ui toggle checkbox">
+                <input type="hidden" name="no_deadline" value="1">
+                <input type="checkbox" name="no_deadline" value="0" data-task-deadlock <?php if($value['no_deadline']!=="1") echo " checked"; ?>>
+                <label>enable deadline</label>
+              </div>
+            </div>
+
+            <div class="field deadline">
               <label>deadline:</label>
               <div class="ui icon input">
                 <input type="text" name="deadline" class="flatpickr" data-timer-deadline value="<?php echo $value['deadline']; ?>">
-                <i class="toggle-deadline icon link" data-task-deadlock>WYŁ</i>
               </div>
             </div>
 
