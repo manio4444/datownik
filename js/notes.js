@@ -17,46 +17,120 @@ function ajax_notes_send(note_operation, this_note) {
          console.log('Usunięto wpis numer: '+this_note.attr('data-note'));
        } else if (data=='edit') {
          console.log('Edytowano wpis numer: '+this_note.attr('data-note'));
-       } else console.log(data);
+       } else console.log(data); //TODO - przy nowym wpisie backend nic nie zwraca
      }
   });
 }
 
-function notesListener(this_note) {
-  $(this_note).off('input'); //najpierw usuwa listenery
-  $(this_note).on('input', function() {
-    if ($(this).val()) {
-      if (!$(this).attr('data-note')) {
-        $(this).parents('.note_element').parent().prepend(new_note);
-        // $('#notepad').prepend(new_note);
-        $(this).attr('data-note', 'waiting');
-        ajax_notes_send('note_new', $(this));
-        notesListener(this_note);
-      }
-      // console.log($(this));
-      ajax_notes_send('note_edit', $(this));
+
+var notes = {
+
+  parentContainer: '.notes_container',
+  elementContainer: '.note_element textarea',
+  newElementHTML: '',
+  objInstanceFired: false,
+  debug: false,
+
+  create: function (note) {
+
+    let $note = $(note);
+
+    $(this.parentContainer).prepend(this.newElementHTML);
+    $note.attr('data-note', 'waiting');
+    ajax_notes_send('note_new', $note);
+
+  },
+
+  delete: function (note) {
+
+  },
+
+
+  edit: function (note) {
+
+    let $note = $(note);
+
+    ajax_notes_send('note_edit', $note);
+
+  },
+
+  listenerInput: function (note) {
+
+    let $note = $(note);
+
+    if ($note.length === 0) {
+      console.error('Note do not exist');
+      return;
     }
-  });
 
-  $(this_note).off('focusout'); //najpierw usuwa listenery
-  $(this_note).focusout(function() {
-    console.log('focusout: '+$(this).attr('data-note'));
-
-    if (!$(this).val() && $(this).attr('data-note')) {
-      console.log('Wysłano prośbę o usunięcie wpisu: '+$(this).attr('data-note'));
-      ajax_notes_send('note_delete', $(this));
+    if (!$note.val()) {
+      if (this.debug) console.warn('Note has no text, request blocked');
+      return;
     }
-  });
 
-} //function notesListener
+    if (!$note.attr('data-note')) {
 
-var new_note = $('.note_element').outerHTML(); //dodanie do zmiennej czystej notatki w html
+      this.create($note);
 
-notesListener( '.note_element textarea' ); //pierwsze uruchomienie
+    } else {
 
+      this.edit($note);
+
+    }
+
+  },
+
+  listenerfocusOut: function (note) {
+
+    let $note = $(note);
+
+    if (this.debug) console.log('listenerfocusOut: '+$note.attr('data-note'));
+
+
+    if (!$note.val() && $note.attr('data-note')) {
+      if (this.debug) console.log('Wysłano prośbę o usunięcie wpisu: '+$note.attr('data-note'));
+      ajax_notes_send('note_delete', $note);
+    }
+
+  },
+
+  init: function() {
+
+    if (this.objInstanceFired === true) {
+      console.warn('object instance was fired before');
+      return;
+    } else {
+      this.objInstanceFired = true;
+      if (this.debug) console.info('object instance fired properly');
+    }
+
+    this.newElementHTML = $('.note_element').outerHTML();
+
+    $(this.parentContainer).on('input', this.elementContainer, (event) => {
+      let note = event.currentTarget;
+      this.listenerInput(note);
+    });
+
+    $(this.parentContainer).on('focusout', this.elementContainer, (event) => {
+      let note = event.currentTarget;
+      this.listenerfocusOut(note);
+    });
+
+  },
+
+}
 
 $(function() {
 
+  /*
+  * Input event
+  */
+  notes.init();
+
+
+  /*
+  * Search event
+  */
   $('[data-note-search]').on('input', function() {
     var input = $(this);
     $('.note_element textarea').each(function() {
