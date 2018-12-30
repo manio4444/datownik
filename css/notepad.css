@@ -66,6 +66,19 @@
   background-color: #fa6161;
 }
 
+.note_element__progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: rgba(230, 33, 23, 0.7);
+  transform: scaleX(.5);
+  transform-origin: 0;
+  transition-duration: 0.2s;
+
+}
+
 @media screen and (max-width:1023px) {
   .note_element {
     width: 200px;
