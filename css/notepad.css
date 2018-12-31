@@ -73,10 +73,14 @@
   right: 0;
   height: 2px;
   background-color: rgba(230, 33, 23, 0.7);
-  transform: scaleX(.5);
+  transform: scaleX(0);
   transform-origin: 0;
-  transition-duration: 0.2s;
-
+}
+.note_element__progress.fill {
+  transform: scaleX(1);
+}
+.note_element__progress:not(.fill) {
+  transition-duration: 0s !important;
 }
 
 @media screen and (max-width:1023px) {

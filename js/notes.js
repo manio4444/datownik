@@ -28,8 +28,10 @@ var notes = {
   parentContainer: '.notes_container',
   elementContainer: '.note_element textarea',
   newElementHTML: '',
+  inputDelay: 700, //ms
   objInstanceFired: false,
   debug: false,
+  timeout: null, //TODO - do for every note individually
 
   create: function (note) {
 
@@ -57,6 +59,7 @@ var notes = {
   listenerInput: function (note) {
 
     let $note = $(note);
+    let $progressBar = $note.parent().find('.note_element__progress');
 
     if ($note.length === 0) {
       console.error('Note do not exist');
@@ -68,15 +71,28 @@ var notes = {
       return;
     }
 
-    if (!$note.attr('data-note')) {
+    if ($note.attr('data-status') === 'delay') {
+      if (this.debug) console.log('Reset delay Timeout');
+      clearTimeout(this.timeout);
+    };
 
-      this.create($note);
+    $progressBar.removeClass('fill');
 
-    } else {
 
-      this.edit($note);
+    $note.attr('data-status', 'delay');
+    $progressBar.css('transition-duration', `${this.inputDelay}ms`);
+    setTimeout(() => $progressBar.addClass('fill'), 1); //hack with 1ms
 
-    }
+    this.timeout = setTimeout(() => {
+      $note.attr('data-status', 'ready');
+      if (!$note.attr('data-note')) {
+        this.create($note);
+      } else {
+        this.edit($note);
+      }
+      if (this.debug) console.log('Delay Timeout fired');
+    }, this.inputDelay);
+
 
   },
 
