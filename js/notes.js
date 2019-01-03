@@ -138,9 +138,6 @@ var notes = {
 
 $(function() {
 
-  /*
-  * Input event
-  */
   notes.init();
 
 
