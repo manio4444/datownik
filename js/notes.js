@@ -53,7 +53,7 @@ var notes = {
           $note.attr('data-note', data);
           if (this.debug) console.log(`New entry, id: ${data}`);
         } else {
-          console.log(data);
+          if (this.debug) console.log(data);
         }
       }
     });
@@ -78,9 +78,9 @@ var notes = {
       success: (data) => {
         if (data == 'deleted') {
           $note.parents('.note_element').remove();
-          console.log(`Deleted entry, id: ${$note.attr('data-note')}`);
+          if (this.debug) console.log(`Deleted entry, id: ${$note.attr('data-note')}`);
         } else {
-          console.log(data);
+          if (this.debug) console.log(data);
         }
       }
     });
@@ -103,9 +103,9 @@ var notes = {
       dataType : 'text',
       success: (data) => {
         if (data == 'edit') {
-          console.log(`Entry edited, id: ${$note.attr('data-note')}`);
+          if (this.debug) console.log(`Entry edited, id: ${$note.attr('data-note')}`);
         } else {
-          console.log(data);
+          if (this.debug) console.log(data);
         }
       }
     });
