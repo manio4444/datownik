@@ -17,46 +17,133 @@ function ajax_notes_send(note_operation, this_note) {
          console.log('Usunięto wpis numer: '+this_note.attr('data-note'));
        } else if (data=='edit') {
          console.log('Edytowano wpis numer: '+this_note.attr('data-note'));
-       } else console.log(data);
+       } else console.log(data); //TODO - przy nowym wpisie backend nic nie zwraca
      }
   });
 }
 
-function notesListener(this_note) {
-  $(this_note).off('input'); //najpierw usuwa listenery
-  $(this_note).on('input', function() {
-    if ($(this).val()) {
-      if (!$(this).attr('data-note')) {
-        $(this).parents('.note_element').parent().prepend(new_note);
-        // $('#notepad').prepend(new_note);
-        $(this).attr('data-note', 'waiting');
-        ajax_notes_send('note_new', $(this));
-        notesListener(this_note);
+
+var notes = {
+
+  parentContainer: '.notes_container',
+  elementContainer: '.note_element textarea',
+  newElementHTML: '',
+  inputDelay: 700, //ms
+  objInstanceFired: false,
+  debug: false,
+  timeout: null, //TODO - do for every note individually
+
+  create: function (note) {
+
+    let $note = $(note);
+
+    $(this.parentContainer).prepend(this.newElementHTML);
+    $note.attr('data-note', 'waiting');
+    ajax_notes_send('note_new', $note);
+
+  },
+
+  delete: function (note) {
+
+  },
+
+
+  edit: function (note) {
+
+    let $note = $(note);
+
+    ajax_notes_send('note_edit', $note);
+
+  },
+
+  listenerInput: function (note) {
+
+    let $note = $(note);
+    let $progressBar = $note.parent().find('.note_element__progress');
+
+    if ($note.length === 0) {
+      console.error('Note do not exist');
+      return;
+    }
+
+    if (!$note.val()) {
+      if (this.debug) console.warn('Note has no text, request blocked');
+      return;
+    }
+
+    if ($note.attr('data-status') === 'delay') {
+      if (this.debug) console.log('Reset delay Timeout');
+      clearTimeout(this.timeout);
+    };
+
+    $progressBar.removeClass('fill');
+
+
+    $note.attr('data-status', 'delay');
+    $progressBar.css('transition-duration', `${this.inputDelay}ms`);
+    setTimeout(() => $progressBar.addClass('fill'), 1); //hack with 1ms
+
+    this.timeout = setTimeout(() => {
+      $note.attr('data-status', 'ready');
+      if (!$note.attr('data-note')) {
+        this.create($note);
+      } else {
+        this.edit($note);
       }
-      // console.log($(this));
-      ajax_notes_send('note_edit', $(this));
+      if (this.debug) console.log('Delay Timeout fired');
+    }, this.inputDelay);
+
+
+  },
+
+  listenerfocusOut: function (note) {
+
+    let $note = $(note);
+
+    if (this.debug) console.log('listenerfocusOut: '+$note.attr('data-note'));
+
+
+    if (!$note.val() && $note.attr('data-note')) {
+      if (this.debug) console.log('Wysłano prośbę o usunięcie wpisu: '+$note.attr('data-note'));
+      ajax_notes_send('note_delete', $note);
     }
-  });
 
-  $(this_note).off('focusout'); //najpierw usuwa listenery
-  $(this_note).focusout(function() {
-    console.log('focusout: '+$(this).attr('data-note'));
+  },
 
-    if (!$(this).val() && $(this).attr('data-note')) {
-      console.log('Wysłano prośbę o usunięcie wpisu: '+$(this).attr('data-note'));
-      ajax_notes_send('note_delete', $(this));
+  init: function() {
+
+    if (this.objInstanceFired === true) {
+      console.warn('object instance was fired before');
+      return;
+    } else {
+      this.objInstanceFired = true;
+      if (this.debug) console.info('object instance fired properly');
     }
-  });
 
-} //function notesListener
+    this.newElementHTML = $('.note_element').outerHTML();
 
-var new_note = $('.note_element').outerHTML(); //dodanie do zmiennej czystej notatki w html
+    $(this.parentContainer).on('input', this.elementContainer, (event) => {
+      let note = event.currentTarget;
+      this.listenerInput(note);
+    });
 
-notesListener( '.note_element textarea' ); //pierwsze uruchomienie
+    $(this.parentContainer).on('focusout', this.elementContainer, (event) => {
+      let note = event.currentTarget;
+      this.listenerfocusOut(note);
+    });
 
+  },
+
+}
 
 $(function() {
 
+  notes.init();
+
+
+  /*
+  * Search event
+  */
   $('[data-note-search]').on('input', function() {
     var input = $(this);
     $('.note_element textarea').each(function() {

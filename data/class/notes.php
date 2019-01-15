@@ -26,6 +26,7 @@ class notes extends defaultController {
         data-placeholder="Kliknięcie poza notatką spowoduje usunięcie"
         data-note="' . $id . '"
       >' . $text . '</textarea>
+      <div class="note_element__progress"></div>
     </div>
     ';
 
