@@ -46,18 +46,16 @@ var notes = {
         'note_id':        $note.attr('data-note'),
         'note_txt':       $note.val(),
         'note_operation': 'note_new',
-       },
-       dataType : 'text',
-       success: (data) => {
-         console.log(data);
-         console.log($.isNumeric(data));
-         if ($.isNumeric(data)) {
-           $note.attr('data-note', data);
-           if (this.debug) console.log(`New entry, id: ${data}`);
-         } else {
-           console.log(data);
-         }
-       }
+      },
+      dataType : 'text',
+      success: (data) => {
+        if ($.isNumeric(data)) {
+          $note.attr('data-note', data);
+          if (this.debug) console.log(`New entry, id: ${data}`);
+        } else {
+          console.log(data);
+        }
+      }
     });
 
   },
@@ -78,17 +76,15 @@ var notes = {
         'note_id':        $note.attr('data-note'),
         'note_txt':       $note.val(),
         'note_operation': 'note_edit',
-       },
-       dataType : 'text',
-       success: (data) => {
-         console.log(data);
-         console.log($.isNumeric(data));
-         if (data == 'edit') {
-           console.log(`Entry edited, id: ${$note.attr('data-note')}`);
-         } else {
-           console.log(data);
-         }
-       }
+      },
+      dataType : 'text',
+      success: (data) => {
+        if (data == 'edit') {
+          console.log(`Entry edited, id: ${$note.attr('data-note')}`);
+        } else {
+          console.log(data);
+        }
+      }
     });
 
   },
