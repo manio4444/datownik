@@ -71,7 +71,25 @@ var notes = {
 
     let $note = $(note);
 
-    ajax_notes_send('note_edit', $note);
+    $.ajax({
+      type: 'post',
+      data: {
+        'note_ajax':      true,
+        'note_id':        $note.attr('data-note'),
+        'note_txt':       $note.val(),
+        'note_operation': 'note_edit',
+       },
+       dataType : 'text',
+       success: (data) => {
+         console.log(data);
+         console.log($.isNumeric(data));
+         if (data == 'edit') {
+           console.log(`Entry edited, id: ${$note.attr('data-note')}`);
+         } else {
+           console.log(data);
+         }
+       }
+    });
 
   },
 
