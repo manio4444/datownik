@@ -62,6 +62,29 @@ var notes = {
 
   delete: function (note) {
 
+    let $note = $(note);
+
+    if (this.debug) console.log('Sending request to delete entry, id: '+$note.attr('data-note'));
+
+    $.ajax({
+      type: 'post',
+      data: {
+        'note_ajax':      true,
+        'note_id':        $note.attr('data-note'),
+        'note_txt':       $note.val(),
+        'note_operation': 'note_delete',
+      },
+      dataType : 'text',
+      success: (data) => {
+        if (data == 'deleted') {
+          $note.parents('.note_element').remove();
+          console.log(`Deleted entry, id: ${$note.attr('data-note')}`);
+        } else {
+          console.log(data);
+        }
+      }
+    });
+
   },
 
 
@@ -137,8 +160,7 @@ var notes = {
 
 
     if (!$note.val() && $note.attr('data-note')) {
-      if (this.debug) console.log('Wysłano prośbę o usunięcie wpisu: '+$note.attr('data-note'));
-      ajax_notes_send('note_delete', $note);
+      this.delete(note);
     }
 
   },
