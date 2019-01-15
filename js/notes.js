@@ -39,7 +39,26 @@ var notes = {
 
     $(this.parentContainer).prepend(this.newElementHTML);
     $note.attr('data-note', 'waiting');
-    ajax_notes_send('note_new', $note);
+    $.ajax({
+      type: 'post',
+      data: {
+        'note_ajax':      true,
+        'note_id':        $note.attr('data-note'),
+        'note_txt':       $note.val(),
+        'note_operation': 'note_new',
+       },
+       dataType : 'text',
+       success: (data) => {
+         console.log(data);
+         console.log($.isNumeric(data));
+         if ($.isNumeric(data)) {
+           $note.attr('data-note', data);
+           if (this.debug) console.log(`New entry, id: ${data}`);
+         } else {
+           console.log(data);
+         }
+       }
+    });
 
   },
 
