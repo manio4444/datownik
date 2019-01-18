@@ -1,28 +1,3 @@
-function ajax_notes_send(note_operation, this_note) {
-  $.ajax({
-    type: 'post',
-    data: {
-      'note_ajax': true,
-      'note_id': this_note.attr('data-note'),
-      'note_txt': this_note.val(),
-      'note_operation': note_operation,
-     },
-     dataType : 'text',
-     success: function(data){
-       if ($.isNumeric(data)) {
-         this_note.attr('data-note', data);
-         console.log('Nowy wpis numer: '+data);
-       } else if (data=='deleted') {
-         this_note.parents('.note_element').remove();
-         console.log('Usunięto wpis numer: '+this_note.attr('data-note'));
-       } else if (data=='edit') {
-         console.log('Edytowano wpis numer: '+this_note.attr('data-note'));
-       } else console.log(data); //TODO - przy nowym wpisie backend nic nie zwraca
-     }
-  });
-}
-
-
 var notes = {
 
   parentContainer: '.notes_container',
