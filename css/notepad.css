@@ -46,7 +46,8 @@
   transform: skew(-10deg,2deg);
 }
 
-.note_element textarea {
+.note_element textarea,
+.note__urlify {
   border: 0;
   resize: none;
   width: 100%;
@@ -54,11 +55,22 @@
   background-color: transparent;
   box-sizing: border-box;
   padding: 20px;
+  color: #202013;
   font-family: 'Kalam', cursive;
   font-weight: normal;
-  font-size:20px;
+  font-size: 20px;
+  line-height: 1.2857;
   overflow: hidden;
+  overflow-wrap: break-word;
   text-align: justify;
+  white-space: pre-wrap;
+}
+
+.note__urlify {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
 }
 
 /* ERROR */
