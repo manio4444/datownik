@@ -76,6 +76,7 @@
 
 .note__urlify a {
   pointer-events: auto;
+  color: #5a0ac2;
 }
 
 /* ERROR */
