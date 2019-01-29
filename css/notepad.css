@@ -66,6 +66,10 @@
   white-space: pre-wrap;
 }
 
+.note_element textarea:focus {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
 .note__urlify {
   position: absolute;
   left: 0;

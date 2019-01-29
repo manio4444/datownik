@@ -107,6 +107,15 @@ var notes = {
 
   },
 
+  clearUrlify: function (note) {
+
+    let $note = $(note);
+    let $urlify = $note.siblings(this.urlifyContainer);
+
+    $urlify.html(null);
+
+  },
+
   listenerInput: function (note) {
 
     let $note = $(note);
@@ -176,6 +185,11 @@ var notes = {
     $(this.parentContainer).on('input', this.elementContainer, (event) => {
       let note = event.currentTarget;
       this.listenerInput(note);
+    });
+
+    $(this.parentContainer).on('focusin', this.elementContainer, (event) => {
+      let note = event.currentTarget;
+      this.clearUrlify(note);
     });
 
     $(this.parentContainer).on('focusout', this.elementContainer, (event) => {
