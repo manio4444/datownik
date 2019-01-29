@@ -2,6 +2,7 @@ var notes = {
 
   parentContainer: '.notes_container',
   elementContainer: '.note_element textarea',
+  urlifyContainer: '.note__urlify',
   newElementHTML: '',
   inputDelay: 700, //ms
   objInstanceFired: false,
@@ -62,7 +63,6 @@ var notes = {
 
   },
 
-
   edit: function (note) {
 
     let $note = $(note);
@@ -84,6 +84,29 @@ var notes = {
         }
       }
     });
+
+  },
+
+  urlify: function (note) {
+
+    let $note = $(note);
+    let $urlify = $note.siblings(this.urlifyContainer);
+
+    let urlRegex = /(https?:\/\/[^\s]+)/g;
+    let newText = $note.val().replace(urlRegex, function(url) {
+        return `<a href="${url}" target="_blank">${url}</a>`;
+    });
+
+    $urlify.html(newText);
+
+  },
+
+  clearUrlify: function (note) {
+
+    let $note = $(note);
+    let $urlify = $note.siblings(this.urlifyContainer);
+
+    $urlify.html(null);
 
   },
 
@@ -133,9 +156,10 @@ var notes = {
 
     if (this.debug) console.log('listenerfocusOut: '+$note.attr('data-note'));
 
-
     if (!$note.val() && $note.attr('data-note')) {
       this.delete(note);
+    } else {
+      this.urlify(note);
     }
 
   },
@@ -157,9 +181,18 @@ var notes = {
       this.listenerInput(note);
     });
 
+    $(this.parentContainer).on('focusin', this.elementContainer, (event) => {
+      let note = event.currentTarget;
+      this.clearUrlify(note);
+    });
+
     $(this.parentContainer).on('focusout', this.elementContainer, (event) => {
       let note = event.currentTarget;
       this.listenerfocusOut(note);
+    });
+
+    $(this.elementContainer).each((index, element) => {
+      this.urlify(element);
     });
 
   },
@@ -168,6 +201,7 @@ var notes = {
 
 $(function() {
 
+  // notes.debug = true;
   notes.init();
 
 
