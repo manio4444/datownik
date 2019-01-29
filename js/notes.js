@@ -203,7 +203,7 @@ var notes = {
 
 $(function() {
 
-  notes.debug = true;
+  // notes.debug = true;
   notes.init();
 
 
