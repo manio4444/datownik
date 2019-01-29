@@ -1,28 +1,3 @@
-function ajax_notes_send(note_operation, this_note) {
-  $.ajax({
-    type: 'post',
-    data: {
-      'note_ajax': true,
-      'note_id': this_note.attr('data-note'),
-      'note_txt': this_note.val(),
-      'note_operation': note_operation,
-     },
-     dataType : 'text',
-     success: function(data){
-       if ($.isNumeric(data)) {
-         this_note.attr('data-note', data);
-         console.log('Nowy wpis numer: '+data);
-       } else if (data=='deleted') {
-         this_note.parents('.note_element').remove();
-         console.log('Usunięto wpis numer: '+this_note.attr('data-note'));
-       } else if (data=='edit') {
-         console.log('Edytowano wpis numer: '+this_note.attr('data-note'));
-       } else console.log(data); //TODO - przy nowym wpisie backend nic nie zwraca
-     }
-  });
-}
-
-
 var notes = {
 
   parentContainer: '.notes_container',
@@ -39,11 +14,51 @@ var notes = {
 
     $(this.parentContainer).prepend(this.newElementHTML);
     $note.attr('data-note', 'waiting');
-    ajax_notes_send('note_new', $note);
+    $.ajax({
+      type: 'post',
+      data: {
+        'note_ajax':      true,
+        'note_id':        $note.attr('data-note'),
+        'note_txt':       $note.val(),
+        'note_operation': 'note_new',
+      },
+      dataType : 'text',
+      success: (data) => {
+        if ($.isNumeric(data)) {
+          $note.attr('data-note', data);
+          if (this.debug) console.log(`New entry, id: ${data}`);
+        } else {
+          if (this.debug) console.log(data);
+        }
+      }
+    });
 
   },
 
   delete: function (note) {
+
+    let $note = $(note);
+
+    if (this.debug) console.log('Sending request to delete entry, id: '+$note.attr('data-note'));
+
+    $.ajax({
+      type: 'post',
+      data: {
+        'note_ajax':      true,
+        'note_id':        $note.attr('data-note'),
+        'note_txt':       $note.val(),
+        'note_operation': 'note_delete',
+      },
+      dataType : 'text',
+      success: (data) => {
+        if (data == 'deleted') {
+          $note.parents('.note_element').remove();
+          if (this.debug) console.log(`Deleted entry, id: ${$note.attr('data-note')}`);
+        } else {
+          if (this.debug) console.log(data);
+        }
+      }
+    });
 
   },
 
@@ -52,7 +67,23 @@ var notes = {
 
     let $note = $(note);
 
-    ajax_notes_send('note_edit', $note);
+    $.ajax({
+      type: 'post',
+      data: {
+        'note_ajax':      true,
+        'note_id':        $note.attr('data-note'),
+        'note_txt':       $note.val(),
+        'note_operation': 'note_edit',
+      },
+      dataType : 'text',
+      success: (data) => {
+        if (data == 'edit') {
+          if (this.debug) console.log(`Entry edited, id: ${$note.attr('data-note')}`);
+        } else {
+          if (this.debug) console.log(data);
+        }
+      }
+    });
 
   },
 
@@ -104,8 +135,7 @@ var notes = {
 
 
     if (!$note.val() && $note.attr('data-note')) {
-      if (this.debug) console.log('Wysłano prośbę o usunięcie wpisu: '+$note.attr('data-note'));
-      ajax_notes_send('note_delete', $note);
+      this.delete(note);
     }
 
   },
