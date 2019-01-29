@@ -97,8 +97,6 @@ var notes = {
         return `<a href="${url}" target="_blank">${url}</a>`;
     });
 
-    console.log(newText);
-
     $urlify.html(newText);
 
   },
