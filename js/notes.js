@@ -90,14 +90,10 @@ var notes = {
   urlify: function (note) {
 
     let $note = $(note);
-
     let $urlify = $note.siblings(this.urlifyContainer);
 
-    console.log($urlify);
-    console.log($urlify.text());
-
     let urlRegex = /(https?:\/\/[^\s]+)/g;
-    let newText = $note.text().replace(urlRegex, function(url) {
+    let newText = $note.val().replace(urlRegex, function(url) {
         return `<a href="${url}" target="_blank">${url}</a>`;
     });
 
