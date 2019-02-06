@@ -49,6 +49,11 @@ $calendar_txt_value = (isset($_GET['txt'])) ? $_GET['txt'] : '';
 
 <br>
 
+<img src="https://cdn6.aptoide.com/imgs/5/5/2/552701dcbef0b2f4866ed1fe9467442d_screen.png?h=464" alt="">
+
+<br>
+
+
 <?php
 
 $preg_match_month = '/\d\d\d\d[-]([0][1-9]|[1][0-2])/'; // for example 2018-12
