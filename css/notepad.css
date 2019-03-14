@@ -111,7 +111,8 @@
     height: 200px;
     /*margin: 5px;*/
   }
-  .note_element textarea {
+  .note_element textarea,
+  .note__urlify {
     font-size: 18px;
     padding: 5px;
   }
@@ -124,7 +125,8 @@
     height: 150px;
     margin: 5px;
   }
-  .note_element textarea {
+  .note_element textarea,
+  .note__urlify {
     font-size: 13px;
     padding: 5px;
   }
