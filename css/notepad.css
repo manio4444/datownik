@@ -14,19 +14,15 @@
 
 .note_element {
   position: relative;
-  width: 250px;
-  height: 250px;
-  /*float: left;*/
+  font-size: 10px;
+  width: 25em;
+  height: 25em;
   font-weight: bold;
   background-color: #fcf59b;
   border-bottom-right-radius: 210px 15px;
-  -webkit-box-shadow: -3px 5px 12px 0 rgba(0,0,0,0.3);
-  -moz-box-shadow: -3px 5px 12px 0 rgba(0,0,0,0.3);
   box-shadow: -3px 5px 12px 0 rgba(0,0,0,0.3);
   margin: 10px;
-  -webkit-transition: all 1s ease-in-out;
-  -moz-transition: all 1s ease-in-out;
-  -o-transition: all 1s ease-in-out;
+  transition: all .2s ease-in-out;
 }
 
 .note_element::before {
@@ -36,13 +32,8 @@
   z-index: -1;
   width: 90%;
   height: 20px;
-  -webkit-box-shadow: 3px 17px 6px rgba(0,0,0,.3);
-  -moz-box-shadow: 3px 17px 6px rgba(0,0,0,.3);
-  box-shadow: 3px 17px 6px rgba(0,0,0,.3);
   bottom: 15px;
   right: 5px;
-  -ms-transform: skew(-10deg,2deg);
-  -webkit-transform: skew(-10deg,2deg);
   transform: skew(-10deg,2deg);
 }
 
@@ -54,12 +45,12 @@
   height: 100%;
   background-color: transparent;
   box-sizing: border-box;
-  padding: 20px;
+  padding: 1em;
   color: #202013;
   font-family: 'Kalam', cursive;
   font-weight: normal;
-  font-size: 20px;
-  line-height: 1.2857;
+  font-size: 2em;
+  line-height: 1.2857em;
   overflow: hidden;
   overflow-wrap: break-word;
   text-align: justify;
@@ -106,31 +97,9 @@
 }
 
 @media screen and (max-width:1023px) {
-  .note_element {
-    width: 200px;
-    height: 200px;
-    /*margin: 5px;*/
-  }
-  .note_element textarea,
-  .note__urlify {
-    font-size: 18px;
-    padding: 5px;
-  }
-
 }
 
 @media screen and (max-width:479px) {
-  .note_element {
-    width: 150px;
-    height: 150px;
-    margin: 5px;
-  }
-  .note_element textarea,
-  .note__urlify {
-    font-size: 13px;
-    padding: 5px;
-  }
-
 }
 
 
