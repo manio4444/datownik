@@ -147,6 +147,12 @@
     do code snippetów -
     https://codepen.io/chriscoyier/pen/GBbOJd
   </pre>
+  <pre>
+    viewport - <span class="startPageViewport"></span>px
+    <script>
+      $('.startPageViewport').text($(window).width());
+    </script>
+  </pre>
 
 </section>
 

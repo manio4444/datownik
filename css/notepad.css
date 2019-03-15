@@ -97,9 +97,16 @@
 }
 
 @media screen and (max-width:1023px) {
+  .note_element {
+    font-size: 8.5px;
+  }
 }
 
 @media screen and (max-width:479px) {
+  .note_element {
+    font-size: 6.6px;
+    margin: 5px;
+  }
 }
 
 
