@@ -91,11 +91,14 @@ var notes = {
 
     let $note = $(note);
     let $urlify = $note.siblings(this.urlifyContainer);
-
+    let newText = $note.val();
     let urlRegex = /(https?:\/\/[^\s]+)/g;
-    let newText = $note.val().replace(urlRegex, function(url) {
+    let nl2brRegex = /(?:\r\n|\r|\n)/g;
+
+    newText = newText.replace(urlRegex, function(url) {
         return `<a href="${url}" target="_blank">${url}</a>`;
     });
+    newText = newText.replace(nl2brRegex, '<br>');
 
     $urlify.html(newText);
 
