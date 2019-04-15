@@ -29,62 +29,68 @@ function draw_calendar2($month,$year) {
   $days_in_this_week = 1;
   $dates_array = array();
   $events_month = get_events_month($month,$year);
+  $decoration_elements = 7;
 
 
 /* Start zwracania wartości */
-  $calendar = '<table cellpadding="0" cellspacing="0" class="calendar">';
-	$calendar.= '<tr class="calendar-row"><td class="calendar-day-head">'.implode('</td><td class="calendar-day-head">',$headings).'</td></tr>';
+  $calendar = '<div class="calendar">';
+
+  $calendar.= '<div class="calendar__decoration">';
+  for ($i=0; $i < $decoration_elements; $i++) {
+    $calendar.= '<div class="calendar__decoration-el"></div>';
+  }
+  $calendar.= '</div>';
+
+	foreach ($headings as $heading) {
+    $calendar.= '<div class="calendar__head">' . $heading . '</div>';
+  };
 
 	/* row for week one */
-	$calendar.= '<tr class="calendar-row">';
+	$calendar.= '<div class="calendar__days">';
 
   if ($first_day > 1) {	// puste zanim zacznie sie od pierwszego dnia
     $days_in_past_month = date('t', strtotime(date('Y-m',mktime(0,0,0,$month,1,$year))." -1 month")); //Ilość dni w POPRZEDNIM miesiącu
   	for($x = $days_in_past_month-$first_day+2; $x <= $days_in_past_month; $x++) {
-  		$calendar.= '<td class="calendar-day-np"><div class="day-number">' . $x . '</div></td>';
+  		$calendar.= '<div class="calendar__day calendar__day--np"><div class="day__number">' . $x . '</div></div>';
   	}
   }
 
 	/* keep going with days.... */
 	for($day = 1; $day <= $days_in_month; $day++) {
     $day_of_week = date('N',mktime(0,0,0,$month,$day,$year)); //pobiera ktory to dzien tygodnia
-		$calendar.= '<td class="calendar-day">';
+		$calendar.= '<div class="calendar__day"><div class="calendar__day__container">';
 
 
 //###################################################################################################
 			/* add in the day number */
-			$calendar.= "<div class='day-number'>$day</div>";
+			$calendar.= "<div class='day__number'>$day</div>";
       if (@is_array($events_month[$day]) && count($events_month[$day])>0) {
         foreach ($events_month[$day] as $value) {
-          $calendar.= '<p class="day-event day-event--' . $value['type'] . '"><a href="' . get_url() . '&id=' . $value['id'] . '">' . $value['txt'] . '</a><span class="details">' . $value['data'] . '</span></p>';
+          $calendar.= '<p class="day__event day__event--' . $value['type'] . '"><a href="' . get_url() . '&id=' . $value['id'] . '">' . $value['txt'] . '</a><span class="details">' . $value['data'] . '</span></p>';
         }
       }
-      $calendar.= '<p class="day-event add-event">+</p>';
+      $calendar.= '<div class="day__hover">';
+      $calendar.= '<a href="#" class="day__hover-icon day__open far fa-eye"></a>';
+      $calendar.= '<a href="#" class="day__hover-icon day__add fas fa-plus"></a>';
+      $calendar.= '</div>';
 //###################################################################################################
 
 
-		$calendar.= '</td>';
-		if($day_of_week == 7) {
-			$calendar.= '</tr>';
-      if ($day < $days_in_month) $calendar.= '<tr class="calendar-row">'; //otwiera nowy wiersz jesli dzien nie jest ostatnim dniem miesiaca
-		}
-		$first_day++;
+		$calendar.= '</div></div>';
 	}
 
 	/* finish the rest of the days in the week */
   $y = 1;
 	if($day_of_week < 7) {
 		for($x = $day_of_week; $x <= 6; $x++):
-			$calendar.= '<td class="calendar-day-np"><div class="day-number">' . $y . '</div></td>';
+			$calendar.= '<div class="calendar__day calendar__day--np"><div class="day__number">' . $y . '</div></div>';
       $y++;
 		endfor;
 	}
 
-	/* final row */
-	$calendar.= '</tr>';
-
+	$calendar.= '</div>';
 	/* end the table */
-	$calendar.= '</table>';
+	$calendar.= '</div>';
 
 	/* all done, return result */
 	return $calendar;
