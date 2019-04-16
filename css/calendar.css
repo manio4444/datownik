@@ -37,6 +37,7 @@
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  padding: 2px;
 }
 .calendar__day {
   width: calc(100% / 7);
@@ -46,8 +47,8 @@
   padding-top: calc(100% / 7);
 }
 .calendar__day--np {
-  color:#ddd;
-  /* background:#eee; */
+  opacity: .5;
+  pointer-events: none;
 }
 .calendar__day__container {
   position: absolute;
@@ -141,6 +142,11 @@
   font-size: 30px;
   background-color: rgba(34, 34, 34, 0.25);
   transition: opacity .3s ease;
+}
+
+.calendar__day:not(:hover) .day__hover {
+  opacity: 0;
+  pointer-events: none;
 }
 .day__hover-icon {
   margin: 0 6px;

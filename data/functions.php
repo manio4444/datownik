@@ -51,7 +51,9 @@ function draw_calendar2($month,$year) {
   if ($first_day > 1) {	// puste zanim zacznie sie od pierwszego dnia
     $days_in_past_month = date('t', strtotime(date('Y-m',mktime(0,0,0,$month,1,$year))." -1 month")); //Ilość dni w POPRZEDNIM miesiącu
   	for($x = $days_in_past_month-$first_day+2; $x <= $days_in_past_month; $x++) {
-  		$calendar.= '<div class="calendar__day calendar__day--np"><div class="day__number">' . $x . '</div></div>';
+  		$calendar.= '<div class="calendar__day calendar__day--np"><div class="calendar__day__container">';
+  		$calendar.= '<div class="day__number">' . $x . '</div>';
+  		$calendar.= '</div></div>';
   	}
   }
 
@@ -87,7 +89,9 @@ function draw_calendar2($month,$year) {
   $y = 1;
 	if($day_of_week < 7) {
 		for($x = $day_of_week; $x <= 6; $x++):
-			$calendar.= '<div class="calendar__day calendar__day--np"><div class="day__number">' . $y . '</div></div>';
+      $calendar.= '<div class="calendar__day calendar__day--np"><div class="calendar__day__container">';
+  		$calendar.= '<div class="day__number">' . $y . '</div>';
+  		$calendar.= '</div></div>';
       $y++;
 		endfor;
 	}
