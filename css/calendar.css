@@ -59,14 +59,11 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  counter-reset: event;
 }
 .calendar__day:hover .calendar__day__container {
   background: #ddd;
 }
-.calendar__day:not(:hover) .day__hover {
-  opacity: 0;
-}
-.calendar__day p { font-weight: lighter;}
 .day__number {
   font-size: 22px;
   line-height: 0.8em;
@@ -76,16 +73,14 @@
   color: #ccc;
 }
 .day__event {
-  position: relative;
-  background-color: rgba(245, 91, 80, 1);
+  background-color: var(--calendar-red);
   border-radius: 2px;
   color: white;
   display: block;
   padding: 3px;
   margin-bottom: 3px;
-  font-size: 11px;
-  font-weight: normal;
-  /*overflow: hidden;*/
+  font-size: 9px;
+  counter-increment: event;
 }
 .day__event--dayoff {
   background-color: #00b5ad;
@@ -118,6 +113,20 @@
   border-bottom: 7px solid rgba(0, 0, 0, 0.7);
   border-left: 7px solid transparent;
   border-right: 7px solid transparent;
+}
+.day__counter {
+  background-color: var(--calendar-red);
+  border-radius: 2px;
+  color: white;
+  font-size: 14px;
+  text-align: center;
+  font-weight: bold;
+}
+.day__events:empty + .day__counter {
+  display: none;
+}
+.day__counter::after {
+  content: counter(event);
 }
 
 .day__hover {
@@ -156,12 +165,23 @@
   margin-left: 5px;
 }
 
+@media (max-width: 479px) {
+  .day__event {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
 @media (min-width: 480px) {
   .calendar__head {
     font-size: 1.2em;
   }
   .day__number {
     font-size: 26px;
+  }
+  .day__counter {
+    display: none;
   }
 }
 
@@ -171,5 +191,9 @@
   }
   .day__number {
     font-size: 32px;
+  }
+  .day__event {
+    font-weight: lighter;
+    font-size: 11px;
   }
 }

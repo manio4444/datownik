@@ -64,11 +64,15 @@ function draw_calendar2($month,$year) {
 //###################################################################################################
 			/* add in the day number */
 			$calendar.= "<div class='day__number'>$day</div>";
+			$calendar.= "<div class='day__events'>";
       if (@is_array($events_month[$day]) && count($events_month[$day])>0) {
         foreach ($events_month[$day] as $value) {
           $calendar.= '<p class="day__event day__event--' . $value['type'] . '"><a href="' . get_url() . '&id=' . $value['id'] . '">' . $value['txt'] . '</a><span class="details">' . $value['data'] . '</span></p>';
         }
       }
+      $calendar.= '</div>';
+
+      $calendar.= '<div class="day__counter"></div>';
       $calendar.= '<div class="day__hover">';
       $calendar.= '<a href="#" class="day__hover-icon day__open far fa-eye"></a>';
       $calendar.= '<a href="#" class="day__hover-icon day__add fas fa-plus"></a>';
