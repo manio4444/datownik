@@ -59,7 +59,7 @@
   background-color: #eee;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   counter-reset: event;
 }
 .calendar__day:hover .calendar__day__container {
@@ -143,10 +143,15 @@
   background-color: rgba(34, 34, 34, 0.25);
   transition: opacity .3s ease;
 }
-
 .calendar__day:not(:hover) .day__hover {
   opacity: 0;
   pointer-events: none;
+}
+@media (hover: none) {
+  .day__hover {
+    opacity: 0;
+    pointer-events: none;
+  }
 }
 .day__hover-icon {
   margin: 0 6px;
@@ -192,6 +197,9 @@
 }
 
 @media (min-width: 1024px) {
+  .calendar__day__container {
+    justify-content: center;
+  }
   .calendar__days {
     padding: 20px;
   }
