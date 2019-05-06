@@ -33,6 +33,10 @@ class notes extends defaultController {
     ';
 
   }
+
+  private function getData($limit=0) {
+    return $this->sqlReturn;
+  }
 }
 
 ?>

@@ -19,6 +19,10 @@ class ajaxRouter extends database {
     'tasksAjax' => array(
       'ajaxControllerFileName' => 'tasks.php',
     ),
+
+    'notesAjax' => array(
+      'ajaxControllerFileName' => 'notes.php',
+    ),
   );
 
   public static function detectAjax() {
