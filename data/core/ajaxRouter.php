@@ -30,9 +30,9 @@ class ajaxRouter extends database {
   }
 
   public static function tryAjax() {
-    if (static::detectAjax() === false) {
-      return null;
-    }
+    // if (static::detectAjax() === false) {
+    //   return null;
+    // }
 
     // static::startAjaxOutput();
 
