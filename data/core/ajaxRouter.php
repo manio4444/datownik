@@ -6,6 +6,8 @@
 
 class ajaxRouter extends database {
 
+  private $requestData;
+  private $requestType;
   private static $routingArray = array(
 
     'docsAjax' => array(
@@ -33,10 +35,54 @@ class ajaxRouter extends database {
     }
   }
 
-  public static function tryAjax() {
-    // if (static::detectAjax() === false) {
-    //   return null;
-    // }
+  public static function detectJson() {
+    if (strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') != 0) {
+      return false;
+    }
+    if (strpos($_SERVER["CONTENT_TYPE"], 'application/json') === false) {
+      return false;
+    }
+    if (System::isJson(file_get_contents("php://input")) === false) {
+      return false;
+    }
+    return true;
+  }
+
+  public static function detectOptions() {
+    //used by axios on React
+    return (strcasecmp($_SERVER['REQUEST_METHOD'], 'OPTIONS') === 0);
+  }
+
+  public function requestType() {
+    if (static::detectAjax() === true) {
+      return 'ajax';
+    }
+    if (static::detectJson() === true) {
+      return 'json';
+    }
+    if (static::detectOptions() === true) {
+      return 'options';
+    }
+    return false;
+  }
+
+  public function tryAjax() {
+    $this->requestType = $this->requestType();
+
+    if ($this->requestType === false) {
+      return null;
+    }
+
+    if ($this->requestType === 'ajax') {
+      $this->requestData = $_POST;
+    }
+    if ($this->requestType === 'json') {
+      $this->requestData = json_decode(file_get_contents("php://input"), true);
+    }
+    if ($this->requestType === 'options') {
+      static::startAjaxOutput();
+      static::endAjaxOutput(array('status' => 200, 'message' => 'OPTIONS request'));
+    }
 
     // static::startAjaxOutput();
 
