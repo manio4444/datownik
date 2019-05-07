@@ -107,6 +107,11 @@ class ajaxRouter extends database {
     $content = ob_get_contents();
     ob_end_clean();
 
+    if ($data['status'] === 404) {
+      //status should be always returned
+      header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found", true, 404);
+    }
+
     echo json_encode(
       array(
         'data' => $data,
