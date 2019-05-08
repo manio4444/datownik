@@ -1,31 +1,13 @@
 <?php
 
 /**
-* defaultController
+* Class for handling ajax queries & data fetch endpoint
 */
 
 class ajaxRouter extends database {
 
   private $requestData;
   private $requestType;
-  private static $routingArray = array(
-
-    'docsAjax' => array(
-      'ajaxControllerFileName' => 'docs.php',
-    ),
-
-    'lockscreenAjax' => array(
-      'ajaxControllerFileName' => 'lockscreen.php',
-    ),
-
-    'tasksAjax' => array(
-      'ajaxControllerFileName' => 'tasks.php',
-    ),
-
-    'notesAjax' => array(
-      'ajaxControllerFileName' => 'notes.php',
-    ),
-  );
 
   public static function detectAjax() {
     if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH'])=='xmlhttprequest') {
@@ -112,31 +94,18 @@ class ajaxRouter extends database {
     }
   }
 
-  private static function getAjaxController($ajaxController) {
-    if (
-      !array_key_exists($ajaxController, self::$routingArray)
-      || !array_key_exists('ajaxControllerFileName', self::$routingArray[$ajaxController])
-      || empty(self::$routingArray[$ajaxController]['ajaxControllerFileName'])
-      || !file_exists(FOLDER_AJAX . '/' . self::$routingArray[$ajaxController]['ajaxControllerFileName'])
-    ) {
-      return false;
-    }
-
-    include(FOLDER_AJAX . '/' . self::$routingArray[$ajaxController]['ajaxControllerFileName']);
-    return $ajaxController;
-  }
-
-  private static function doAjax($ajaxControllerName) {
-    $ajaxController = static::getAjaxController($ajaxControllerName);
-    if ($ajaxController === false) {
+  private function doAjax($ajaxControllerName) {
+    try {
+      $controller = new $ajaxControllerName;
+    } catch (Exception $e) {
       return array(
         'status' => 404,
-        'message' => 'Nie można załadować klasy: ' . $ajaxControllerName,
+        // 'message' => 'Nie można załadować klasy: ' . $ajaxControllerName,
+        'message' =>  $e->getMessage(),
       );
-    } else {
-      $controller = new $ajaxController;
-      return $controller->render();
     }
+
+    return $controller->render();
   }
 
   public static function startAjaxOutput() {
