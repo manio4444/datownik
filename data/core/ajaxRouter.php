@@ -8,6 +8,7 @@ class ajaxRouter extends database {
 
   private $requestData;
   private $requestType;
+  private $apiV2Compatible = false;
 
   public static function detectAjax() {
     if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH'])=='xmlhttprequest') {
@@ -63,7 +64,7 @@ class ajaxRouter extends database {
     }
     if ($this->requestType === 'options') {
       static::startAjaxOutput();
-      static::endAjaxOutput(array('status' => 200, 'message' => 'OPTIONS request'));
+      $this->endAjaxOutput(array('status' => 200, 'message' => 'OPTIONS request'));
     }
 
     // static::startAjaxOutput();
@@ -77,11 +78,11 @@ class ajaxRouter extends database {
       // );
     } else {
       static::startAjaxOutput();
-      $data = static::doAjax($existsAjaxController);
-      static::endAjaxOutput($data);
+      $data = $this->doAjax($existsAjaxController);
+      $this->endAjaxOutput($data);
     }
 
-    // static::endAjaxOutput($data);
+    // $this->endAjaxOutput($data);
   }
 
   private static function existsAjaxController() {
@@ -104,7 +105,10 @@ class ajaxRouter extends database {
         'message' =>  $e->getMessage(),
       );
     }
-
+    if ($controller->apiV2Compatible === true) {
+      $this->apiV2Compatible = true;
+      return $controller->futureRender($this->requestData);
+    }
     return $controller->render();
   }
 
@@ -118,13 +122,18 @@ class ajaxRouter extends database {
     ob_start();
   }
 
-  public static function endAjaxOutput($data) {
+  public function endAjaxOutput($data) {
     $content = ob_get_contents();
     ob_end_clean();
 
     if ($data['status'] === 404) {
       //status should be always returned
       header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found", true, 404);
+    }
+
+    if ($this->apiV2Compatible === true) {
+      echo json_encode($data);
+      die();
     }
 
     echo json_encode(
