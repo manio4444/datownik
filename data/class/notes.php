@@ -11,7 +11,7 @@ class notes extends defaultController {
       System::error('Klasa "' . get_class() . '" Nie ma dostępu do połączenia SQL');
       return false;
     }
-    $this->sqlReturn = $this->getInstance()->query('SELECT * FROM `notes` ORDER BY `id` DESC'); //TODO make it to another function
+    $this->sqlReturn = $this->getData();
   }
 
   public function getTemplate($data = array()) {
@@ -34,8 +34,12 @@ class notes extends defaultController {
 
   }
 
-  private function getData($limit=0) {
-    return $this->sqlReturn;
+  protected function getData($limit = 0) {
+
+    $this->sqlReturn = $this->getInstance()->query('SELECT * FROM `notes` ORDER BY `id` DESC'); //TODO make it to another function
+
+    return $this->sqlReturn->fetchAll();
+
   }
 }
 
