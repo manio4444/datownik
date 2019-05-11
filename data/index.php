@@ -24,7 +24,8 @@ try {
 
 // TODO docelowo pozbyć się oddzielnego routera do ajaxa ???
 include_once('data/core/ajaxRouter.php');
-ajaxRouter::tryAjax();
+$ajaxRouter = new ajaxRouter;
+$ajaxRouter->tryAjax();
 
 // TODO docelowo poprzenosić operacje do konkretnych modelów
 include_once('data/operations.php');

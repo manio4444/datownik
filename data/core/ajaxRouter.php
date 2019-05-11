@@ -1,25 +1,14 @@
 <?php
 
 /**
-* defaultController
+* Class for handling ajax queries & data fetch endpoint
 */
 
 class ajaxRouter extends database {
 
-  private static $routingArray = array(
-
-    'docsAjax' => array(
-      'ajaxControllerFileName' => 'docs.php',
-    ),
-
-    'lockscreenAjax' => array(
-      'ajaxControllerFileName' => 'lockscreen.php',
-    ),
-
-    'tasksAjax' => array(
-      'ajaxControllerFileName' => 'tasks.php',
-    ),
-  );
+  private $requestData;
+  private $requestType;
+  private $apiV2Compatible = false;
 
   public static function detectAjax() {
     if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH'])=='xmlhttprequest') {
@@ -29,10 +18,54 @@ class ajaxRouter extends database {
     }
   }
 
-  public static function tryAjax() {
-    // if (static::detectAjax() === false) {
-    //   return null;
-    // }
+  public static function detectJson() {
+    if (strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') != 0) {
+      return false;
+    }
+    if (strpos($_SERVER["CONTENT_TYPE"], 'application/json') === false) {
+      return false;
+    }
+    if (System::isJson(file_get_contents("php://input")) === false) {
+      return false;
+    }
+    return true;
+  }
+
+  public static function detectOptions() {
+    //used by axios on React
+    return (strcasecmp($_SERVER['REQUEST_METHOD'], 'OPTIONS') === 0);
+  }
+
+  public function requestType() {
+    if (static::detectAjax() === true) {
+      return 'ajax';
+    }
+    if (static::detectJson() === true) {
+      return 'json';
+    }
+    if (static::detectOptions() === true) {
+      return 'options';
+    }
+    return false;
+  }
+
+  public function tryAjax() {
+    $this->requestType = $this->requestType();
+
+    if ($this->requestType === false) {
+      return null;
+    }
+
+    if ($this->requestType === 'ajax') {
+      $this->requestData = $_POST;
+    }
+    if ($this->requestType === 'json') {
+      $this->requestData = json_decode(file_get_contents("php://input"), true);
+    }
+    if ($this->requestType === 'options') {
+      static::startAjaxOutput();
+      $this->endAjaxOutput(array('status' => 200, 'message' => 'OPTIONS request'));
+    }
 
     // static::startAjaxOutput();
 
@@ -45,11 +78,11 @@ class ajaxRouter extends database {
       // );
     } else {
       static::startAjaxOutput();
-      $data = static::doAjax($existsAjaxController);
-      static::endAjaxOutput($data);
+      $data = $this->doAjax($existsAjaxController);
+      $this->endAjaxOutput($data);
     }
 
-    // static::endAjaxOutput($data);
+    // $this->endAjaxOutput($data);
   }
 
   private static function existsAjaxController() {
@@ -62,31 +95,21 @@ class ajaxRouter extends database {
     }
   }
 
-  private static function getAjaxController($ajaxController) {
-    if (
-      !array_key_exists($ajaxController, self::$routingArray)
-      || !array_key_exists('ajaxControllerFileName', self::$routingArray[$ajaxController])
-      || empty(self::$routingArray[$ajaxController]['ajaxControllerFileName'])
-      || !file_exists(FOLDER_AJAX . '/' . self::$routingArray[$ajaxController]['ajaxControllerFileName'])
-    ) {
-      return false;
-    }
-
-    include(FOLDER_AJAX . '/' . self::$routingArray[$ajaxController]['ajaxControllerFileName']);
-    return $ajaxController;
-  }
-
-  private static function doAjax($ajaxControllerName) {
-    $ajaxController = static::getAjaxController($ajaxControllerName);
-    if ($ajaxController === false) {
+  private function doAjax($ajaxControllerName) {
+    try {
+      $controller = new $ajaxControllerName;
+    } catch (Exception $e) {
       return array(
         'status' => 404,
-        'message' => 'Nie można załadować klasy: ' . $ajaxControllerName,
+        // 'message' => 'Nie można załadować klasy: ' . $ajaxControllerName,
+        'message' =>  $e->getMessage(),
       );
-    } else {
-      $controller = new $ajaxController;
-      return $controller->render();
     }
+    if ($controller->apiV2Compatible === true) {
+      $this->apiV2Compatible = true;
+      return $controller->futureRender($this->requestData);
+    }
+    return $controller->render();
   }
 
   public static function startAjaxOutput() {
@@ -99,9 +122,19 @@ class ajaxRouter extends database {
     ob_start();
   }
 
-  public static function endAjaxOutput($data) {
+  public function endAjaxOutput($data) {
     $content = ob_get_contents();
     ob_end_clean();
+
+    if ($data['status'] === 404) {
+      //status should be always returned
+      header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found", true, 404);
+    }
+
+    if ($this->apiV2Compatible === true) {
+      echo json_encode($data);
+      die();
+    }
 
     echo json_encode(
       array(
