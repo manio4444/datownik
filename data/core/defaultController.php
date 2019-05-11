@@ -6,6 +6,7 @@
 class defaultController extends database {
 
   public $dbInstance;
+  protected $requestData = [];
 
   public function getViewTitle() {
     return DEFAULT_TITLE . get_class($this);
@@ -14,6 +15,7 @@ class defaultController extends database {
   public function futureRender($requestData) {
 
     $this->dbInstance = $this->getInstance();
+    $this->requestData = $requestData;
 
     if (!array_key_exists('operation', $requestData)) {
       return $this->error404('Nie wprowadzono operacji.');

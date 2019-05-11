@@ -20,7 +20,7 @@ $notes = new notes;
 
     echo $notes->getTemplate(); //first empty
 
-    foreach ($notes->sqlReturn as $data) {
+    foreach ($notes->getData() as $data) {
 
       echo $notes->getTemplate($data);
 

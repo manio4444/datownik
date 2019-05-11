@@ -11,7 +11,6 @@ class notes extends defaultController {
       System::error('Klasa "' . get_class() . '" Nie ma dostępu do połączenia SQL');
       return false;
     }
-    $this->sqlReturn = $this->getData();
   }
 
   public function getTemplate($data = array()) {
@@ -34,9 +33,15 @@ class notes extends defaultController {
 
   }
 
-  protected function getData($limit = 0) {
+  public function getData() {
 
-    $this->sqlReturn = $this->getInstance()->query('SELECT * FROM `notes` ORDER BY `id` DESC'); //TODO make it to another function
+    $sqlLimit = (
+      array_key_exists('limit', $this->requestData)
+      && is_numeric($this->requestData['limit'])
+      && $this->requestData['limit'] !== 0
+      ) ? " LIMIT " . $this->requestData['limit'] : "";
+
+    $this->sqlReturn = $this->getInstance()->query('SELECT * FROM `notes` ORDER BY `id` DESC'.$sqlLimit); //TODO make it to another function
 
     return $this->sqlReturn->fetchAll();
 
