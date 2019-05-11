@@ -26,10 +26,18 @@ class defaultController extends database {
       return $this->error404('Podana operacja nie istnieje.');
     }
 
-    return array(
-      'status' => 200,
-      'result' =>  $this->{$operation}($requestData),
-    );
+    try {
+      $result = $this->{$operation}($requestData);
+      return array(
+        'status' => 200,
+        'result' =>  $result,
+      );
+    } catch (Exception $e) {
+      return array(
+        'status' => 404,
+        'message' =>  $e->getMessage(),
+      );
+    }
 
   }
 
