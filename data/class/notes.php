@@ -33,6 +33,16 @@ class notes extends defaultController {
 
   }
 
+  public function setLimit($limit) {
+
+    if (!is_numeric($limit)) {
+      return false;
+    }
+
+    $this->requestData['limit'] = $limit;
+
+  }
+
   public function getData() {
 
     $sqlLimit = (

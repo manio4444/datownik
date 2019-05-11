@@ -167,14 +167,12 @@
     if (Router::importViewClass('notatki')) {
 
       $notes = new notes;
+      $notes->setLimit(7);
 
       echo $notes->getTemplate(); //first empty
 
-      $foreach_limit = 0;
-
-      foreach ($notes->sqlReturn as $data) {
+      foreach ($notes->getData() as $data) {
         echo $notes->getTemplate($data);
-        if (++$foreach_limit >= 7) break;
       }
 
     }
