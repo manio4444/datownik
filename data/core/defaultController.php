@@ -58,6 +58,10 @@ class defaultController extends database {
     );
   }
 
+  public function addParam($name, $value) {
+    $this->requestData[$name] = $value;
+  }
+
 }
 
 ?>

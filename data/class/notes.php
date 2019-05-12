@@ -47,6 +47,27 @@ class notes extends defaultController {
     return $sqlReturn->fetchAll(PDO::FETCH_ASSOC);
 
   }
+
+  public function addNote() {
+
+    if (
+      !array_key_exists('txt', $this->requestData)
+      || empty($this->requestData['txt'])
+    ) {
+      return $this->error404('Nie można utworzyć notatki, brak tekstu');
+    }
+
+    $sqlReturn = $this->getDbInstance()->prepare('INSERT INTO `notes` (`txt`) VALUES (:txt)');
+    $sqlReturn->bindValue(':txt', $this->requestData['txt'], PDO::PARAM_STR);
+    $sqlReturn->execute();
+
+    return array(
+      'operation' => 'Added new',
+      'id' => $this->getDbInstance()->lastInsertId(),
+    );
+
+  }
+
 }
 
 ?>
