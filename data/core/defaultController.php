@@ -5,16 +5,26 @@
  */
 class defaultController extends database {
 
-  public $dbInstance;
+  private $dbInstance;
   protected $requestData = [];
 
   public function getViewTitle() {
     return DEFAULT_TITLE . get_class($this);
   }
 
+  protected function getDbInstance() {
+    //TODO: in future remote extending database class
+    $db = new database;
+    if (!isset($this->dbInstance)) {
+      $db->startPDO();
+      $this->dbInstance = $db->getInstance();
+    }
+
+    return $this->dbInstance;
+  }
+
   public function futureRender($requestData) {
 
-    $this->dbInstance = $this->getInstance();
     $this->requestData = $requestData;
 
     if (!array_key_exists('operation', $requestData)) {

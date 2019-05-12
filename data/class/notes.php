@@ -4,15 +4,6 @@
 */
 class notes extends defaultController {
 
-  public $sqlReturn;
-
-  public function __construct() {
-    if (null === $this->getInstance()) {
-      System::error('Klasa "' . get_class() . '" Nie ma dostępu do połączenia SQL');
-      return false;
-    }
-  }
-
   public function getTemplate($data = array()) {
 
     $id = (isset($data['id'])) ? $data['id'] : NULL;
@@ -51,9 +42,9 @@ class notes extends defaultController {
       && $this->requestData['limit'] !== 0
       ) ? " LIMIT " . $this->requestData['limit'] : "";
 
-    $this->sqlReturn = $this->getInstance()->query('SELECT * FROM `notes` ORDER BY `id` DESC'.$sqlLimit); //TODO make it to another function
+    $sqlReturn = $this->getInstance()->query('SELECT * FROM `notes` ORDER BY `id` DESC'.$sqlLimit); //TODO make it to another function
 
-    return $this->sqlReturn->fetchAll(PDO::FETCH_ASSOC);
+    return $sqlReturn->fetchAll(PDO::FETCH_ASSOC);
 
   }
 }
