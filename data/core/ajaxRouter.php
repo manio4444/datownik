@@ -69,7 +69,7 @@ class ajaxRouter extends database {
 
     // static::startAjaxOutput();
 
-    $existsAjaxController = static::existsAjaxController();
+    $existsAjaxController = $this->existsAjaxController();
     if ($existsAjaxController === false) {
       return null; //temporarily must do nothing, because of lots of functionality doing ajax calls in operations.php
       // $data = array(
@@ -85,11 +85,11 @@ class ajaxRouter extends database {
     // $this->endAjaxOutput($data);
   }
 
-  private static function existsAjaxController() {
+  private function existsAjaxController() {
     if (isset($_GET['ajax_action']) && !empty($_GET['ajax_action'])) {
       return $_GET['ajax_action'];
-    } elseif (isset($_POST['ajax_action']) && !empty($_POST['ajax_action'])) {
-      return $_POST['ajax_action'];
+    } elseif (array_key_exists('ajax_action', $this->requestData) && !empty($this->requestData['ajax_action'])) {
+      return $this->requestData['ajax_action'];
     } else {
       return false;
     }
