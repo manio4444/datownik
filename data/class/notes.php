@@ -60,11 +60,11 @@ class notes extends defaultController {
     $sqlReturn = $this->getDbInstance()->prepare('INSERT INTO `notes` (`txt`) VALUES (:txt)');
     $sqlReturn->bindValue(':txt', $this->requestData['txt'], PDO::PARAM_STR);
     $sqlReturn->execute();
+    $lastInsertId = $this->getDbInstance()->lastInsertId();
+    $sqlReturn = $this->getInstance()->query('SELECT * FROM `notes` WHERE `id` = ' . $lastInsertId);
+    $lastInsertElement = $sqlReturn->fetch(PDO::FETCH_ASSOC);
 
-    return array(
-      'operation' => 'Added new',
-      'id' => $this->getDbInstance()->lastInsertId(),
-    );
+    return $lastInsertElement;
 
   }
 
