@@ -105,7 +105,7 @@ class ajaxRouter extends database {
         'message' =>  $e->getMessage(),
       );
     }
-    if ($controller->apiV2Compatible === true) {
+    if (isset($controller->apiV2Compatible) && $controller->apiV2Compatible === true) {
       $this->apiV2Compatible = true;
       return $controller->futureRender($this->requestData);
     }
