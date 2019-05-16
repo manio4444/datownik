@@ -79,10 +79,10 @@ if(isset($_POST['note_ajax'])) {
     }
   } elseif (isset($_POST['note_operation']) && $_POST['note_operation']==='note_edit') {
     if (isset($_POST['note_id']) && $_POST['note_id']!=='waiting' && isset($_POST['note_txt']) && !empty($_POST['note_id'])) {
-      $pdo_operation = $sql_pdo->prepare( 'UPDATE `notes` SET `txt` = :txt WHERE `id` = :id' );
-      $pdo_operation->bindValue(':id', $_POST['note_id'], PDO::PARAM_INT);
-      $pdo_operation->bindValue(':txt', $_POST['note_txt'], PDO::PARAM_STR);
-      $pdo_operation->execute();
+      $notesController = new notes;
+      $notesController->addParam('id', $_POST['note_id']);
+      $notesController->addParam('txt', $_POST['note_txt']);
+      $notesController->editNote();
       echo "edit";
     }
   } else { echo var_dump($_POST); }

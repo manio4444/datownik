@@ -68,6 +68,34 @@ class notes extends defaultController {
 
   }
 
+  public function editNote() {
+
+    if (
+      !array_key_exists('id', $this->requestData)
+      || empty($this->requestData['id'])
+      || !is_numeric($this->requestData['id'])
+    ) {
+      return $this->error404('Nie można edytować notatki, brak/niepoprawny ID');
+    }
+
+    if (
+      !array_key_exists('txt', $this->requestData)
+      || empty($this->requestData['txt'])
+    ) {
+      return $this->error404('Nie można edytować notatki, brak tekstu');
+    }
+
+    $sqlReturn = $this->getDbInstance()->prepare( 'UPDATE `notes` SET `txt` = :txt WHERE `id` = :id' );
+    $sqlReturn->bindValue(':id', $this->requestData['id'], PDO::PARAM_INT);
+    $sqlReturn->bindValue(':txt', $this->requestData['txt'], PDO::PARAM_STR);
+    $sqlReturn->execute();
+    $sqlReturn = $this->getInstance()->query('SELECT * FROM `notes` WHERE `id` = ' . $this->requestData['id']);
+    $lastInsertElement = $sqlReturn->fetch(PDO::FETCH_ASSOC);
+
+    return $lastInsertElement;
+
+  }
+
 }
 
 ?>
