@@ -98,10 +98,12 @@
     <?php
 
     $tasks = new tasks;
+    $tasks->addParam('limit', 5);
+    $tasksData = $tasks->getData();
 
-    if ($tasks->getTasksWidget()->rowCount() > 0) {
+    if (is_array($tasksData) && count($tasksData) > 0) {
 
-      foreach ($tasks->getTasksWidget(5) as $value) : ?>
+      foreach ($tasksData as $value) : ?>
 
       <div class="ui card teal task" data-task="<?php echo $value['id']; ?>">
         <input type="hidden" data-timer-deadline value="<?php echo $value['deadline']; ?>">

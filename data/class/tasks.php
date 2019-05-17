@@ -30,10 +30,21 @@ class tasks extends defaultController {
 
     }
 
-
-
-    $this->sqlReturn = $this->getInstance()->query('SELECT * FROM `tasks` WHERE `finished` = 0 ORDER BY `id` DESC'); //TODO make it to another function
   }
+
+  public function getData() {
+
+    $sqlLimit = (
+      array_key_exists('limit', $this->requestData)
+      && is_numeric($this->requestData['limit'])
+      && $this->requestData['limit'] !== 0
+      ) ? " LIMIT " . $this->requestData['limit'] : "";
+
+      $sqlReturn = $this->getInstance()->query('SELECT * FROM `tasks` WHERE `finished` = 0 ORDER BY `id` DESC'.$sqlLimit);
+
+      return $sqlReturn->fetchAll(PDO::FETCH_ASSOC);
+
+    }
 
   private function saveTask($data) {
     if (
@@ -78,14 +89,6 @@ class tasks extends defaultController {
       'message' => "Status ustawiony na: zakończone",
       'id' => $this->requestData['id'],
     );
-
-  }
-
-  public function getTasksWidget($limit = 10) {
-
-    $query = $this->getInstance()->query('SELECT * FROM `tasks` WHERE `finished` = 0 ORDER BY `id` DESC LIMIT '.$limit.'');
-
-    return $query;
 
   }
 

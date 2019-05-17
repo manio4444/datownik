@@ -41,7 +41,7 @@ $tasks = new tasks;
       </div>
     </form>
 
-    <?php foreach ($tasks->sqlReturn as $value) : ?>
+    <?php foreach ($tasks->getData() as $value) : ?>
 
       <form method="post" class="ui card task<?php if($value['no_deadline']==="1") echo " no-deadline"; ?>" data-task="<?php echo $value['id']; ?>">
         <div class="content">

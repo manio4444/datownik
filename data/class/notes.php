@@ -42,7 +42,7 @@ class notes extends defaultController {
       && $this->requestData['limit'] !== 0
       ) ? " LIMIT " . $this->requestData['limit'] : "";
 
-    $sqlReturn = $this->getInstance()->query('SELECT * FROM `notes` ORDER BY `id` DESC'.$sqlLimit); //TODO make it to another function
+    $sqlReturn = $this->getInstance()->query('SELECT * FROM `notes` ORDER BY `id` DESC'.$sqlLimit);
 
     return $sqlReturn->fetchAll(PDO::FETCH_ASSOC);
 
