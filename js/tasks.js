@@ -88,11 +88,11 @@ $(function() {
           }
         }).done(function(data) {
 
-          if (data.data.status == 200) {
+          if (data.status == 200) {
             task.addClass('done');
           }
 
-          if (data.data.status !== 200) {
+          if (data.status !== 200) {
             console.log(data);
             return;
           }

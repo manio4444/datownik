@@ -35,9 +35,6 @@ class tasks extends defaultController {
     $this->sqlReturn = $this->getInstance()->query('SELECT * FROM `tasks` WHERE `finished` = 0 ORDER BY `id` DESC'); //TODO make it to another function
   }
 
-  public function getTemplate($data = array()) {
-  }
-
   private function saveTask($data) {
     if (
       !isset($data['task_id'])
@@ -64,24 +61,22 @@ class tasks extends defaultController {
     );
   }
 
-  protected function doneTask($TaskId) {
+  protected function doneTask() {
 
-    if (!isset($TaskId) || empty($TaskId)) {
-      $message = 'Nie podano ID.';
-      return array(
-        'status' => 404,
-        'message' => $message,
-      );
+    if (
+      !array_key_exists('id', $this->requestData)
+      || empty($this->requestData['id'])
+      || !is_numeric($this->requestData['id'])
+    ) {
+      return $this->error404('Nie podano ID.');
     }
 
-    $sqlObj = $this->dbInstance->prepare( 'UPDATE `tasks` SET `finished` = 1 WHERE `id` = :id' );
-    $sqlObj->bindValue(':id', $TaskId, PDO::PARAM_INT);
+    $sqlObj = $this->getDbInstance()->prepare( 'UPDATE `tasks` SET `finished` = 1 WHERE `id` = :id' );
+    $sqlObj->bindValue(':id', $this->requestData['id'], PDO::PARAM_INT);
     $sqlObj->execute();
-    $message = "Status ustawiony na: zakończone";
     return array(
-      'status' => 200,
-      'message' => $message,
-      'id' => $TaskId,
+      'message' => "Status ustawiony na: zakończone",
+      'id' => $this->requestData['id'],
     );
 
   }
