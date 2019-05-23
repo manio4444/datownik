@@ -41,6 +41,7 @@ class defaultController extends database {
       return array(
         'status' => 200,
         'result' =>  $result,
+        'request' => $this->requestData,
       );
     } catch (Exception $e) {
       return array(

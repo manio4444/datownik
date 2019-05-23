@@ -40,7 +40,17 @@ class tasks extends defaultController {
       && $this->requestData['limit'] !== 0
       ) ? " LIMIT " . $this->requestData['limit'] : "";
 
-      $sqlReturn = $this->getInstance()->query('SELECT * FROM `tasks` WHERE `finished` = 0 ORDER BY `id` DESC'.$sqlLimit);
+    $sqlFinished = (
+      array_key_exists('getFinished', $this->requestData)
+      && $this->requestData['getFinished'] === true
+      ) ? $sqlFinished = '' : ' WHERE `finished` = 0';
+
+    $sqlFinished = (
+      array_key_exists('getFinishedOnly', $this->requestData)
+      && $this->requestData['getFinishedOnly'] === true
+      ) ? ' WHERE `finished` = 1' : $sqlFinished;
+
+      $sqlReturn = $this->getInstance()->query('SELECT * FROM `tasks`'. $sqlFinished .' ORDER BY `id` DESC'.$sqlLimit);
 
       return $sqlReturn->fetchAll(PDO::FETCH_ASSOC);
 
