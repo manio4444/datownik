@@ -50,11 +50,11 @@ class tasks extends defaultController {
       && $this->requestData['getFinishedOnly'] === true
       ) ? ' WHERE `finished` = 1' : $sqlFinished;
 
-      $sqlReturn = $this->getInstance()->query('SELECT * FROM `tasks`'. $sqlFinished .' ORDER BY `id` DESC'.$sqlLimit);
+    $sqlReturn = $this->getInstance()->query('SELECT * FROM `tasks`'. $sqlFinished .' ORDER BY `id` DESC'.$sqlLimit);
 
-      return $sqlReturn->fetchAll(PDO::FETCH_ASSOC);
+    return $sqlReturn->fetchAll(PDO::FETCH_ASSOC);
 
-    }
+  }
 
   private function saveTask($data) {
     if (
@@ -97,6 +97,26 @@ class tasks extends defaultController {
     $sqlObj->execute();
     return array(
       'message' => "Status ustawiony na: zakończone",
+      'id' => $this->requestData['id'],
+    );
+
+  }
+
+  protected function unDoneTask() {
+
+    if (
+      !array_key_exists('id', $this->requestData)
+      || empty($this->requestData['id'])
+      || !is_numeric($this->requestData['id'])
+    ) {
+      return $this->error404('Nie podano ID.');
+    }
+
+    $sqlObj = $this->getDbInstance()->prepare( 'UPDATE `tasks` SET `finished` = 0 WHERE `id` = :id' );
+    $sqlObj->bindValue(':id', $this->requestData['id'], PDO::PARAM_INT);
+    $sqlObj->execute();
+    return array(
+      'message' => "Status ustawiony na: NIEukończone",
       'id' => $this->requestData['id'],
     );
 
