@@ -53,6 +53,7 @@ class defaultController extends database {
   }
 
   public function error404($message = '') {
+    throw new Exception($message);
     return array(
       'status' => 404,
       'message' => $message,

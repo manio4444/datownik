@@ -23,8 +23,12 @@ class tasks extends defaultController {
       $this->addParam('deadline', $_POST['deadline']);
       $this->addParam('no_deadline', $_POST['no_deadline']);
 
-      $return = $this->saveTask();
-      System::headerBack();
+      try {
+        $return = $this->saveTask();
+        System::headerBack();
+      } catch (Exception $e) {
+        System::error($e->getMessage());
+      }
     }
 
   }
@@ -61,8 +65,7 @@ class tasks extends defaultController {
       || empty($this->requestData['txt'])
       || (empty($this->requestData['deadline']) && $this->requestData['no_deadline'] !== '1')
     ) {
-      System::error('Błąd, złe dane');
-      return;
+      return $this->error404('Błąd, złe dane');
     }
     $sqlObj = $this->dbInstance->prepare( 'INSERT INTO `tasks` (`txt`, `no_deadline`, `deadline`) VALUES (:txt, :no_deadline, :deadline)' );
     $sqlObj->bindValue(':txt', $this->requestData['txt'], PDO::PARAM_STR);
