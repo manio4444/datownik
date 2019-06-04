@@ -19,15 +19,12 @@ class tasks extends defaultController {
       isset($_POST['deadline']) &&
       isset($_POST['no_deadline'])
     ) {
-      $return = $this->saveTask($_POST);
+      $this->addParam('txt', $_POST['txt']);
+      $this->addParam('deadline', $_POST['deadline']);
+      $this->addParam('no_deadline', $_POST['no_deadline']);
 
-      if (ajaxRouter::detectAjax() === true) {
-        ajaxRouter::endAjaxOutput();
-        ajaxRouter::endAjaxOutput($return);
-      } else {
-        System::headerBack();
-      }
-
+      $return = $this->saveTask();
+      System::headerBack();
     }
 
   }
@@ -56,30 +53,31 @@ class tasks extends defaultController {
 
   }
 
-  private function saveTask($data) {
+  protected function saveTask() {
     if (
-      !isset($data['task_id'])
-      || !isset($data['txt'])
-      || !isset($data['deadline'])
-      || !isset($data['no_deadline'])
-      || empty($data['txt'])
-      || (empty($data['deadline']) && $data['no_deadline'] !== '1')
+      !array_key_exists('txt', $this->requestData)
+      || !array_key_exists('deadline', $this->requestData)
+      || !array_key_exists('no_deadline', $this->requestData)
+      || empty($this->requestData['txt'])
+      || (empty($this->requestData['deadline']) && $this->requestData['no_deadline'] !== '1')
     ) {
       System::error('Błąd, złe dane');
       return;
     }
     $sqlObj = $this->dbInstance->prepare( 'INSERT INTO `tasks` (`txt`, `no_deadline`, `deadline`) VALUES (:txt, :no_deadline, :deadline)' );
-    $sqlObj->bindValue(':txt', $data['txt'], PDO::PARAM_STR);
-    $sqlObj->bindValue(':no_deadline', $data['no_deadline'], PDO::PARAM_STR);
-    $sqlObj->bindValue(':deadline', $data['deadline'], PDO::PARAM_STR);
+    $sqlObj->bindValue(':txt', $this->requestData['txt'], PDO::PARAM_STR);
+    $sqlObj->bindValue(':no_deadline', $this->requestData['no_deadline'], PDO::PARAM_STR);
+    $sqlObj->bindValue(':deadline', $this->requestData['deadline'], PDO::PARAM_STR);
     $sqlObj->execute();
     $TaskId = $this->dbInstance->lastInsertId();
-    $message = "Utworzono nowy dokument";
+    $sqlReturn = $this->getInstance()->query('SELECT * FROM `tasks` WHERE `id` = ' . $TaskId);
+    $lastInsertElement = $sqlReturn->fetch(PDO::FETCH_ASSOC);
+
     return array(
-      'status' => 200,
-      'message' => $message,
-      'id' => $TaskId,
+      'message' => 'Utworzono nowy dokument',
+      'id' => $lastInsertElement,
     );
+
   }
 
   protected function doneTask() {
