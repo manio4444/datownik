@@ -62,14 +62,22 @@ class tasks extends defaultController {
       !array_key_exists('txt', $this->requestData)
       || !array_key_exists('deadline', $this->requestData)
       || !array_key_exists('no_deadline', $this->requestData)
-      || empty($this->requestData['txt'])
-      || (empty($this->requestData['deadline']) && $this->requestData['no_deadline'] !== '1')
     ) {
-      return $this->error404('Błąd, złe dane');
+      return $this->error404('Nie wprowadzono wymaganych danych');
     }
+    if (empty($this->requestData['txt'])) {
+      return $this->error404('Pole tekst nie może być puste');
+    }
+    if (
+      empty($this->requestData['deadline'])
+      && $this->requestData['no_deadline'] !== '1'
+    ) {
+      return $this->error404('Pole deadline nie może być puste');
+    }
+
     $sqlObj = $this->dbInstance->prepare( 'INSERT INTO `tasks` (`txt`, `no_deadline`, `deadline`) VALUES (:txt, :no_deadline, :deadline)' );
     $sqlObj->bindValue(':txt', $this->requestData['txt'], PDO::PARAM_STR);
-    $sqlObj->bindValue(':no_deadline', $this->requestData['no_deadline'], PDO::PARAM_STR);
+    $sqlObj->bindValue(':no_deadline', $this->requestData['no_deadline'], PDO::PARAM_INT);
     $sqlObj->bindValue(':deadline', $this->requestData['deadline'], PDO::PARAM_STR);
     $sqlObj->execute();
     $TaskId = $this->dbInstance->lastInsertId();
@@ -77,8 +85,8 @@ class tasks extends defaultController {
     $lastInsertElement = $sqlReturn->fetch(PDO::FETCH_ASSOC);
 
     return array(
-      'message' => 'Utworzono nowy dokument',
-      'id' => $lastInsertElement,
+      'message' => 'Utworzono nowe zadanie',
+      'newElement' => $lastInsertElement,
     );
 
   }
