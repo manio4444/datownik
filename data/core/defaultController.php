@@ -47,6 +47,7 @@ class defaultController extends database {
       return array(
         'status' => 404,
         'message' =>  $e->getMessage(),
+        'request' => $this->requestData,
       );
     }
 
@@ -54,10 +55,6 @@ class defaultController extends database {
 
   public function error404($message = '') {
     throw new Exception($message);
-    return array(
-      'status' => 404,
-      'message' => $message,
-    );
   }
 
   public function addParam($name, $value) {
