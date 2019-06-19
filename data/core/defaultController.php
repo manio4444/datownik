@@ -27,16 +27,17 @@ class defaultController extends database {
 
     $this->requestData = $requestData;
 
-    if (!array_key_exists('operation', $requestData)) {
-      return $this->error404('Nie wprowadzono operacji.');
-    } else {
-      $operation = $requestData['operation'];
-    }
-    if (!method_exists($this, $operation)) {
-      return $this->error404('Podana operacja nie istnieje.');
-    }
-
     try {
+
+      if (!array_key_exists('operation', $requestData)) {
+        return $this->error404('Nie wprowadzono operacji.');
+      } else {
+        $operation = $requestData['operation'];
+      }
+      if (!method_exists($this, $operation)) {
+        return $this->error404('Podana operacja nie istnieje.');
+      }
+
       $result = $this->{$operation}($requestData);
       return array(
         'status' => 200,
