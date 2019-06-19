@@ -96,6 +96,25 @@ class notes extends defaultController {
 
   }
 
+  public function deleteNote() {
+
+    if (
+      !array_key_exists('id', $this->requestData)
+      || empty($this->requestData['id'])
+      || !is_numeric($this->requestData['id'])
+    ) {
+      return $this->error404('Nie można usunąć notatki, brak/niepoprawny ID');
+    }
+
+    $sqlReturn = $this->getDbInstance()->prepare('DELETE FROM `notes` WHERE `id` = :id');
+    $sqlReturn->bindValue(':id', $this->requestData['id'], PDO::PARAM_INT);
+    $sqlReturn->execute();
+
+    return true;
+
+  }
+
+
 }
 
 ?>

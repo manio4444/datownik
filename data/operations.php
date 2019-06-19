@@ -72,9 +72,9 @@ if(isset($_POST['note_ajax'])) {
     }
   } elseif (isset($_POST['note_operation']) && $_POST['note_operation']==='note_delete') {
     if (isset($_POST['note_id']) && !empty($_POST['note_id']) && isset($_POST['note_txt']) && empty($_POST['note_txt'])) {
-      $pdo_operation = $sql_pdo->prepare( 'DELETE FROM `notes` WHERE `id` = :id' );
-      $pdo_operation->bindValue(':id', $_POST['note_id'], PDO::PARAM_INT);
-      $pdo_operation->execute();
+      $notesController = new notes;
+      $notesController->addParam('id', $_POST['note_id']);
+      $notesController->deleteNote();
       echo "deleted";
     }
   } elseif (isset($_POST['note_operation']) && $_POST['note_operation']==='note_edit') {
