@@ -16,7 +16,7 @@ class lockscreenAjax extends lockscreen {
       );
     } else {
       return array(
-        'status' => 404,
+        'status' => 200,
         'message' => 'invalid',
       );
     }
