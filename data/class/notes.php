@@ -4,15 +4,6 @@
 */
 class notes extends defaultController {
 
-  public $sqlReturn;
-
-  public function __construct() {
-    if (null === $this->getInstance()) {
-      System::error('Klasa "' . get_class() . '" Nie ma dostępu do połączenia SQL');
-      return false;
-    }
-  }
-
   public function getTemplate($data = array()) {
 
     $id = (isset($data['id'])) ? $data['id'] : NULL;
@@ -51,11 +42,79 @@ class notes extends defaultController {
       && $this->requestData['limit'] !== 0
       ) ? " LIMIT " . $this->requestData['limit'] : "";
 
-    $this->sqlReturn = $this->getInstance()->query('SELECT * FROM `notes` ORDER BY `id` DESC'.$sqlLimit); //TODO make it to another function
+    $sqlReturn = $this->getInstance()->query('SELECT * FROM `notes` ORDER BY `id` DESC'.$sqlLimit);
 
-    return $this->sqlReturn->fetchAll(PDO::FETCH_ASSOC);
+    return $sqlReturn->fetchAll(PDO::FETCH_ASSOC);
 
   }
+
+  public function addNote() {
+
+    if (
+      !array_key_exists('txt', $this->requestData)
+      || empty($this->requestData['txt'])
+    ) {
+      return $this->error404('Nie można utworzyć notatki, brak tekstu');
+    }
+
+    $sqlReturn = $this->getDbInstance()->prepare('INSERT INTO `notes` (`txt`) VALUES (:txt)');
+    $sqlReturn->bindValue(':txt', $this->requestData['txt'], PDO::PARAM_STR);
+    $sqlReturn->execute();
+    $lastInsertId = $this->getDbInstance()->lastInsertId();
+    $sqlReturn = $this->getInstance()->query('SELECT * FROM `notes` WHERE `id` = ' . $lastInsertId);
+    $lastInsertElement = $sqlReturn->fetch(PDO::FETCH_ASSOC);
+
+    return $lastInsertElement;
+
+  }
+
+  public function editNote() {
+
+    if (
+      !array_key_exists('id', $this->requestData)
+      || empty($this->requestData['id'])
+      || !is_numeric($this->requestData['id'])
+    ) {
+      return $this->error404('Nie można edytować notatki, brak/niepoprawny ID');
+    }
+
+    if (
+      !array_key_exists('txt', $this->requestData)
+      || empty($this->requestData['txt'])
+    ) {
+      return $this->error404('Nie można edytować notatki, brak tekstu');
+    }
+
+    $sqlReturn = $this->getDbInstance()->prepare( 'UPDATE `notes` SET `txt` = :txt WHERE `id` = :id' );
+    $sqlReturn->bindValue(':id', $this->requestData['id'], PDO::PARAM_INT);
+    $sqlReturn->bindValue(':txt', $this->requestData['txt'], PDO::PARAM_STR);
+    $sqlReturn->execute();
+    $sqlReturn = $this->getInstance()->query('SELECT * FROM `notes` WHERE `id` = ' . $this->requestData['id']);
+    $lastInsertElement = $sqlReturn->fetch(PDO::FETCH_ASSOC);
+
+    return $lastInsertElement;
+
+  }
+
+  public function deleteNote() {
+
+    if (
+      !array_key_exists('id', $this->requestData)
+      || empty($this->requestData['id'])
+      || !is_numeric($this->requestData['id'])
+    ) {
+      return $this->error404('Nie można usunąć notatki, brak/niepoprawny ID');
+    }
+
+    $sqlReturn = $this->getDbInstance()->prepare('DELETE FROM `notes` WHERE `id` = :id');
+    $sqlReturn->bindValue(':id', $this->requestData['id'], PDO::PARAM_INT);
+    $sqlReturn->execute();
+
+    return true;
+
+  }
+
+
 }
 
 ?>

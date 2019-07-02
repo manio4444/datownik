@@ -56,33 +56,33 @@ if(isset($_POST['calendar_ts']) && isset($_POST['calendar_txt'])) {
 
 
 if(isset($_POST['action']) && $_POST['action']=="notatka" && $_POST['urladd']) {
-    $pdo_operation = $sql_pdo->prepare( 'INSERT INTO `notes` (`txt`) VALUES (:txt)' );
-    $pdo_operation->bindValue(':txt', $_POST['urladd'], PDO::PARAM_STR);
-    $pdo_operation->execute();
-    $header_back = 'notatki'; //robi przekierowanie headerem po skończeniu operacji
+  $notesController = new notes;
+  $notesController->addParam('txt', $_POST['urladd']);
+  $notesController->addNote();
+  $header_back = 'notatki'; //robi przekierowanie headerem po skończeniu operacji
 }
 
 if(isset($_POST['note_ajax'])) {
   if (isset($_POST['note_operation']) && $_POST['note_operation']==='note_new') {
     if (isset($_POST['note_id']) && $_POST['note_id']==='waiting' && isset($_POST['note_txt']) && !empty($_POST['note_txt'])) {
-      $pdo_operation = $sql_pdo->prepare( 'INSERT INTO `notes` (`txt`) VALUES (:txt)' );
-      $pdo_operation->bindValue(':txt', $_POST['note_txt'], PDO::PARAM_STR);
-      $pdo_operation->execute();
-      echo $sql_pdo->lastInsertId();
+      $notesController = new notes;
+      $notesController->addParam('txt', $_POST['note_txt']);
+      $return = $notesController->addNote();
+      echo $return['id'];
     }
   } elseif (isset($_POST['note_operation']) && $_POST['note_operation']==='note_delete') {
     if (isset($_POST['note_id']) && !empty($_POST['note_id']) && isset($_POST['note_txt']) && empty($_POST['note_txt'])) {
-      $pdo_operation = $sql_pdo->prepare( 'DELETE FROM `notes` WHERE `id` = :id' );
-      $pdo_operation->bindValue(':id', $_POST['note_id'], PDO::PARAM_INT);
-      $pdo_operation->execute();
+      $notesController = new notes;
+      $notesController->addParam('id', $_POST['note_id']);
+      $notesController->deleteNote();
       echo "deleted";
     }
   } elseif (isset($_POST['note_operation']) && $_POST['note_operation']==='note_edit') {
     if (isset($_POST['note_id']) && $_POST['note_id']!=='waiting' && isset($_POST['note_txt']) && !empty($_POST['note_id'])) {
-      $pdo_operation = $sql_pdo->prepare( 'UPDATE `notes` SET `txt` = :txt WHERE `id` = :id' );
-      $pdo_operation->bindValue(':id', $_POST['note_id'], PDO::PARAM_INT);
-      $pdo_operation->bindValue(':txt', $_POST['note_txt'], PDO::PARAM_STR);
-      $pdo_operation->execute();
+      $notesController = new notes;
+      $notesController->addParam('id', $_POST['note_id']);
+      $notesController->addParam('txt', $_POST['note_txt']);
+      $notesController->editNote();
       echo "edit";
     }
   } else { echo var_dump($_POST); }

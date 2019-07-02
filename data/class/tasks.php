@@ -19,78 +19,115 @@ class tasks extends defaultController {
       isset($_POST['deadline']) &&
       isset($_POST['no_deadline'])
     ) {
-      $return = $this->saveTask($_POST);
+      $this->addParam('txt', $_POST['txt']);
+      $this->addParam('deadline', $_POST['deadline']);
+      $this->addParam('no_deadline', $_POST['no_deadline']);
 
-      if (ajaxRouter::detectAjax() === true) {
-        ajaxRouter::endAjaxOutput();
-        ajaxRouter::endAjaxOutput($return);
-      } else {
+      try {
+        $return = $this->saveTask();
         System::headerBack();
+      } catch (Exception $e) {
+        System::error($e->getMessage());
       }
-
     }
 
-
-
-    $this->sqlReturn = $this->getInstance()->query('SELECT * FROM `tasks` WHERE `finished` = 0 ORDER BY `id` DESC'); //TODO make it to another function
   }
 
-  public function getTemplate($data = array()) {
+  public function getData() {
+
+    $sqlLimit = (
+      array_key_exists('limit', $this->requestData)
+      && is_numeric($this->requestData['limit'])
+      && $this->requestData['limit'] !== 0
+      ) ? " LIMIT " . $this->requestData['limit'] : "";
+
+    $sqlFinished = (
+      array_key_exists('getFinished', $this->requestData)
+      && $this->requestData['getFinished'] === true
+      ) ? $sqlFinished = '' : ' WHERE `finished` = 0';
+
+    $sqlFinished = (
+      array_key_exists('getFinishedOnly', $this->requestData)
+      && $this->requestData['getFinishedOnly'] === true
+      ) ? ' WHERE `finished` = 1' : $sqlFinished;
+
+    $sqlReturn = $this->getInstance()->query('SELECT * FROM `tasks`'. $sqlFinished .' ORDER BY `id` DESC'.$sqlLimit);
+
+    return $sqlReturn->fetchAll(PDO::FETCH_ASSOC);
+
   }
 
-  private function saveTask($data) {
+  protected function saveTask() {
     if (
-      !isset($data['task_id'])
-      || !isset($data['txt'])
-      || !isset($data['deadline'])
-      || !isset($data['no_deadline'])
-      || empty($data['txt'])
-      || (empty($data['deadline']) && $data['no_deadline'] !== '1')
+      !array_key_exists('txt', $this->requestData)
+      || !array_key_exists('deadline', $this->requestData)
+      || !array_key_exists('no_deadline', $this->requestData)
     ) {
-      System::error('Błąd, złe dane');
-      return;
+      return $this->error404('Nie wprowadzono wymaganych danych');
     }
+    if (empty($this->requestData['txt'])) {
+      return $this->error404('Pole tekst nie może być puste');
+    }
+    if (
+      empty($this->requestData['deadline'])
+      && $this->requestData['no_deadline'] !== '1'
+    ) {
+      return $this->error404('Pole deadline nie może być puste');
+    }
+
     $sqlObj = $this->dbInstance->prepare( 'INSERT INTO `tasks` (`txt`, `no_deadline`, `deadline`) VALUES (:txt, :no_deadline, :deadline)' );
-    $sqlObj->bindValue(':txt', $data['txt'], PDO::PARAM_STR);
-    $sqlObj->bindValue(':no_deadline', $data['no_deadline'], PDO::PARAM_STR);
-    $sqlObj->bindValue(':deadline', $data['deadline'], PDO::PARAM_STR);
+    $sqlObj->bindValue(':txt', $this->requestData['txt'], PDO::PARAM_STR);
+    $sqlObj->bindValue(':no_deadline', $this->requestData['no_deadline'], PDO::PARAM_INT);
+    $sqlObj->bindValue(':deadline', $this->requestData['deadline'], PDO::PARAM_STR);
     $sqlObj->execute();
     $TaskId = $this->dbInstance->lastInsertId();
-    $message = "Utworzono nowy dokument";
+    $sqlReturn = $this->getInstance()->query('SELECT * FROM `tasks` WHERE `id` = ' . $TaskId);
+    $lastInsertElement = $sqlReturn->fetch(PDO::FETCH_ASSOC);
+
     return array(
-      'status' => 200,
-      'message' => $message,
-      'id' => $TaskId,
+      'message' => 'Utworzono nowe zadanie',
+      'newElement' => $lastInsertElement,
     );
+
   }
 
-  protected function doneTask($TaskId) {
+  protected function doneTask() {
 
-    if (!isset($TaskId) || empty($TaskId)) {
-      $message = 'Nie podano ID.';
-      return array(
-        'status' => 404,
-        'message' => $message,
-      );
+    if (
+      !array_key_exists('id', $this->requestData)
+      || empty($this->requestData['id'])
+      || !is_numeric($this->requestData['id'])
+    ) {
+      return $this->error404('Nie podano ID.');
     }
 
-    $sqlObj = $this->dbInstance->prepare( 'UPDATE `tasks` SET `finished` = 1 WHERE `id` = :id' );
-    $sqlObj->bindValue(':id', $TaskId, PDO::PARAM_INT);
+    $sqlObj = $this->getDbInstance()->prepare( 'UPDATE `tasks` SET `finished` = 1 WHERE `id` = :id' );
+    $sqlObj->bindValue(':id', $this->requestData['id'], PDO::PARAM_INT);
     $sqlObj->execute();
-    $message = "Status ustawiony na: zakończone";
     return array(
-      'status' => 200,
-      'message' => $message,
-      'id' => $TaskId,
+      'message' => "Status ustawiony na: zakończone",
+      'id' => $this->requestData['id'],
     );
 
   }
 
-  public function getTasksWidget($limit = 10) {
+  protected function unDoneTask() {
 
-    $query = $this->getInstance()->query('SELECT * FROM `tasks` WHERE `finished` = 0 ORDER BY `id` DESC LIMIT '.$limit.'');
+    if (
+      !array_key_exists('id', $this->requestData)
+      || empty($this->requestData['id'])
+      || !is_numeric($this->requestData['id'])
+    ) {
+      return $this->error404('Nie podano ID.');
+    }
 
-    return $query;
+    $sqlObj = $this->getDbInstance()->prepare( 'UPDATE `tasks` SET `finished` = 0 WHERE `id` = :id' );
+    $sqlObj->bindValue(':id', $this->requestData['id'], PDO::PARAM_INT);
+    $sqlObj->execute();
+    return array(
+      'message' => "Status ustawiony na: NIEukończone",
+      'id' => $this->requestData['id'],
+    );
 
   }
 
