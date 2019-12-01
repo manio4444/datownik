@@ -131,6 +131,46 @@ class tasks extends defaultController {
 
   }
 
+  protected function deleteTask() {
+
+    if (
+      !array_key_exists('id', $this->requestData)
+      || empty($this->requestData['id'])
+      || !is_numeric($this->requestData['id'])
+    ) {
+      return $this->error404('Nie podano ID.');
+    }
+
+    $sqlObj = $this->getDbInstance()->prepare( 'UPDATE `tasks` SET `deleted` = 1 WHERE `id` = :id' );
+    $sqlObj->bindValue(':id', $this->requestData['id'], PDO::PARAM_INT);
+    $sqlObj->execute();
+    return array(
+      'message' => "Status ustawiony na: usunięte",
+      'id' => $this->requestData['id'],
+    );
+
+  }
+
+  protected function unDeleteTask() {
+
+    if (
+      !array_key_exists('id', $this->requestData)
+      || empty($this->requestData['id'])
+      || !is_numeric($this->requestData['id'])
+    ) {
+      return $this->error404('Nie podano ID.');
+    }
+
+    $sqlObj = $this->getDbInstance()->prepare( 'UPDATE `tasks` SET `deleted` = 0 WHERE `id` = :id' );
+    $sqlObj->bindValue(':id', $this->requestData['id'], PDO::PARAM_INT);
+    $sqlObj->execute();
+    return array(
+      'message' => "Status ustawiony na: NIEusunięte",
+      'id' => $this->requestData['id'],
+    );
+
+  }
+
 }
 
 ?>

@@ -6,19 +6,20 @@ class multisearch extends defaultController {
 
   public function getData() {
 
-    if (
-      !array_key_exists('txt', $this->requestData)
-      || empty($this->requestData['txt'])
-    ) {
-      return $this->error404('Nie można wyszukać, brak tekstu');
-    }
+    $notes = new notes;
+    $notes->addParam('txt', $this->requestData['txt']);
+    $result['notes'] = $notes->searchData();
+    $result['notes123'] = $notes->searchData();
 
-    $txt = '%' . $this->requestData['txt'] . '%';
-    $sqlReturn = $this->getDbInstance()->prepare('SELECT id, txt FROM `notes` WHERE `txt` LIKE :txt ORDER BY `txt` DESC');
-    $sqlReturn->bindValue(':txt', $txt, PDO::PARAM_STR);
-    $sqlReturn->execute();
+    // $tasks = new tasks;
+    // $tasksController->addParam('txt', this->requestData['txt']);
+    // $result['tasks'] = $tasks->searchData();
 
-    return $sqlReturn->fetchAll(PDO::FETCH_ASSOC);
+    // $docs = new docs;
+    // $docsController->addParam('txt', this->requestData['txt']);
+    // $result['docs'] = $docs->searchData();
+
+    return $result;
 
   }
 
