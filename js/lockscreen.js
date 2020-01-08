@@ -51,15 +51,19 @@ var lockscreen = {
       dataType : 'json',
       data: {
         'ajax_action': 'lockscreenAjax',
-        'lockscreen_code': _this.input.val(),
+        'operation': 'tryPasscode',
+        'code': _this.input.val(),
       },
-    }).done(function(data) {
-      if (data.data.message==='valid') {
+    })
+    .done(function(data) {
+      if (data.result.isValid) {
         location.reload();
-
       } else {
         _this.resetLockscreen();
       }
+    })
+    .catch(function (error) {
+      _this.resetLockscreen();
     });
 
   },

@@ -24,6 +24,7 @@ class lockscreen extends defaultController {
     }
 
     if ($this->isPasscodeValid($this->requestData['code'])) {
+      setcookie( 'datownik_' . md5('_admin'), md5('datownik_access'), strtotime( '+1 days' ) ); //TODO - refactor
       return array(
         'message' => 'Passcode poprawny',
         'isValid' => true,
