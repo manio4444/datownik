@@ -1,5 +1,9 @@
 <section id="main_page">
 
+  <pre>
+    Serwis w wersji react: <a href="http://datownik-react.studiocitrus.pl/">http://datownik-react.studiocitrus.pl/</a>
+  </pre>
+
   <form method="POST" class="start_form">
 
     <h1 class="start_form_title">Multicontent:</h1>
@@ -148,12 +152,6 @@
   <pre>
     do code snippetów -
     https://codepen.io/chriscoyier/pen/GBbOJd
-  </pre>
-  <pre>
-    viewport - <span class="startPageViewport"></span>px
-    <script>
-      $('.startPageViewport').text($(window).width());
-    </script>
   </pre>
 
 </section>
