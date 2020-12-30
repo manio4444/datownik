@@ -16,14 +16,14 @@ class lockscreen extends defaultController {
 
   public function tryPasscode() {
     if (
-      !array_key_exists('code', $this->requestData)
-      || empty($this->requestData['code'])
-      || !is_numeric($this->requestData['code'])
+      !$this->getParam('code')
+      || empty($this->getParam('code'))
+      || !is_numeric($this->getParam('code'))
     ) {
       return $this->error404('Nie podano Passcode.');
     }
 
-    if ($this->isPasscodeValid($this->requestData['code'])) {
+    if ($this->isPasscodeValid($this->getParam('code'))) {
       setcookie( 'datownik_' . md5('_admin'), md5('datownik_access'), strtotime( '+1 days' ) ); //TODO - refactor
       return array(
         'message' => 'Passcode poprawny',

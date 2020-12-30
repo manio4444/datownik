@@ -30,20 +30,20 @@ class notes extends defaultController {
       return false;
     }
 
-    $this->requestData['limit'] = $limit;
+    $this->addParam('limit', $limit);
 
   }
 
   public function searchData() {
 
     if (
-      !array_key_exists('txt', $this->requestData)
-      || empty($this->requestData['txt'])
+      !$this->getParam('txt')
+      || empty($this->getParam('txt'))
     ) {
       return $this->error404('Nie można wyszukać notatek, brak tekstu');
     }
 
-    $txt = '%' . $this->requestData['txt'] . '%';
+    $txt = '%' . $this->getParam('txt') . '%';
     $sqlReturn = $this->getDbInstance()->prepare('SELECT id, txt FROM `notes` WHERE `txt` LIKE :txt ORDER BY `txt` DESC');
     $sqlReturn->bindValue(':txt', $txt, PDO::PARAM_STR);
     $sqlReturn->execute();
@@ -55,10 +55,10 @@ class notes extends defaultController {
   public function getData() {
 
     $sqlLimit = (
-      array_key_exists('limit', $this->requestData)
-      && is_numeric($this->requestData['limit'])
-      && $this->requestData['limit'] !== 0
-      ) ? " LIMIT " . $this->requestData['limit'] : "";
+      $this->getParam('limit')
+      && is_numeric($this->getParam('limit'))
+      && $this->getParam('limit') !== 0
+      ) ? " LIMIT " . $this->getParam('limit') : "";
 
     $sqlReturn = $this->getInstance()->query('SELECT * FROM `notes` ORDER BY `id` DESC'.$sqlLimit);
 
@@ -69,14 +69,14 @@ class notes extends defaultController {
   public function addNote() {
 
     if (
-      !array_key_exists('txt', $this->requestData)
-      || empty($this->requestData['txt'])
+      !$this->getParam('txt')
+      || empty($this->getParam('txt'))
     ) {
       return $this->error404('Nie można utworzyć notatki, brak tekstu');
     }
 
     $sqlReturn = $this->getDbInstance()->prepare('INSERT INTO `notes` (`txt`) VALUES (:txt)');
-    $sqlReturn->bindValue(':txt', $this->requestData['txt'], PDO::PARAM_STR);
+    $sqlReturn->bindValue(':txt', $this->getParam('txt'), PDO::PARAM_STR);
     $sqlReturn->execute();
     $lastInsertId = $this->getDbInstance()->lastInsertId();
     $sqlReturn = $this->getInstance()->query('SELECT * FROM `notes` WHERE `id` = ' . $lastInsertId);
@@ -89,25 +89,25 @@ class notes extends defaultController {
   public function editNote() {
 
     if (
-      !array_key_exists('id', $this->requestData)
-      || empty($this->requestData['id'])
-      || !is_numeric($this->requestData['id'])
+      !$this->getParam('id')
+      || empty($this->getParam('id'))
+      || !is_numeric($this->getParam('id'))
     ) {
       return $this->error404('Nie można edytować notatki, brak/niepoprawny ID');
     }
 
     if (
-      !array_key_exists('txt', $this->requestData)
-      || empty($this->requestData['txt'])
+      !$this->getParam('txt')
+      || empty($this->getParam('txt'))
     ) {
       return $this->error404('Nie można edytować notatki, brak tekstu');
     }
 
     $sqlReturn = $this->getDbInstance()->prepare( 'UPDATE `notes` SET `txt` = :txt WHERE `id` = :id' );
-    $sqlReturn->bindValue(':id', $this->requestData['id'], PDO::PARAM_INT);
-    $sqlReturn->bindValue(':txt', $this->requestData['txt'], PDO::PARAM_STR);
+    $sqlReturn->bindValue(':id', $this->getParam('id'), PDO::PARAM_INT);
+    $sqlReturn->bindValue(':txt', $this->getParam('txt'), PDO::PARAM_STR);
     $sqlReturn->execute();
-    $sqlReturn = $this->getInstance()->query('SELECT * FROM `notes` WHERE `id` = ' . $this->requestData['id']);
+    $sqlReturn = $this->getInstance()->query('SELECT * FROM `notes` WHERE `id` = ' . $this->getParam('id'));
     $lastInsertElement = $sqlReturn->fetch(PDO::FETCH_ASSOC);
 
     return $lastInsertElement;
@@ -117,15 +117,15 @@ class notes extends defaultController {
   public function deleteNote() {
 
     if (
-      !array_key_exists('id', $this->requestData)
-      || empty($this->requestData['id'])
-      || !is_numeric($this->requestData['id'])
+      !$this->getParam('id')
+      || empty($this->getParam('id'))
+      || !is_numeric($this->getParam('id'))
     ) {
       return $this->error404('Nie można usunąć notatki, brak/niepoprawny ID');
     }
 
     $sqlReturn = $this->getDbInstance()->prepare('DELETE FROM `notes` WHERE `id` = :id');
-    $sqlReturn->bindValue(':id', $this->requestData['id'], PDO::PARAM_INT);
+    $sqlReturn->bindValue(':id', $this->getParam('id'), PDO::PARAM_INT);
     $sqlReturn->execute();
 
     return true;

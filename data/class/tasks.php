@@ -36,20 +36,16 @@ class tasks extends defaultController {
   public function getData() {
 
     $sqlLimit = (
-      array_key_exists('limit', $this->requestData)
-      && is_numeric($this->requestData['limit'])
-      && $this->requestData['limit'] !== 0
-      ) ? " LIMIT " . $this->requestData['limit'] : "";
+      $this->getParam('limit')
+      && is_numeric($this->getParam('limit'))
+      && $this->getParam('limit') !== 0
+      ) ? " LIMIT " . $this->getParam('limit') : "";
 
-    $sqlFinished = (
-      array_key_exists('getFinished', $this->requestData)
-      && $this->requestData['getFinished'] === true
-      ) ? $sqlFinished = '' : ' WHERE `finished` = 0';
-
-    $sqlFinished = (
-      array_key_exists('getFinishedOnly', $this->requestData)
-      && $this->requestData['getFinishedOnly'] === true
-      ) ? ' WHERE `finished` = 1' : $sqlFinished;
+    $sqlFinished = $this->getParam('getFinishedOnly')
+    ? ' WHERE `finished` = 1'
+    : $this->getParam('getFinished')
+      ? ''
+      : ' WHERE `finished` = 0';
 
     $sqlReturn = $this->getInstance()->query('SELECT * FROM `tasks`'. $sqlFinished .' ORDER BY `id` DESC'.$sqlLimit);
 
@@ -59,9 +55,9 @@ class tasks extends defaultController {
 
   protected function saveTask() {
     if (
-      !array_key_exists('txt', $this->requestData)
-      || !array_key_exists('deadline', $this->requestData)
-      || !array_key_exists('no_deadline', $this->requestData)
+      !$this->getParam('txt')
+      || !$this->getParam('deadline')
+      || !$this->getParam('no_deadline')
     ) {
       return $this->error404('Nie wprowadzono wymaganych danych');
     }
@@ -94,19 +90,19 @@ class tasks extends defaultController {
   protected function doneTask() {
 
     if (
-      !array_key_exists('id', $this->requestData)
-      || empty($this->requestData['id'])
-      || !is_numeric($this->requestData['id'])
+      !$this->getParam('id')
+      || empty($this->getParam('id'))
+      || !is_numeric($this->getParam('id'))
     ) {
       return $this->error404('Nie podano ID.');
     }
 
     $sqlObj = $this->getDbInstance()->prepare( 'UPDATE `tasks` SET `finished` = 1 WHERE `id` = :id' );
-    $sqlObj->bindValue(':id', $this->requestData['id'], PDO::PARAM_INT);
+    $sqlObj->bindValue(':id', $this->getParam('id'), PDO::PARAM_INT);
     $sqlObj->execute();
     return array(
       'message' => "Status ustawiony na: zakończone",
-      'id' => $this->requestData['id'],
+      'id' => $this->getParam('id'),
     );
 
   }
@@ -114,19 +110,19 @@ class tasks extends defaultController {
   protected function unDoneTask() {
 
     if (
-      !array_key_exists('id', $this->requestData)
-      || empty($this->requestData['id'])
-      || !is_numeric($this->requestData['id'])
+      !$this->getParam('id')
+      || empty($this->getParam('id'))
+      || !is_numeric($this->getParam('id'))
     ) {
       return $this->error404('Nie podano ID.');
     }
 
     $sqlObj = $this->getDbInstance()->prepare( 'UPDATE `tasks` SET `finished` = 0 WHERE `id` = :id' );
-    $sqlObj->bindValue(':id', $this->requestData['id'], PDO::PARAM_INT);
+    $sqlObj->bindValue(':id', $this->getParam('id'), PDO::PARAM_INT);
     $sqlObj->execute();
     return array(
       'message' => "Status ustawiony na: NIEukończone",
-      'id' => $this->requestData['id'],
+      'id' => $this->getParam('id'),
     );
 
   }
@@ -134,19 +130,19 @@ class tasks extends defaultController {
   protected function deleteTask() {
 
     if (
-      !array_key_exists('id', $this->requestData)
-      || empty($this->requestData['id'])
-      || !is_numeric($this->requestData['id'])
+      !$this->getParam('id')
+      || empty($this->getParam('id'))
+      || !is_numeric($this->getParam('id'))
     ) {
       return $this->error404('Nie podano ID.');
     }
 
     $sqlObj = $this->getDbInstance()->prepare( 'UPDATE `tasks` SET `deleted` = 1 WHERE `id` = :id' );
-    $sqlObj->bindValue(':id', $this->requestData['id'], PDO::PARAM_INT);
+    $sqlObj->bindValue(':id', $this->getParam('id'), PDO::PARAM_INT);
     $sqlObj->execute();
     return array(
       'message' => "Status ustawiony na: usunięte",
-      'id' => $this->requestData['id'],
+      'id' => $this->getParam('id'),
     );
 
   }
@@ -154,19 +150,19 @@ class tasks extends defaultController {
   protected function unDeleteTask() {
 
     if (
-      !array_key_exists('id', $this->requestData)
-      || empty($this->requestData['id'])
-      || !is_numeric($this->requestData['id'])
+      !$this->getParam('id')
+      || empty($this->getParam('id'))
+      || !is_numeric($this->getParam('id'))
     ) {
       return $this->error404('Nie podano ID.');
     }
 
     $sqlObj = $this->getDbInstance()->prepare( 'UPDATE `tasks` SET `deleted` = 0 WHERE `id` = :id' );
-    $sqlObj->bindValue(':id', $this->requestData['id'], PDO::PARAM_INT);
+    $sqlObj->bindValue(':id', $this->getParam('id'), PDO::PARAM_INT);
     $sqlObj->execute();
     return array(
       'message' => "Status ustawiony na: NIEusunięte",
-      'id' => $this->requestData['id'],
+      'id' => $this->getParam('id'),
     );
 
   }
