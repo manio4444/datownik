@@ -95,8 +95,8 @@ $tasks = new tasks;
             </div>
 
             <div class="field disabled">
-              <label>txt:</label>
-              <textarea rows="2"><?php echo $value['txt']; ?></textarea>
+              <label>deleted:</label>
+              <input type="text" name="" value="<?php echo $value['deleted']; ?>">
             </div>
 
             <div class="field disabled delete">
