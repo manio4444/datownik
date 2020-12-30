@@ -8,9 +8,14 @@ class multisearch extends defaultController {
 
     $notes = new notes;
     $notes->addParam('txt', $this->requestData['txt']);
-    $result['notes'] = $notes->searchData();
-    $result['notes123'] = $notes->searchData();
-
+    $result[] = [
+      'type' => 'notes',
+      'data' => $notes->searchData(),
+    ];
+    $result[] = [
+      'type' => 'notes123',
+      'data' => $notes->searchData(),
+    ];
     // $tasks = new tasks;
     // $tasksController->addParam('txt', this->requestData['txt']);
     // $result['tasks'] = $tasks->searchData();
