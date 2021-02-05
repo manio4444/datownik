@@ -62,8 +62,12 @@ class defaultController extends database {
     $this->requestData[$name] = $value;
   }
 
+  public function existsParam($name) {
+    return array_key_exists($name, $this->requestData);
+  }
+
   public function getParam($name) {
-    return array_key_exists($name, $this->requestData)
+    return $this->existsParam($name)
     ? $this->requestData[$name]
     : false;
   }

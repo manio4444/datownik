@@ -37,7 +37,7 @@ class notes extends defaultController {
   public function searchData() {
 
     if (
-      !array_key_exists('txt', $this->requestData)
+      !$this->existsParam('txt')
       || empty($this->requestData['txt'])
     ) {
       return $this->error404('Nie można wyszukać notatek, brak tekstu');
@@ -55,7 +55,7 @@ class notes extends defaultController {
   public function getData() {
 
     $sqlLimit = (
-      array_key_exists('limit', $this->requestData)
+      $this->existsParam('limit')
       && is_numeric($this->requestData['limit'])
       && $this->requestData['limit'] !== 0
       ) ? " LIMIT " . $this->requestData['limit'] : "";
@@ -69,7 +69,7 @@ class notes extends defaultController {
   public function addNote() {
 
     if (
-      !array_key_exists('txt', $this->requestData)
+      !$this->existsParam('txt')
       || empty($this->requestData['txt'])
     ) {
       return $this->error404('Nie można utworzyć notatki, brak tekstu');
@@ -89,7 +89,7 @@ class notes extends defaultController {
   public function editNote() {
 
     if (
-      !array_key_exists('id', $this->requestData)
+      !$this->existsParam('id')
       || empty($this->requestData['id'])
       || !is_numeric($this->requestData['id'])
     ) {
@@ -97,7 +97,7 @@ class notes extends defaultController {
     }
 
     if (
-      !array_key_exists('txt', $this->requestData)
+      !$this->existsParam('txt')
       || empty($this->requestData['txt'])
     ) {
       return $this->error404('Nie można edytować notatki, brak tekstu');
@@ -117,7 +117,7 @@ class notes extends defaultController {
   public function deleteNote() {
 
     if (
-      !array_key_exists('id', $this->requestData)
+      !$this->existsParam('id')
       || empty($this->requestData['id'])
       || !is_numeric($this->requestData['id'])
     ) {

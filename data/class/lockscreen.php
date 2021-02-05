@@ -16,7 +16,7 @@ class lockscreen extends defaultController {
 
   public function tryPasscode() {
     if (
-      !array_key_exists('code', $this->requestData)
+      !$this->existsParam('code')
       || empty($this->requestData['code'])
       || !is_numeric($this->requestData['code'])
     ) {
