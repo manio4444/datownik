@@ -15,11 +15,19 @@ class calendar extends defaultController {
     }
   }
 
-  public function getFutureEvents($limit = 10) {
+  public function getFutureEvents() {
+    $limit = $this->getParam('limit');
 
-    $query = $this->getInstance()->query('SELECT * FROM `calendar_static` WHERE `data` > CURRENT_TIMESTAMP ORDER BY `calendar_static`.`data` ASC LIMIT '.$limit.'');
+    if (!$limit) {
+      return $this->error404('Brak podanej wartości limit');
+    }
+    if (!is_numeric($limit)) {
+      return $this->error404('Wartości limit musi być liczbą całkowitą');
+    }
 
-    return $query;
+    $sqlReturn = $this->dbInstance->query('SELECT * FROM `calendar_static` WHERE `data` > CURRENT_TIMESTAMP ORDER BY `calendar_static`.`data` ASC LIMIT '.$limit.'');
+
+    return $sqlReturn->fetchAll(PDO::FETCH_ASSOC);
 
   }
 
