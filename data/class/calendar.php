@@ -31,6 +31,41 @@ class calendar extends defaultController {
 
   }
 
+  public function getMonthEvents() {
+    $month = $this->getParam('month');
+    $year = $this->getParam('year');
+
+    if (!$month) {
+      return $this->error404('Brak podanej wartości month');
+    }
+    if (!$year) {
+      return $this->error404('Brak podanej wartości year');
+    }
+    if (!is_numeric($month)) {
+      return $this->error404('Wartości month musi być liczbą całkowitą');
+    }
+    if (!is_numeric($year)) {
+      return $this->error404('Wartości year musi być liczbą całkowitą');
+    }
+
+    $sqlReturn = $this->dbInstance->prepare('SELECT id, data AS date, DAY(data) AS day, txt, "static" AS type
+    FROM `calendar_static`
+    WHERE MONTH(data) = :month
+    AND YEAR(data) = :year
+    UNION ALL
+    SELECT id, data AS date, DAY(data) AS day, txt, "dayoff" AS type
+    FROM `calendar_dayoff`
+    WHERE MONTH(data) = :month
+    AND YEAR(data) = :year
+    ORDER BY date ASC');
+    $sqlReturn->bindValue(':month', $month, PDO::PARAM_INT);
+    $sqlReturn->bindValue(':year', $year, PDO::PARAM_INT);
+    $sqlReturn->execute();
+
+    return $sqlReturn->fetchAll(PDO::FETCH_ASSOC);
+
+  }
+
   protected function saveEvent() {
     if (
       !$this->existsParam('txt')
