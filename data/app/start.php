@@ -58,10 +58,12 @@
     <?php
 
     $calendar = new calendar;
+    $calendar->addParam('limit', 5);
+    $calendarData = $calendar->getFutureEvents();
 
-    if ($calendar->getFutureEvents()->rowCount() > 0) {
+    if (is_array($calendarData) && count($calendarData) > 0) {
 
-      foreach ($calendar->getFutureEvents(5) as $value) : ?>
+      foreach ($calendarData as $value) : ?>
 
       <div class="ui card red task" data-task="<?php echo $value['id']; ?>">
         <input type="hidden" data-timer-deadline value="<?php echo $value['data']; ?>">

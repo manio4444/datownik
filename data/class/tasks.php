@@ -36,7 +36,7 @@ class tasks extends defaultController {
   public function getData() {
 
     $sqlLimit = (
-      array_key_exists('limit', $this->requestData)
+      $this->existsParam('limit')
       && is_numeric($this->requestData['limit'])
       && $this->requestData['limit'] !== 0
       ) ? " LIMIT " . $this->requestData['limit'] : "";
@@ -59,9 +59,9 @@ class tasks extends defaultController {
 
   protected function saveTask() {
     if (
-      !array_key_exists('txt', $this->requestData)
-      || !array_key_exists('deadline', $this->requestData)
-      || !array_key_exists('no_deadline', $this->requestData)
+      !$this->existsParam('txt')
+      || !$this->existsParam('deadline')
+      || !$this->existsParam('no_deadline')
     ) {
       return $this->error404('Nie wprowadzono wymaganych danych');
     }
@@ -94,7 +94,7 @@ class tasks extends defaultController {
   protected function doneTask() {
 
     if (
-      !array_key_exists('id', $this->requestData)
+      !$this->existsParam('id')
       || empty($this->requestData['id'])
       || !is_numeric($this->requestData['id'])
     ) {
@@ -114,7 +114,7 @@ class tasks extends defaultController {
   protected function unDoneTask() {
 
     if (
-      !array_key_exists('id', $this->requestData)
+      !$this->existsParam('id')
       || empty($this->requestData['id'])
       || !is_numeric($this->requestData['id'])
     ) {
@@ -134,7 +134,7 @@ class tasks extends defaultController {
   protected function deleteTask() {
 
     if (
-      !array_key_exists('id', $this->requestData)
+      !$this->existsParam('id')
       || empty($this->requestData['id'])
       || !is_numeric($this->requestData['id'])
     ) {
@@ -154,7 +154,7 @@ class tasks extends defaultController {
   protected function unDeleteTask() {
 
     if (
-      !array_key_exists('id', $this->requestData)
+      !$this->existsParam('id')
       || empty($this->requestData['id'])
       || !is_numeric($this->requestData['id'])
     ) {

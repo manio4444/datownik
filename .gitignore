@@ -5,3 +5,6 @@
 /upload_thumbs/*
 logs/log_*
 Contacts.txt
+
+# webstorm
+/.idea/*
