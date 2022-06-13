@@ -18,7 +18,7 @@ $docs = new docs;
       'title' => 'Nowy dokument',
     ));
 
-    foreach ($docs->sqlReturn as $data) {
+    foreach ($docs->getData() as $data) {
 
       echo $docs->getTemplate($data);
 

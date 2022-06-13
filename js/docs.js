@@ -10,10 +10,10 @@ dat.docs = {
         url: '?ajax_action=docsAjax',
         method: 'POST',
         data: {
-            operation   :'editText',
+            operation   :'editDoc',
             id          : id,
-            text        : content,
-            name        : name,
+            txt         : content,
+            title       : name,
         }
     }).done(function(data) {
 
@@ -33,9 +33,9 @@ dat.docs = {
         url: '?ajax_action=docsAjax',
         method: 'POST',
         data: {
-            operation   :'newDoc',
-            text        : content,
-            name        : name,
+            operation   :'addDoc',
+            txt         : content,
+            title       : name,
         }
     }).done(function(data) {
 
