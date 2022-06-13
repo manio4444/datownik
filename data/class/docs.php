@@ -115,6 +115,24 @@ class docs extends defaultController {
 
     }
 
+    public function deleteDoc() {
+
+      if (
+        !$this->existsParam('id')
+        || empty($this->requestData['id'])
+        || !is_numeric($this->requestData['id'])
+      ) {
+        return $this->error404('Nie można usunąć dokumentu, brak/niepoprawny ID');
+      }
+
+      $sqlReturn = $this->getDbInstance()->prepare('DELETE FROM `docs` WHERE `id` = :id');
+      $sqlReturn->bindValue(':id', $this->requestData['id'], PDO::PARAM_INT);
+      $sqlReturn->execute();
+
+      return true;
+
+    }
+
 }
 
 ?>
