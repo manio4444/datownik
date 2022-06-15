@@ -7,7 +7,7 @@ $docs = new docs;
   <?php
 
   if (Router::getGetParams('id')) {
-
+    $docs->addParam('id', Router::getGetParams('id'));
     $data = $docs->getElement(Router::getGetParams('id'));
     echo $docs->getTemplate($data);
 

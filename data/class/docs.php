@@ -38,14 +38,23 @@ class docs extends defaultController {
       && $this->requestData['limit'] !== 0
       ) ? " LIMIT " . $this->requestData['limit'] : "";
 
+
       $sqlReturn = $this->getInstance()->query('SELECT * FROM `docs` ORDER BY `id` DESC'.$sqlLimit);
 
       return $sqlReturn->fetchAll(PDO::FETCH_ASSOC);
 
     }
 
-    public function getElement($id) {
-      $sqlReturn = $this->getInstance()->query('SELECT * FROM `docs` WHERE `id` = '.$id.'');
+    public function getElement() {
+      if (
+        !$this->existsParam('id')
+        || empty($this->requestData['id'])
+        || !is_numeric($this->requestData['id'])
+      ) {
+        return $this->error404('Nie można edytować dokumentu, brak/niepoprawny ID');
+      }
+
+      $sqlReturn = $this->getInstance()->query('SELECT * FROM `docs` WHERE `id` = '.$this->requestData['id'].'');
       return $sqlReturn->fetch(PDO::FETCH_ASSOC);
     }
 
