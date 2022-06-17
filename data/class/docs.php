@@ -55,7 +55,14 @@ class docs extends defaultController {
       }
 
       $sqlReturn = $this->getInstance()->query('SELECT * FROM `docs` WHERE `id` = '.$this->requestData['id'].'');
-      return $sqlReturn->fetch(PDO::FETCH_ASSOC);
+      $returnData = $sqlReturn->fetch(PDO::FETCH_ASSOC);
+
+      if (!$returnData) {
+        return $this->error404('Nie można znaleźć dokumentu');
+      } else {
+        return $returnData;
+      }
+
     }
 
     public function addDoc() {
