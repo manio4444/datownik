@@ -7,6 +7,8 @@ class lockscreen extends defaultController {
   public $sqlReturn;
   private $pinCode;
   private $logFile;
+  private $authenticationSalt = 'z28GmJA6bzh2rAm5';
+  private $authenticatedId;
 
   public function __construct() {
     global $ini;
@@ -28,6 +30,7 @@ class lockscreen extends defaultController {
       return array(
         'message' => 'Passcode poprawny',
         'isValid' => true,
+        'token' => $this->newSession(),
       );
     } else {
       return array(
@@ -43,8 +46,33 @@ class lockscreen extends defaultController {
     return ($code === $this->pinCode);
   }
 
+  protected function newSession() {
+    $expireDate = strtotime( '+1 days' );
+    $sqlReturn = $this->getDbInstance()->prepare('INSERT INTO `authentication` (`exp`) VALUES (:exp)');
+    $sqlReturn->bindValue(':exp', $expireDate, PDO::PARAM_STR);
+    $sqlReturn->execute();
+    $this->authenticatedId = $this->getDbInstance()->lastInsertId();
 
+    return base64_encode($this->authenticatedId) . $this->authenticationSalt;
+  }
 
+  public function checkAuth() {
+    $sessionId = $this->parseSessionId($this->requestData['token']);
+    if (
+      !$this->existsParam('token')
+      || empty($this->requestData['token'])
+      || !is_numeric($sessionId)
+    ) {
+      return $this->error404('Nieprawidłowy token sesji');
+    }
+
+    $sqlReturn = $this->getInstance()->query('SELECT * FROM `authentication` WHERE `id` = '.$sessionId.'');
+    return $sqlReturn->fetch(PDO::FETCH_ASSOC);
+  }
+
+  protected function parseSessionId($sessionIdToken) {
+    return base64_decode(str_replace($this->authenticationSalt, '', $sessionIdToken));
+  }
 
 }
 

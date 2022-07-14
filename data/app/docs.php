@@ -7,7 +7,7 @@ $docs = new docs;
   <?php
 
   if (Router::getGetParams('id')) {
-
+    $docs->addParam('id', Router::getGetParams('id'));
     $data = $docs->getElement(Router::getGetParams('id'));
     echo $docs->getTemplate($data);
 
@@ -18,7 +18,7 @@ $docs = new docs;
       'title' => 'Nowy dokument',
     ));
 
-    foreach ($docs->sqlReturn as $data) {
+    foreach ($docs->getData() as $data) {
 
       echo $docs->getTemplate($data);
 
