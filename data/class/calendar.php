@@ -66,6 +66,14 @@ class calendar extends defaultController {
 
   }
 
+  public function getBirthdaysAll() {
+    $sqlReturn = $this->dbInstance->prepare('SELECT id, data AS date, txt FROM `calendar_birthdays`');
+    $sqlReturn->execute();
+
+    return $sqlReturn->fetchAll(PDO::FETCH_ASSOC);
+
+  }
+
   protected function saveEvent() {
     if (
       !$this->existsParam('txt')
@@ -90,6 +98,35 @@ class calendar extends defaultController {
 
     return array(
       'message' => 'Utworzono nowe wydarzenie',
+      'newElement' => $lastInsertElement,
+    );
+
+  }
+
+  protected function saveBirthday() {
+    if (
+      !$this->existsParam('txt')
+      || !$this->existsParam('data')
+    ) {
+      return $this->error404('Nie wprowadzono wymaganych danych');
+    }
+    if (empty($this->requestData['txt'])) {
+      return $this->error404('Pole tekst nie może być puste');
+    }
+    if (empty($this->requestData['data'])) {
+      return $this->error404('Pole data nie może być puste');
+    }
+
+    $sqlObj = $this->dbInstance->prepare( 'INSERT INTO `calendar_birthdays` (`txt`, `data`) VALUES (:txt, :data)');
+    $sqlObj->bindValue(':txt', $this->requestData['txt'], PDO::PARAM_STR);
+    $sqlObj->bindValue(':data', $this->requestData['data'], PDO::PARAM_STR);
+    $sqlObj->execute();
+    $BirthdayId = $this->dbInstance->lastInsertId();
+    $sqlReturn = $this->getInstance()->query('SELECT * FROM `calendar_birthdays` WHERE `id` = ' . $BirthdayId);
+    $lastInsertElement = $sqlReturn->fetch(PDO::FETCH_ASSOC);
+
+    return array(
+      'message' => 'Utworzono nowe wydarzenie cykliczne',
       'newElement' => $lastInsertElement,
     );
 
