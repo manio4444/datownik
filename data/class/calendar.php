@@ -25,7 +25,24 @@ class calendar extends defaultController {
       return $this->error404('Wartości limit musi być liczbą całkowitą');
     }
 
-    $sqlReturn = $this->dbInstance->query('SELECT * FROM `calendar_static` WHERE `data` > CURRENT_TIMESTAMP ORDER BY `calendar_static`.`data` ASC LIMIT '.$limit.'');
+    $sqlReturn = $this->dbInstance->prepare('SELECT id, data AS date, txt, "static" AS type
+    FROM `calendar_static`
+    WHERE data > CURRENT_TIMESTAMP
+    UNION ALL
+    SELECT id, data AS date, txt, "dayoff" AS type
+    FROM `calendar_dayoff`
+    WHERE data > CURRENT_TIMESTAMP
+    UNION ALL
+    SELECT id, data AS date, txt, "birthdays" AS type
+    FROM `calendar_birthdays`
+    WHERE MONTH(data) >= MONTH(CURRENT_TIMESTAMP)
+    AND DAY(data) >= MONTH(CURRENT_TIMESTAMP)
+    OR MONTH(data) = MONTH(CURRENT_TIMESTAMP) + 1
+    ORDER BY date ASC
+    LIMIT :limit
+    ');
+    $sqlReturn->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $sqlReturn->execute();
 
     return $sqlReturn->fetchAll(PDO::FETCH_ASSOC);
 
