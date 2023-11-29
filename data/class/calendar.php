@@ -33,7 +33,7 @@ class calendar extends defaultController {
     FROM `calendar_dayoff`
     WHERE data > CURRENT_TIMESTAMP
     UNION ALL
-    SELECT id, data AS date, txt, "birthdays" AS type
+    SELECT id, DATE_ADD(data, INTERVAL YEAR(CURRENT_TIMESTAMP) - YEAR(data) YEAR) AS date, txt, "birthdays" AS type
     FROM `calendar_birthdays`
     WHERE MONTH(data) >= MONTH(CURRENT_TIMESTAMP)
     AND DAY(data) >= MONTH(CURRENT_TIMESTAMP)
