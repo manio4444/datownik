@@ -61,7 +61,6 @@ class calendar extends defaultController {
     SELECT id, data AS date, DAY(data) AS day, txt, "birthdays" AS type
     FROM `calendar_birthdays`
     WHERE MONTH(data) = :month
-    AND YEAR(data) = :year
     ORDER BY date ASC');
     $sqlReturn->bindValue(':month', $month, PDO::PARAM_INT);
     $sqlReturn->bindValue(':year', $year, PDO::PARAM_INT);
