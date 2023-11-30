@@ -8,7 +8,6 @@ class ajaxRouter extends database {
 
   private $requestData;
   private $requestType;
-  private $apiV2Compatible = false;
 
   public static function detectAjax() {
     if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH'])=='xmlhttprequest') {
@@ -36,7 +35,7 @@ class ajaxRouter extends database {
     return (strcasecmp($_SERVER['REQUEST_METHOD'], 'OPTIONS') === 0);
   }
 
-  public function requestType() {
+  public function detectRequestType() {
     if (static::detectAjax() === true) {
       return 'ajax';
     }
@@ -50,7 +49,7 @@ class ajaxRouter extends database {
   }
 
   public function tryAjax() {
-    $this->requestType = $this->requestType();
+    $this->requestType = $this->detectRequestType();
 
     if ($this->requestType === false) {
       return null;
@@ -87,12 +86,13 @@ class ajaxRouter extends database {
 
   private function existsAjaxController() {
     if (isset($_GET['ajax_action']) && !empty($_GET['ajax_action'])) {
-      return $_GET['ajax_action'];
+      $className = $_GET['ajax_action'];
     } elseif (array_key_exists('ajax_action', $this->requestData) && !empty($this->requestData['ajax_action'])) {
-      return $this->requestData['ajax_action'];
+      $className = $this->requestData['ajax_action'];
     } else {
       return false;
     }
+    return str_replace('Ajax', '', $className);
   }
 
   private function doAjax($ajaxControllerName) {
@@ -105,11 +105,8 @@ class ajaxRouter extends database {
         'message' =>  $e->getMessage(),
       );
     }
-    if (isset($controller->apiV2Compatible) && $controller->apiV2Compatible === true) {
-      $this->apiV2Compatible = true;
-      return $controller->futureRender($this->requestData);
-    }
-    return $controller->render();
+
+    return $controller->render($this->requestData);
   }
 
   public static function startAjaxOutput() {
@@ -131,17 +128,7 @@ class ajaxRouter extends database {
       header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found", true, 404);
     }
 
-    if ($this->apiV2Compatible === true) {
-      echo json_encode($data);
-      die();
-    }
-
-    echo json_encode(
-      array(
-        'data' => $data,
-        'content' => $content,
-      )
-    );
+    echo json_encode($data);
     die();
   }
 
