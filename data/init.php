@@ -8,7 +8,6 @@ define("FOLDER_VENDORS", "data/vendors");
 define("FOLDER_INI", "data/config");
 define("FOLDER_CLASSES", "data/class");
 define("FOLDER_APPS", "data/app");
-define("FOLDER_AJAX", "data/ajax");
 define("FOLDER_CONTROLLERS", "data/controllers"); //TODO in future use instead of FOLDER_CLASSES
 define("FOLDER_LOGS", "logs");
 

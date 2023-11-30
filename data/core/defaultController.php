@@ -23,7 +23,7 @@ class defaultController extends database {
     return $this->dbInstance;
   }
 
-  public function futureRender($requestData) {
+  public function render($requestData) {
 
     $this->requestData = $requestData;
 
