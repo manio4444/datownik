@@ -25,7 +25,22 @@ class calendar extends defaultController {
       return $this->error404('Wartości limit musi być liczbą całkowitą');
     }
 
-    $sqlReturn = $this->dbInstance->query('SELECT * FROM `calendar_static` WHERE `data` > CURRENT_TIMESTAMP ORDER BY `calendar_static`.`data` ASC LIMIT '.$limit.'');
+    $sqlReturn = $this->dbInstance->prepare('SELECT id, data AS date, txt, "static" AS type
+    FROM `calendar_static`
+    WHERE data > CURRENT_TIMESTAMP
+    UNION ALL
+    SELECT id, data AS date, txt, "dayoff" AS type
+    FROM `calendar_dayoff`
+    WHERE data > CURRENT_TIMESTAMP
+    UNION ALL
+    SELECT id, DATE_ADD(data, INTERVAL YEAR (CURRENT_TIMESTAMP) - YEAR(data) YEAR) AS date, txt, "birthdays" AS type
+    FROM `calendar_birthdays`
+    WHERE DATE_ADD(data, INTERVAL YEAR (CURRENT_TIMESTAMP) - YEAR(data) YEAR) > DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 DAY)
+    ORDER BY date ASC
+    LIMIT :limit
+    ');
+    $sqlReturn->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $sqlReturn->execute();
 
     return $sqlReturn->fetchAll(PDO::FETCH_ASSOC);
 
@@ -57,9 +72,21 @@ class calendar extends defaultController {
     FROM `calendar_dayoff`
     WHERE MONTH(data) = :month
     AND YEAR(data) = :year
+    UNION ALL
+    SELECT id, data AS date, DAY(data) AS day, txt, "birthdays" AS type
+    FROM `calendar_birthdays`
+    WHERE MONTH(data) = :month
     ORDER BY date ASC');
     $sqlReturn->bindValue(':month', $month, PDO::PARAM_INT);
     $sqlReturn->bindValue(':year', $year, PDO::PARAM_INT);
+    $sqlReturn->execute();
+
+    return $sqlReturn->fetchAll(PDO::FETCH_ASSOC);
+
+  }
+
+  public function getBirthdaysAll() {
+    $sqlReturn = $this->dbInstance->prepare('SELECT id, data AS date, txt FROM `calendar_birthdays`');
     $sqlReturn->execute();
 
     return $sqlReturn->fetchAll(PDO::FETCH_ASSOC);
@@ -90,6 +117,35 @@ class calendar extends defaultController {
 
     return array(
       'message' => 'Utworzono nowe wydarzenie',
+      'newElement' => $lastInsertElement,
+    );
+
+  }
+
+  protected function saveBirthday() {
+    if (
+      !$this->existsParam('txt')
+      || !$this->existsParam('data')
+    ) {
+      return $this->error404('Nie wprowadzono wymaganych danych');
+    }
+    if (empty($this->requestData['txt'])) {
+      return $this->error404('Pole tekst nie może być puste');
+    }
+    if (empty($this->requestData['data'])) {
+      return $this->error404('Pole data nie może być puste');
+    }
+
+    $sqlObj = $this->dbInstance->prepare( 'INSERT INTO `calendar_birthdays` (`txt`, `data`) VALUES (:txt, :data)');
+    $sqlObj->bindValue(':txt', $this->requestData['txt'], PDO::PARAM_STR);
+    $sqlObj->bindValue(':data', $this->requestData['data'], PDO::PARAM_STR);
+    $sqlObj->execute();
+    $BirthdayId = $this->dbInstance->lastInsertId();
+    $sqlReturn = $this->getInstance()->query('SELECT * FROM `calendar_birthdays` WHERE `id` = ' . $BirthdayId);
+    $lastInsertElement = $sqlReturn->fetch(PDO::FETCH_ASSOC);
+
+    return array(
+      'message' => 'Utworzono nowe wydarzenie cykliczne',
       'newElement' => $lastInsertElement,
     );
 
