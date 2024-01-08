@@ -66,6 +66,24 @@ class notes extends defaultController {
 
   }
 
+  public function getSingleNoteData() {
+
+    if (
+      !$this->existsParam('id')
+      || empty($this->requestData['id'])
+      || !is_numeric($this->requestData['id'])
+    ) {
+      return $this->error404('Nie można znaleźć notatki, brak/niepoprawny ID');
+    }
+
+    $sqlReturn = $this->getDbInstance()->prepare('SELECT * FROM `notes` WHERE `id` = :id');
+    $sqlReturn->bindValue(':id', $this->requestData['id'], PDO::PARAM_INT);
+    $sqlReturn->execute();
+
+    return $sqlReturn->fetch(PDO::FETCH_ASSOC);
+
+  }
+
   public function addNote() {
 
     if (
