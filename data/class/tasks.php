@@ -45,9 +45,9 @@ class tasks extends defaultController {
 
     $sqlFinished = $this->getParam('getFinishedOnly')
     ? ' AND `finished` = 1'
-    : $this->getParam('getFinished')
+    : ($this->getParam('getFinished')
       ? ''
-      : ' AND `finished` = 0';
+      : ' AND `finished` = 0');
 
     $sqlWhere .= $sqlFinished;
 
